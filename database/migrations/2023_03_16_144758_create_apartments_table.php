@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('beds')->default(1);
             $table->integer('bathrooms')->default(1);
             $table->integer('square_meters');
-            $table->string('address',100);
+            $table->string('address',255);
             $table->float('longitude',20,15);
             $table->float('latitude',20,15);
             $table->boolean('visible')->default(false);

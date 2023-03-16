@@ -23,4 +23,8 @@ class Apartment extends Model
         'visible',
         'image'
     ];
+
+    public function messages(){
+        return $this->hasMany(Message::class);
+    }
 }

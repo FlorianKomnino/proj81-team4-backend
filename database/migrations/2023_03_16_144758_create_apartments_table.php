@@ -25,7 +25,7 @@ return new class extends Migration
             $table->float('latitude',20,15);
             $table->boolean('visible')->default(false);
             $table->string('image',255)->nullable();
-            $table->dateTime('deleted_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

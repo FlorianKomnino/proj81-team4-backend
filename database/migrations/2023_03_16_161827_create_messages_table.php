@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('apartment_id')->after('id');
+            $table->unsignedBigInteger('apartment_id');
             $table->foreign('apartment_id')
                 ->references('id')
                 ->on('apartments')

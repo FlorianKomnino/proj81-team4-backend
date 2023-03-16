@@ -1,0 +1,27 @@
+GENERICO
+
+suffissi da aggiungere eventualmente a fine commit:
+* prototype(funzionante, da dettagliare);
+* completed(apparentemente completo e senza errori);
+
+hotfix ( specifica contenuto modificato, motivo della modifica); CONTROLLARE IN CHAT E AVVISARE IN DA	 FUCKING CHAT 
+
+CONTENUTO
+
+add    (aggiunta righe di codice, contenuto aggiunto -- specificare file di riferimento); add content -- file
+modify (modifica contenuto esistente, contenuto visivo/testuale -- specificare file di riferimento); modify content -- file
+remove (cancellazione di righe di codice, contenuto -- specificare file di riferimento); remove content -- file
+
+
+LOGICA
+
+implement (aggiunta nuova feature o contenuto logico, contenuto); implement content
+edit 	    (modifica contenuto esistente); edit content
+import    (nuovo contenuto esterno - specificare contenuto aggiunto, es.libraries); import nome_libreria
+fix       (correzione errore logico esistente); fix content/error; fix content/error
+
+
+FILE E CARTELLE
+
+create (creazione nuovo file o cartella -- specificare nome file di riferimento, es.components); create file/folder
+delete (eliminazione di files -- specificare file di riferimento); delete file/folder

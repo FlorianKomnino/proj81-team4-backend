@@ -30,8 +30,12 @@ class UserController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
             //Setting login response 
+            $success['user_id'] = $user->id;
             $success['token'] = $this->apiToken;
             $success['name'] =  $user->name;
+            $success['surname'] = $user->surname;
+            $success['email'] = $user->email;
+            $success['subscribed_from'] = Str::of($user->created_at)->limit(4,'');
             return response()->json([
                 'status' => 'success',
                 'data' => $success

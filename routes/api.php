@@ -20,5 +20,5 @@ Route::middleware('auth:api_token')->get('/user', function (Request $request) {
 });
 
 Route::post('/user', [UserController::class, 'store'])->name('api.user.store');
-Route::get('/user/{id}', [UserController::class, 'show'])->name('api.user.show');
+Route::get('/user/{user}', [UserController::class, 'show'])->name('api.user.show');
 Route::post('login', [UserController::class, 'login'])->name('login');

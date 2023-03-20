@@ -72,18 +72,18 @@ class ApartmentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Apartment $apartment
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Apartment $apartment)
     {
-        //
+        return view ('user.apartments.show',['apartment'=>$apartment]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Apartment $apartment
      * @return \Illuminate\Http\Response
      */
     public function edit(Apartment $apartment)
@@ -95,7 +95,7 @@ class ApartmentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Apartment $apartment
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Apartment $apartment)
@@ -103,16 +103,16 @@ class ApartmentController extends Controller
         $rules = $this->validationRules;
         $data = $request->validate($rules);
         $apartment->update($data);
-        return redirect()->route('user.apartments.show',compact('apartment'));
+        return redirect()->route('user.apartments.show', ['apartment'=>$apartment]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Apartment $apartment
      * @return \Illuminate\Http\Response
      */
-    public function destroy($apartment)
+    public function destroy(Apartment $apartment)
     {
         $apartment->delete();
         return redirect()->route('user.apartments.index')->with('message', 'The apartment has been removed correctly')->with('message_class','danger');

@@ -19,10 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/createApartmentForm', function () {
-    return view('user.createApartmentForm');
-});
-
 Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');

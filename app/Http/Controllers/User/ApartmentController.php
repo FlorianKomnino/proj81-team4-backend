@@ -88,7 +88,7 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        return view('apartments.edit', ['apartment'=>$apartment]);
+        return view('user.apartments.edit', ['apartment'=>$apartment]);
     }
 
     /**
@@ -103,7 +103,7 @@ class ApartmentController extends Controller
         $rules = $this->validationRules;
         $data = $request->validate($rules);
         $apartment->update($data);
-        return redirect()->route('apartments.show',compact('apartment'));
+        return redirect()->route('user.apartments.show',compact('apartment'));
     }
 
     /**
@@ -115,6 +115,6 @@ class ApartmentController extends Controller
     public function destroy($apartment)
     {
         $apartment->delete();
-        return redirect()->route('apartments.index')->with('message', 'The apartment has been removed correctly')->with('message_class','danger');
+        return redirect()->route('user.apartments.index')->with('message', 'The apartment has been removed correctly')->with('message_class','danger');
     }
 }

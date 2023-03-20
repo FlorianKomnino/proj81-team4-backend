@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Apartment;
 use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
@@ -55,9 +56,9 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Apartment $apartment)
     {
-        //
+        return view('apartments.edit', ['apartment'=>$apartment]);
     }
 
     /**
@@ -67,9 +68,12 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Apartment $apartment)
     {
-        //
+        $rules = $this->validationRules;
+        $data = $request->validate($rules);
+        $apartment->update($data);
+        return redirect()->route('apartments.show',compact('apartment'));
     }
 
     /**
@@ -78,8 +82,9 @@ class ApartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($apartment)
     {
-        //
+        $apartment->delete();
+        return redirect()->route('apartments.index')->with('message', 'The apartment has been removed correctly')->with('message_class','danger');
     }
 }

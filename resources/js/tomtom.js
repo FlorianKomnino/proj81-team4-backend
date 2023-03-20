@@ -39,10 +39,6 @@ function getHouses() {
     let locationQuery = document.getElementById('locationQuery').value;
     console.log(locationQuery)
     axios.get(urlAddress + `${locationQuery}.json`, {
-        headers: {
-            "Content-Type": "application/json",
-            'Access-Control-Allow-Origin': '*',
-            },
         params: {
             key: "jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr",
             
@@ -53,10 +49,6 @@ function getHouses() {
         let centerCoordinate = response.data.results[0].position;
         let position = `${response.data.results[0].position.lon},${response.data.results[0].position.lat}`;
         axios.get(positionUrlAddress, {
-            headers: {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*',
-                },
             params: {
                 key: "jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr",
                 geometryList: JSON.stringify([

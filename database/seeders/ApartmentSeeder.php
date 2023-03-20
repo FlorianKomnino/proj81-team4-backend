@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Apartment;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -59,6 +60,7 @@ class ApartmentSeeder extends Seeder
         foreach($this->apartments as $apartment){
             $newApartment = new Apartment();
             $newApartment->title = $apartment['title'];
+            $newApartment->user_id = User::inRandomOrder()->first()->id;
             $newApartment->rooms = $apartment['rooms'];
             $newApartment->beds = $apartment['beds'];
             $newApartment->bathrooms = $apartment['bathrooms'];

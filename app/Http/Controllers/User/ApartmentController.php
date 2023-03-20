@@ -30,7 +30,8 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        //
+        $apartments = Apartment::all();
+        return view('user.apartmentIndex', compact('apartments'));
     }
 
     /**
@@ -54,7 +55,7 @@ class ApartmentController extends Controller
         $rules = $this->validationRules;
         $data = $request->validate($rules);
         $data['user_id'] = Auth::user()->id;
-        $data['image'] = Storage::put('imgs/',$data['image']);
+        $data['image'] = Storage::put('imgs/', $data['image']);
         $newApartment = new Apartment();
         $newApartment->fill($data);
         $newApartment->save();
@@ -80,7 +81,8 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        return view('user.apartments.edit', ['apartment' => $apartment]);
+        $services = Service::all();
+        return view('user.editApartmentForm', ['apartment' => $apartment, 'services' => $services]);
     }
 
     /**

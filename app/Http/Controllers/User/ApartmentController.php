@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -38,7 +39,7 @@ class ApartmentController extends Controller
      */
     public function create(Apartment $apartment)
     {
-        return view('user.apartment.create', ['apartment' => new Apartment()]);
+        return view('user.apartment.create', ['apartment' => new Apartment(), 'services' => Service::all()]);
     }
 
     /**
@@ -77,7 +78,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        return view ('user.apartments.show',['apartment'=>$apartment]);
+        return view('user.apartments.show', ['apartment' => $apartment]);
     }
 
     /**
@@ -88,7 +89,7 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        return view('user.apartments.edit', ['apartment'=>$apartment]);
+        return view('user.apartments.edit', ['apartment' => $apartment]);
     }
 
     /**
@@ -103,7 +104,7 @@ class ApartmentController extends Controller
         $rules = $this->validationRules;
         $data = $request->validate($rules);
         $apartment->update($data);
-        return redirect()->route('user.apartments.show', ['apartment'=>$apartment]);
+        return redirect()->route('user.apartments.show', ['apartment' => $apartment]);
     }
 
     /**
@@ -115,6 +116,6 @@ class ApartmentController extends Controller
     public function destroy(Apartment $apartment)
     {
         $apartment->delete();
-        return redirect()->route('user.apartments.index')->with('message', 'The apartment has been removed correctly')->with('message_class','danger');
+        return redirect()->route('user.apartments.index')->with('message', 'The apartment has been removed correctly')->with('message_class', 'danger');
     }
 }

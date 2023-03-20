@@ -70,7 +70,8 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        return view('user.apartments.show', ['apartment' => $apartment]);
+        $user = Auth::user();
+        return view('user.showApartment', ['apartment' => $apartment, 'user' => $user]);
     }
 
     /**

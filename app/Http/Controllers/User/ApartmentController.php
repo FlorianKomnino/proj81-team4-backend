@@ -39,7 +39,7 @@ class ApartmentController extends Controller
      */
     public function create(Apartment $apartment)
     {
-        return view('user.apartment.create', ['apartment' => new Apartment(), 'services' => Service::all()]);
+        return view('user.createApartmentForm', ['apartment' => new Apartment(), 'services' => Service::all()]);
     }
 
     /**

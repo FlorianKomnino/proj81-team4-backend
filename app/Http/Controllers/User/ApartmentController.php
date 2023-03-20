@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ApartmentController extends Controller
@@ -52,6 +53,7 @@ class ApartmentController extends Controller
     {
         $rules = $this->validationRules;
         $data = $request->validate($rules);
+        $data['user_id'] = Auth::user()->id;
         $data['image'] = Storage::put('imgs/',$data['image']);
         $newApartment = new Apartment();
         $newApartment->fill($data);

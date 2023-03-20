@@ -21,6 +21,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('results', [UserApartmentController::class, 'APICall']);
+
 Route::get('/tomtom', function () {
     return view('tomtom.tomtomMap');
 });

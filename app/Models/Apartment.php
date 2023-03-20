@@ -39,4 +39,8 @@ class Apartment extends Model
     public function visualizations(){
         return $this->hasMany(Visualization::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

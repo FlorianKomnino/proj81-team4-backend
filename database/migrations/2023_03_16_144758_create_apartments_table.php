@@ -15,14 +15,18 @@ return new class extends Migration
     {
         Schema::create('apartments', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
             $table->string('title',60);
             $table->integer('rooms')->default(1);
             $table->integer('beds')->default(1);
             $table->integer('bathrooms')->default(1);
             $table->integer('square_meters');
             $table->string('address',255);
-            $table->float('longitude',20,15);
-            $table->float('latitude',20,15);
+            $table->float('longitude',20,15)->nullable();
+            $table->float('latitude',20,15)->nullable();
             $table->boolean('visible')->default(false);
             $table->string('image',255)->nullable();
             $table->softDeletes();

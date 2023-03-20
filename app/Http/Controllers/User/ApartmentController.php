@@ -19,6 +19,7 @@ class ApartmentController extends Controller
         'bathrooms' => 'int|min:1',
         'square_meters' => 'int',
         'address' => 'string',
+        'services' => 'nullable',
         'image' => 'image|max:2048'
     ];
 
@@ -59,6 +60,8 @@ class ApartmentController extends Controller
         $newApartment = new Apartment();
         $newApartment->fill($data);
         $newApartment->save();
+        $newApartment->services()->sync($data['services']??[]);
+        $newApartment->update();
         return redirect()->route('user.dashboard');
     }
 

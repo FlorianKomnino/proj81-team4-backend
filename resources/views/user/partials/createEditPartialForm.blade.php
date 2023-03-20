@@ -41,7 +41,7 @@
             <div class="p-0 d-flex justify-content-between">
                 @foreach ($services as $service)
                     <div class="single-tag d-flex align-items-center">
-                        <input type="checkbox" class="form-check-input" name="technologies[]" value="{{ $service->id }}"
+                        <input type="checkbox" class="form-check-input" name="services[]" value="{{ $service->id }}"
                         @if ($errors->any())
                             @checked(in_array($service->id, old('services',[])))
                         @else

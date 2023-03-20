@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('head')
+    @vite(['resources/js/deleteForm.js'])
+@endsection
 @section('content')
 <div class="container">
     <div class="row">

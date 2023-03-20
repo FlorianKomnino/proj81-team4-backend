@@ -82,7 +82,7 @@ class UserController extends Controller
         $validator = Validator::make(
             $data,
             [
-                'name' => ['required', 'string', 'max:255'],
+                'name' => ['string', 'max:255'],
                 'surname' => ['string', 'max:40'],
                 'birth_date' => ['date'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
@@ -110,12 +110,15 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show(User $user){
+        $user = User::findOrFail($user->id);
+        return response()->json([
+            'success' => true,
+            'results' => $user
+        ]);
     }
 
     /**

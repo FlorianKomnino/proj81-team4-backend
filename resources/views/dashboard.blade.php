@@ -26,6 +26,7 @@
                     <p class="text-secondary">Su Bool BnB dal {{substr(Auth::user()->created_at,0,4)}}</p>
                     <p class="text-decoration-underline my-3">modifica il profilo</p>
                     <a href="{{route('user.apartments.create')}}" class="btn btn-secondary">+ aggiungi appartamento</a><br>
+                    <a href="{{route('user.apartments.index')}}" class="btn btn-secondary mt-3"> visualizza i tuoi appartamenti</a><br>
                     <a href="" class="btn btn-secondary my-3">Messaggi</a><br>
                     <a href="" class="btn btn-secondary">&star; Visualizzazioni</a>
                 </div>

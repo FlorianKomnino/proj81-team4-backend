@@ -5,7 +5,7 @@
         <form action="{{ route('user.apartments.store') }}" id="form" class="m-auto" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="d-flex flex-column p-2">
-                <textarea class="p-0 border-0" placeholder="Breve descrizione dell'appartamento" name="description"></textarea>
+                <textarea class="p-0 border-0" placeholder="Inserisci un titolo descrittivo per l'appartamento" name="title"></textarea>
             </div>
             <hr>
             <div class="d-flex flex-column p-2">

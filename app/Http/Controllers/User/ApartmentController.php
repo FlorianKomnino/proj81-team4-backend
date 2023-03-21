@@ -20,6 +20,7 @@ class ApartmentController extends Controller
         'bathrooms' => 'int|min:1',
         'square_meters' => 'int',
         'address' => 'string',
+        'services' => 'nullable',
         'image' => 'image|max:2048'
     ];
 
@@ -31,7 +32,8 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        //
+        $apartments = Apartment::all();
+        return view('user.apartmentIndex', compact('apartments'));
     }
 
     /**
@@ -57,12 +59,14 @@ class ApartmentController extends Controller
         $response = Http::get("https://api.tomtom.com/search/2/search/" . $data['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
         $jsonData = $response->json();
         $data['user_id'] = Auth::user()->id;
-        $data['image'] = Storage::put('imgs/',$data['image']);
+        $data['image'] = Storage::put('imgs/', $data['image']);
         $data['latitude'] = $jsonData['results'][0]['position']['lat'];
         $data['longitude'] = $jsonData['results'][0]['position']['lon'];
         $newApartment = new Apartment();
         $newApartment->fill($data);
         $newApartment->save();
+        $newApartment->services()->sync($data['services']??[]);
+        $newApartment->update();
         return redirect()->route('user.dashboard');
     }
 
@@ -74,7 +78,8 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        return view('user.apartments.show', ['apartment' => $apartment]);
+        $user = Auth::user();
+        return view('user.showApartment', ['apartment' => $apartment, 'user' => $user]);
     }
 
     /**
@@ -85,7 +90,8 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        return view('user.apartments.edit', ['apartment' => $apartment]);
+        $services = Service::all();
+        return view('user.editApartmentForm', ['apartment' => $apartment, 'services' => $services]);
     }
 
     /**

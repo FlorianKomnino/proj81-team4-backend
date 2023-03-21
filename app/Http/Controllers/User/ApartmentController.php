@@ -60,9 +60,14 @@ class ApartmentController extends Controller
         $response = Http::get("https://api.tomtom.com/search/2/search/" . $data['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
         $jsonData = $response->json();
         $data['user_id'] = Auth::user()->id;
-        $data['image'] = Storage::put('imgs/', $data['image']);
-        $data['latitude'] = $jsonData['results'][0]['position']['lat'];
-        $data['longitude'] = $jsonData['results'][0]['position']['lon'];
+        isset($data['image']) ? $data['image']=Storage::put('imgs/', $data['image']) : null;
+        if ($jsonData['results'] != []) {
+            $data['latitude'] = $jsonData['results'][0]['position']['lat'];
+            $data['longitude'] = $jsonData['results'][0]['position']['lon'];
+        } else {
+            $data['latitude'] = null;
+            $data['longitude'] = null;
+        }
         $newApartment = new Apartment();
         $newApartment->fill($data);
         $newApartment->save();
@@ -122,6 +127,11 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
+        if(Storage::exists($apartment->image)){
+            Storage::delete($apartment->image);
+        }else{
+            dd('file does not exist');
+        }
         $apartment->delete();
         return redirect()->route('user.apartments.index')->with('message', 'The apartment has been removed correctly')->with('message_class', 'danger');
     }

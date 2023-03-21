@@ -21,20 +21,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('results', [UserApartmentController::class, 'APICall']);
-
-Route::get('/tomtom', function () {
-    return view('tomtom.tomtomMap');
-});
-
 Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
     Route::resource('apartments', UserApartmentController::class);
 });
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

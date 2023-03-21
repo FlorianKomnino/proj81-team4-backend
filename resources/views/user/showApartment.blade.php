@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('head')
+    @vite(['resources/js/tomtom.js'])
+@endsection
+
 @section('content')
     <div class="container">
         <div class="col-12">
@@ -45,14 +49,27 @@
 
                     <div class="col-12">
                         <h5 class="mt-4">Dove ti troverai</h5>
+                        <div class="icon"></div>
                         <p>{{$apartment->address}}</p>
-                        <div class="col-12 bg-secondary" style="height: 280px;">
-                            <p class="text-light ms-2">tomtom map</p>
+                        <div class="tomtom-container mb-5">
+                            {{-- these rows (56-63) is used to send coordinates to tomtom.js and visualize the map --}}
+                            <div class="row w-50 d-none"> 
+                                <div class="input-group mb-3 col-3 p-0">
+                                    <input name="coordinate[]" type="text" class="form-control shadow-none" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                                    placeholder="Search" id="locationQuery" value="{{$jsonData['results'][0]['position']['lon']}}">
+                                    <input name="coordinate[]" type="text" class="form-control shadow-none" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                                    placeholder="Search" id="locationQuery" value="{{$jsonData['results'][0]['position']['lat']}}">
+                                </div>
+                            </div>
+                            <div id="map" class="map">
+                                <div id="marker">
+                                    <svg class="marker-container" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></svg>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 @endsection

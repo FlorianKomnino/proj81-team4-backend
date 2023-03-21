@@ -79,7 +79,10 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         $user = Auth::user();
-        return view('user.showApartment', ['apartment' => $apartment, 'user' => $user]);
+        $response = Http::get("https://api.tomtom.com/search/2/search/" . $apartment['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
+    
+        $jsonData = $response->json();
+        return view('user.showApartment', ['apartment' => $apartment, 'user' => $user, 'jsonData' => $jsonData]);
     }
 
     /**
@@ -126,7 +129,7 @@ class ApartmentController extends Controller
         $response = Http::get('https://api.tomtom.com/search/2/search/roma.json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr');
     
         $jsonData = $response->json();
-          
         dd($jsonData);
+        return view('tomtom.tomtomMap', ['jsonData' => $jsonData]);
     }
 }

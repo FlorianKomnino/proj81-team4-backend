@@ -20,7 +20,7 @@
                     <tr>
                         <th scope="col">id</th>
                         <th scope="col">title</th>
-                        <th scope="col">adress</th>
+                        <th scope="col">address</th>
                         <th scope="col">
                             <a href="{{ route('user.apartments.create') }}" class="btn btn-lg btn-primary my-3 w-100">Add a new apartment</a>
                         </th>

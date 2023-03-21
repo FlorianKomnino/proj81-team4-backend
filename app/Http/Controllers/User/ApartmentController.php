@@ -60,8 +60,13 @@ class ApartmentController extends Controller
         $jsonData = $response->json();
         $data['user_id'] = Auth::user()->id;
         isset($data['image']) ? $data['image']=Storage::put('imgs/', $data['image']) : null;
-        $data['latitude'] = $jsonData['results'][0]['position']['lat'];
-        $data['longitude'] = $jsonData['results'][0]['position']['lon'];
+        if ($jsonData['results'] != []) {
+            $data['latitude'] = $jsonData['results'][0]['position']['lat'];
+            $data['longitude'] = $jsonData['results'][0]['position']['lon'];
+        } else {
+            $data['latitude'] = null;
+            $data['longitude'] = null;
+        }
         $newApartment = new Apartment();
         $newApartment->fill($data);
         $newApartment->save();

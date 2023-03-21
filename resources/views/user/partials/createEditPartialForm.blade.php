@@ -8,27 +8,27 @@
                 {{$formMethod === 'POST' ? 'Create a new apartment' : "Edit the apartment '$apartment->title'"}}
             </h2>
             <div class="d-flex flex-column p-2">
-                <textarea class="p-0 border-0" placeholder="Inserisci un titolo descrittivo per l'appartamento" name="title"></textarea>
+                <textarea class="p-0 border-0" placeholder="Inserisci un titolo descrittivo per l'appartamento" name="title">{{ old('title', $apartment->title) }}</textarea>
             </div>
             <hr>
             <div class="d-flex flex-column p-2">
-                <input type="number" class="p-0 border-0" placeholder="Numero di stanze" name="rooms">
+                <input type="number" class="p-0 border-0" value="{{ old('rooms', $apartment->rooms) }}" placeholder="Numero di stanze" name="rooms">
             </div>
             <hr>
             <div class="d-flex flex-column p-2">
-                <input type="number" class="p-0 border-0" placeholder="Numero di letti" name="beds">
+                <input type="number" class="p-0 border-0" value="{{ old('beds', $apartment->beds) }}" placeholder="Numero di letti" name="beds">
             </div>
             <hr>
             <div class="d-flex flex-column p-2">
-                <input type="number" class="p-0 border-0" placeholder="Numero di Bagni" name="bathrooms">
+                <input type="number" class="p-0 border-0" value="{{ old('bathrooms', $apartment->bathrooms) }}" placeholder="Numero di Bagni" name="bathrooms">
             </div>
             <hr>
             <div class="d-flex flex-column p-2">
-                <input type="number" class="p-0 border-0" placeholder="Metri quadrati" name="square_meters">
+                <input type="number" class="p-0 border-0" value="{{ old('square_meters', $apartment->square_meters) }}" placeholder="Metri quadrati" name="square_meters">
             </div>
             <hr>
             <div class="d-flex flex-column p-2">
-                <input type="text" class="p-0 border-0" placeholder="Indirizzo dell'appartamento" name="address">
+                <input type="text" class="p-0 border-0" value="{{ old('address', $apartment->address) }}" placeholder="Indirizzo dell'appartamento" name="address">
             </div>
             <hr class="mb-0">
             <div class="p-0 d-flex">

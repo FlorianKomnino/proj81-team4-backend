@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Validation\Rule;
 
 class ApartmentController extends Controller
 {
@@ -65,9 +66,8 @@ class ApartmentController extends Controller
         $newApartment = new Apartment();
         $newApartment->fill($data);
         $newApartment->save();
-        $newApartment->services()->sync($data['services']??[]);
-        $newApartment->update();
-        return redirect()->route('user.dashboard');
+        $newApartment->services()->sync($data['services'] ?? []);
+        return redirect()->route('user.apartments.show', $newApartment->id)->with('message', "$newApartment->title has been created")->with('alert-type', 'primary');
     }
 
     /**
@@ -80,7 +80,7 @@ class ApartmentController extends Controller
     {
         $user = Auth::user();
         $response = Http::get("https://api.tomtom.com/search/2/search/" . $apartment['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
-    
+
         $jsonData = $response->json();
         return view('user.showApartment', ['apartment' => $apartment, 'user' => $user, 'jsonData' => $jsonData]);
     }
@@ -106,10 +106,12 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
+        $this->validationRules['title'] = ['required', 'min:2', 'max:50', Rule::unique('apartments')->ignore($apartment->id)];
         $rules = $this->validationRules;
         $data = $request->validate($rules);
+        $apartment->services()->sync($data['services'] ?? []);
         $apartment->update($data);
-        return redirect()->route('user.apartments.show', ['apartment' => $apartment]);
+        return redirect()->route('user.apartments.show', $apartment)->with('message', "Successfully updated")->with('alert-type', 'primary');;
     }
 
     /**
@@ -127,7 +129,7 @@ class ApartmentController extends Controller
     public function APICall()
     {
         $response = Http::get('https://api.tomtom.com/search/2/search/roma.json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr');
-    
+
         $jsonData = $response->json();
         dd($jsonData);
         return view('tomtom.tomtomMap', ['jsonData' => $jsonData]);

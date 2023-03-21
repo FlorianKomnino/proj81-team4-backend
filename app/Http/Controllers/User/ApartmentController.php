@@ -19,10 +19,34 @@ class ApartmentController extends Controller
         'rooms' => 'int|min:1',
         'beds' => 'int|min:1',
         'bathrooms' => 'int|min:1',
-        'square_meters' => 'int',
+        'square_meters' => 'int|min:4',
         'address' => 'string',
         'services' => 'nullable',
         'image' => 'image|max:2048'
+    ];
+
+    protected $validationErrorMessages = [
+        'title.required' => 'Il titolo è necessario.',
+        'title.unique' => 'Il titolo non può essere uguale ad un altro titolo in archivio.',
+        'title.min' => 'Il titolo deve essere lungo almeno 2 caratteri.',
+        'title.max' => 'Il titolo non può superare i 255 caratteri.',
+
+        'rooms.integer' => 'Il valore inserito deve essere un numero',
+        'rooms.min' => 'Il numero di stanze non deve essere inferiore a uno',
+
+        'beds.integer' => 'Il valore inserito deve essere un numero',
+        'beds.min' => 'Il numero di letti non deve essere inferiore a uno',
+
+        'bathrooms.integer' => 'Il valore inserito deve essere un numero',
+        'bathrooms.min' => 'Il numero di bagni non deve essere inferiore a uno',
+
+        'square_meters.integer' => 'Il valore inserito deve essere un numero',
+        'square_meters.min' => 'Il numero di metri quadri non deve essere inferiore a quattro',
+
+        'address.string' => 'Il valore inserito deve essere una stringa',
+
+        'image.image' => 'Il file inserito deve essere un\'immagine',
+        'image.max' => 'Il file inserito non deve superare i 2 Megabyte'
     ];
 
 
@@ -56,17 +80,19 @@ class ApartmentController extends Controller
     public function store(Request $request)
     {
         $rules = $this->validationRules;
-        $data = $request->validate($rules);
+        $errors = $this->validationErrorMessages;
+        $data = $request->validate($rules, $errors);
         $response = Http::get("https://api.tomtom.com/search/2/search/" . $data['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
         $jsonData = $response->json();
         $data['user_id'] = Auth::user()->id;
-        isset($data['image']) ? $data['image']=Storage::put('imgs/', $data['image']) : null;
+        isset($data['image']) ? $data['image'] = Storage::put('imgs/', $data['image']) : null;
         if ($jsonData['results'] != []) {
             $data['latitude'] = $jsonData['results'][0]['position']['lat'];
             $data['longitude'] = $jsonData['results'][0]['position']['lon'];
         } else {
-            $data['latitude'] = null;
-            $data['longitude'] = null;
+            return redirect()->route('user.apartments.create')->with('message', 'siamo spiacenti ma l\'indirizzo inserito non ha dato nessun risultato sulle nostre mappe');
+            // $data['latitude'] = null;
+            // $data['longitude'] = null;
         }
         $newApartment = new Apartment();
         $newApartment->fill($data);
@@ -113,7 +139,8 @@ class ApartmentController extends Controller
     {
         $this->validationRules['title'] = ['required', 'min:2', 'max:50', Rule::unique('apartments')->ignore($apartment->id)];
         $rules = $this->validationRules;
-        $data = $request->validate($rules);
+        $errors = $this->validationErrorMessages;
+        $data = $request->validate($rules, $errors);
         $apartment->services()->sync($data['services'] ?? []);
         $apartment->update($data);
         return redirect()->route('user.apartments.show', $apartment)->with('message', "Successfully updated")->with('alert-type', 'primary');;
@@ -127,9 +154,9 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        if(Storage::exists($apartment->image)){
+        if (Storage::exists($apartment->image)) {
             Storage::delete($apartment->image);
-        }else{
+        } else {
             dd('file does not exist');
         }
         $apartment->delete();

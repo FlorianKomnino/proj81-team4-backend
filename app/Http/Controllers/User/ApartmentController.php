@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Models\Service;
+use GuzzleHttp\TransferStats;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -65,7 +66,7 @@ class ApartmentController extends Controller
         $newApartment = new Apartment();
         $newApartment->fill($data);
         $newApartment->save();
-        $newApartment->services()->sync($data['services']??[]);
+        $newApartment->services()->sync($data['services'] ?? []);
         $newApartment->update();
         return redirect()->route('user.dashboard');
     }
@@ -79,7 +80,10 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         $user = Auth::user();
-        return view('user.showApartment', ['apartment' => $apartment, 'user' => $user]);
+        $response = Http::get('https://api.tomtom.com/search/2/search/roma.json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr');
+
+        $jsonData = $response->json();
+        return view('user.showApartment', ['apartment' => $apartment, 'user' => $user, 'jsonData' => $jsonData]);
     }
 
     /**
@@ -124,9 +128,9 @@ class ApartmentController extends Controller
     public function APICall()
     {
         $response = Http::get('https://api.tomtom.com/search/2/search/roma.json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr');
-    
+
         $jsonData = $response->json();
-          
+
         dd($jsonData);
     }
 }

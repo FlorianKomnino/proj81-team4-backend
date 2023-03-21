@@ -58,16 +58,12 @@
             @error('image')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-
             <label for="form-file" class="custom-file-upload p-1">Inserisci un'immagine</label>
             <input class="form-control" type="file" placeholder="no file selected" name="image" id="form-file">{{ old('image', $apartment->image) }}
-
-            {{-- <label for="image-upload" class="custom-file-upload">Inserisci un'immagine</label>
-            <input id="image-upload" type="file" placeholder="Immagine" name="image" value="{{ old('image', $apartment->image) }}"> --}}
         </div>
 
         <hr class="mt-0">
-        <div class="p-0 d-flex justify-content-between">
+        <div class="p-2 d-flex justify-content-between">
             @foreach ($services as $service)
                 <div class="single-tag d-flex align-items-center">
                     <input type="checkbox" class="form-check-input" name="services[]" value="{{ $service->id }}"
@@ -78,6 +74,6 @@
                 </div>
             @endforeach
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary m-2">Submit</button>
     </form>
 </div>

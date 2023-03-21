@@ -50,6 +50,9 @@
             @error('address')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
+            @if (session('message'))
+                <p class="text-danger">{{session('message')}}</p>
+            @endif
             <input type="text" value="{{ old('address', $apartment->address) }}" class="p-0 border-0"
                 placeholder="Indirizzo dell'appartamento" name="address">
         </div>

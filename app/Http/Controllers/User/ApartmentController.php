@@ -90,9 +90,11 @@ class ApartmentController extends Controller
             $data['latitude'] = $jsonData['results'][0]['position']['lat'];
             $data['longitude'] = $jsonData['results'][0]['position']['lon'];
         } else {
-            return redirect()->route('user.apartments.create')->with('message', 'siamo spiacenti ma l\'indirizzo inserito non ha dato nessun risultato sulle nostre mappe');
-            // $data['latitude'] = null;
-            // $data['longitude'] = null;
+            $newApartment = new Apartment();
+            $newApartment->fill($data);
+            $newApartment->save();
+            $newApartment->services()->sync($data['services'] ?? []);
+            return redirect()->route('user.apartments.edit', $newApartment->id)->with('message', 'Attenzione, l\'appartamento è stato creato correttamente ma l\'indirizzo inserito non ha prodotto alcun risultato! Per favore inserisci un indirizzo valido');
         }
         $newApartment = new Apartment();
         $newApartment->fill($data);
@@ -139,8 +141,21 @@ class ApartmentController extends Controller
     {
         $this->validationRules['title'] = ['required', 'min:2', 'max:50', Rule::unique('apartments')->ignore($apartment->id)];
         $rules = $this->validationRules;
-        $errors = $this->validationErrorMessages;
-        $data = $request->validate($rules, $errors);
+        $data = $request->validate($rules);
+
+        $response = Http::get("https://api.tomtom.com/search/2/search/" . $data['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
+        $jsonData = $response->json();
+        $data['user_id'] = Auth::user()->id;
+        //isset($data['image']) ? $data['image']=Storage::put('imgs/', $data['image']) : null;
+        if ($jsonData['results'] != []) {
+            $data['latitude'] = $jsonData['results'][0]['position']['lat'];
+            $data['longitude'] = $jsonData['results'][0]['position']['lon'];
+        } else {
+            $apartment->update($data);
+            return redirect()->route('user.apartments.edit', $apartment->id)->with('message', 'Attenzione, l\'appartamento è stato creato correttamente ma l\'indirizzo inserito non ha prodotto alcun risultato! Per favore inserisci un indirizzo valido');
+        }
+
+
         $apartment->services()->sync($data['services'] ?? []);
         $apartment->update($data);
         return redirect()->route('user.apartments.show', $apartment)->with('message', "Successfully updated")->with('alert-type', 'primary');;

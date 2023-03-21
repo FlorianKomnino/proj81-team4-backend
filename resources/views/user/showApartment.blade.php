@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('head')
+    @vite(['resources/js/tomtom.js'])
+@endsection
+
 @section('content')
     <div class="container">
         <div class="col-12">
@@ -48,6 +52,20 @@
                         <p>{{$apartment->address}}</p>
                         <div class="col-12 bg-secondary" style="height: 280px;">
                             <p class="text-light ms-2">tomtom map</p>
+                        </div>
+                    </div>
+
+                    <div class="container tomtom-container my-5">
+                        @dump($jsonData['results'][0]['position']['lon'])
+                        @dump($jsonData['results'][0]['position']['lat'])
+                        <div class="row w-50">
+                            <div class="input-group mb-3 col-3 p-0">
+                                <input type="text" class="form-control shadow-none d-none" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                                placeholder="Search" id="locationQuery" value="12.49427, 41.89056">
+                            </div>
+                        </div>
+                        <div id="map" class="map">
+                            <div id="marker" class="d-flex justify-content-center align-items-center"><font-awesome-icon icon="fa-solid fa-house" class="icon"/></div>
                         </div>
                     </div>
                 </div>

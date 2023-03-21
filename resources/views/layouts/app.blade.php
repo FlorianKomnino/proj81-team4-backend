@@ -91,5 +91,6 @@
         </main>
     </div>
 </body>
+@yield('head')
 
 </html>

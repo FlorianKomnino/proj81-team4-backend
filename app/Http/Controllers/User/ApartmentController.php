@@ -8,6 +8,7 @@ use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 
 class ApartmentController extends Controller
 {
@@ -55,8 +56,12 @@ class ApartmentController extends Controller
     {
         $rules = $this->validationRules;
         $data = $request->validate($rules);
+        $response = Http::get("https://api.tomtom.com/search/2/search/" . $data['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
+        $jsonData = $response->json();
         $data['user_id'] = Auth::user()->id;
         $data['image'] = Storage::put('imgs/', $data['image']);
+        $data['latitude'] = $jsonData['results'][0]['position']['lat'];
+        $data['longitude'] = $jsonData['results'][0]['position']['lon'];
         $newApartment = new Apartment();
         $newApartment->fill($data);
         $newApartment->save();
@@ -114,5 +119,14 @@ class ApartmentController extends Controller
     {
         $apartment->delete();
         return redirect()->route('user.apartments.index')->with('message', 'The apartment has been removed correctly')->with('message_class', 'danger');
+    }
+
+    public function APICall()
+    {
+        $response = Http::get('https://api.tomtom.com/search/2/search/roma.json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr');
+    
+        $jsonData = $response->json();
+          
+        dd($jsonData);
     }
 }

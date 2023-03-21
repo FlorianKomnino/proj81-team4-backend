@@ -1,4 +1,24 @@
 @import '~bootstrap/scss/bootstrap';
+@import "@tomtom-international/web-sdk-maps";
+
+$main-bg-color: rgb(255,55,92);
+
+@mixin standard-button {
+    background-color: $main-bg-color;
+    color: white;
+    padding: 5px 20px;
+    border: none;
+    border-radius: 10px;
+}
+
+.tomtom-container{
+    button{
+        @include standard-button;
+    }
+    #map{
+        height: 500px;
+    }
+}
 
 #container-form{
     #form{

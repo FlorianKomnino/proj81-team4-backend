@@ -141,8 +141,8 @@ class ApartmentController extends Controller
     {
         $this->validationRules['title'] = ['required', 'min:2', 'max:50', Rule::unique('apartments')->ignore($apartment->id)];
         $rules = $this->validationRules;
-        $data = $request->validate($rules);
-
+        $errors = $this->validationErrorMessages;
+        $data = $request->validate($rules, $errors);
         $response = Http::get("https://api.tomtom.com/search/2/search/" . $data['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
         $jsonData = $response->json();
         $data['user_id'] = Auth::user()->id;

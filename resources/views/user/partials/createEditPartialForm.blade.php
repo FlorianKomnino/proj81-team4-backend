@@ -62,12 +62,14 @@
             <label class="form-check-label" for="visible">Visibile al pubblico <em>(Spunta questa casella per rendere subito visibile il tuo appartamento)</em></label>
         </div>
         <hr class="mb-0">
+
+        <label for="form-file" class=" p-1">Inserisci un'immagine</label>
+
         <div class="p-0 d-flex">
             @error('image')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <label for="form-file" class="custom-file-upload p-1">Inserisci un'immagine</label>
-            <input class="form-control" type="file" placeholder="no file selected" name="image" id="form-file">{{ old('image', $apartment->image) }}
+            <input class="form-control rounded-0" type="file" placeholder="no file selected" name="image" id="form-file">
         </div>
         <hr class="mt-0">
         <div class="p-2 d-flex justify-content-between">

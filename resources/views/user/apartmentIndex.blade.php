@@ -14,6 +14,7 @@
         </div>
         @endif
 
+
         <h1 class="text-center">
             I tuoi appartamenti
         </h1>

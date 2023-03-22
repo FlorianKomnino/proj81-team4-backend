@@ -9,20 +9,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class ApartmentController extends Controller
 {
-
     protected $validationRules = [
-        'title' => 'required|unique:apartments|string|min:2|max:255',
+        'title' => ['required', 'string', 'min:2', 'max:255'],
         'rooms' => 'int|min:1',
         'beds' => 'int|min:1',
         'bathrooms' => 'int|min:1',
         'square_meters' => 'int|min:4',
         'address' => 'string',
         'services' => 'nullable',
-        'image' => 'image|max:2048'
+        'image' => 'image|max:2048',
+        'visible' => 'boolean'
     ];
 
     protected $validationErrorMessages = [
@@ -57,7 +58,7 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::all();
+        $apartments = Apartment::all()->where('user_id',Auth::user()->id);
         return view('user.apartmentIndex', compact('apartments'));
     }
 
@@ -79,13 +80,20 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
+        //validations
         $rules = $this->validationRules;
+        array_push($rules['title'],Rule::unique('apartments')->where('user_id', Auth::user()->id));
         $errors = $this->validationErrorMessages;
         $data = $request->validate($rules, $errors);
+
+        //tomtom call
         $response = Http::get("https://api.tomtom.com/search/2/search/" . $data['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
         $jsonData = $response->json();
+
         $data['user_id'] = Auth::user()->id;
         isset($data['image']) ? $data['image'] = Storage::put('imgs/', $data['image']) : null;
+
+        //wrong address control
         if ($jsonData['results'] != []) {
             $data['latitude'] = $jsonData['results'][0]['position']['lat'];
             $data['longitude'] = $jsonData['results'][0]['position']['lon'];
@@ -139,14 +147,21 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
-        $this->validationRules['title'] = ['required', 'min:2', 'max:50', Rule::unique('apartments')->ignore($apartment->id)];
+        //validations
         $rules = $this->validationRules;
+        array_push($rules['title'], 
+            Rule::unique('apartments')->where('user_id', Auth::user()->id)->ignore($apartment->id));
         $errors = $this->validationErrorMessages;
         $data = $request->validate($rules, $errors);
+
+        //tomtom call
         $response = Http::get("https://api.tomtom.com/search/2/search/" . $data['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
         $jsonData = $response->json();
         $data['user_id'] = Auth::user()->id;
-        //isset($data['image']) ? $data['image']=Storage::put('imgs/', $data['image']) : null;
+
+        //! gestire eliminazione dell'immagine su modifica isset($data['image']) ? $data['image']=Storage::put('imgs/', $data['image']) : null;
+
+        //wrong address control
         if ($jsonData['results'] != []) {
             $data['latitude'] = $jsonData['results'][0]['position']['lat'];
             $data['longitude'] = $jsonData['results'][0]['position']['lon'];
@@ -185,5 +200,20 @@ class ApartmentController extends Controller
         $jsonData = $response->json();
         dd($jsonData);
         return view('tomtom.tomtomMap', ['jsonData' => $jsonData]);
+    }
+
+    /**
+     * Toggle on soldout field.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function enableToggle(Apartment $apartment)
+    {
+        $apartment->visible = !$apartment->visible;
+        $apartment->save();
+
+        $message = ($apartment->visible) ? "disponibile" : "non disponibile";
+        return redirect()->back()->with('alert-type', 'success')->with('alert-message', "$apartment->title:&nbsp;<b>$message</b>");
     }
 }

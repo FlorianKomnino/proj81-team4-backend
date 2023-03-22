@@ -59,7 +59,7 @@
         <hr class="mb-0">
         <div class="d-flex mt-1 p-2">
             <input class="form-check-input me-2" type="checkbox" value="1" {{ old('visible', $apartment->visible) ? 'checked' : '' }} name="visible" id="visible">
-            <label class="form-check-label" for="visible">Disponibilità</label>
+            <label class="form-check-label" for="visible">Visibile al pubblico <em>(Spunta questa casella per rendere subito visibile il tuo appartamento)</em></label>
         </div>
         <hr class="mb-0">
         <div class="p-0 d-flex">

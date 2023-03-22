@@ -31,8 +31,8 @@ class ApartmentSeeder extends Seeder
             "bathrooms" => 3,
             "square_meters" => 130,
             "address" => "Via dei Genovesi, 18, Roma",
-            "longitude" => 41.887800, 
-            "latitude" => 12.476573,
+            "longitude" => 12.476573,
+            "latitude" => 41.887800,
             "visible" => false,
             "image" => "https://www.example.com/apartment.jpg"
         ],
@@ -43,8 +43,8 @@ class ApartmentSeeder extends Seeder
             "bathrooms" => 1,
             "square_meters" => 60,
             "address" => "Corso Italia, 221, Sorrento",
-            "longitude" => 40.626501,
-            "latitude" => 14.377975,
+            "longitude" => 14.377975,
+            "latitude" => 40.626501,
             "visible" => true,
             "image" => "https://www.example.com/apartment.jpg"
         ],

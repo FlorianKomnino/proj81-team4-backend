@@ -14,39 +14,40 @@
         </div>
         @endif
 
+        <h1 class="text-center">
+            I tuoi appartamenti
+        </h1>
         <div class="col-12">
             <table class="table table-hover text-center">
                 <thead class="align-middle">
                     <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">title</th>
-                        <th scope="col">address</th>
-                        <th scope="col">services</th>
+                        <th scope="col">Titolo</th>
+                        <th scope="col">Indirizzo</th>
+                        <th scope="col">Servizi</th>
                         <th scope="col">
-                            <a href="{{ route('user.apartments.create') }}" class="btn btn-lg btn-primary my-3 w-100">Add a new apartment</a>
+                            <a href="{{ route('user.apartments.create') }}" class="btn btn-lg btn-primary my-3 w-100"> + Aggiungi un appartamento</a>
                         </th>
                     </tr>
                 </thead>
                 <tbody class="align-middle">
                     @foreach ($apartments as $apartment)
                     <tr>
-                        <th scope="row">{{ $apartment->id }}</th>
                         <td>{{ $apartment->title }}</td>
                         <td>{{ $apartment->address }}</td>
                         <td>
                                 @forelse ($apartment->services as $service )
                                     #{{ $service->name }}
                                 @empty
-                                    No services included
+                                    Nessun servizio incluso
                                 @endforelse
                             </td>
                         <td>
-                            <a href="{{ route('user.apartments.show', $apartment->id ) }}" class="btn btn-primary btn-sm w-25">Vai all'appartamento</a>
+                            <a href="{{ route('user.apartments.show', $apartment->id ) }}" class="btn btn-primary btn-sm w-25">Visualizza l'appartamento</a>
                             <a href="{{ route('user.apartments.edit', $apartment->id) }}" class="btn btn-warning btn-sm w-25 m-0">Modifica l'appartamento</a>
-                            <form class="form-deleter d-inline w-25 m-0" action="{{ route('user.apartments.destroy', $apartment->id) }}" method="POST" data-element-name="{{ $apartment->title }}">
+                            <form class="form-deleter d-inline w-25" action="{{ route('user.apartments.destroy', $apartment->id) }}" method="POST" data-element-name="{{ $apartment->title }}">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm w-100">Elimina l'appartamento</button>
+                                <button class="btn btn-danger btn-sm w-25">Elimina l'appartamento</button>
                             </form>
                         </td>
                     </tr>

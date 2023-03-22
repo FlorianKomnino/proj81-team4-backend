@@ -6,6 +6,7 @@ use App\Models\Apartment;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class ApartmentSeeder extends Seeder
 
@@ -57,9 +58,10 @@ class ApartmentSeeder extends Seeder
      */
     public function run()
     {
-        foreach($this->apartments as $apartment){
+        foreach ($this->apartments as $apartment) {
             $newApartment = new Apartment();
             $newApartment->title = $apartment['title'];
+            $newApartment->slug = Str::slug($newApartment->title);
             $newApartment->user_id = User::inRandomOrder()->first()->id;
             $newApartment->rooms = $apartment['rooms'];
             $newApartment->beds = $apartment['beds'];

@@ -1,5 +1,5 @@
 <div id="container-form" class="container my-4">
-    <form action="{{ route($route, $apartment->id) }}" id="form" class="m-auto" method="POST"
+    <form action="{{ route($route, $apartment->slug) }}" id="form" class="m-auto" method="POST"
         enctype="multipart/form-data">
         @csrf
         @method($formMethod)

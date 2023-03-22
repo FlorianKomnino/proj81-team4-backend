@@ -41,16 +41,16 @@
                         </td> --}}
                         <td>{{ $apartment->address }}</td>
                         <td>
-                            <form action="{{ route('user.apartments.toggle', $apartment->id) }}" method="POST">
+                            <form action="{{ route('user.apartments.toggle', $apartment->slug) }}" method="POST">
                             @method('PATCH')
                             @csrf
                             <button type="submit" title="{{$apartment->visible ? 'disponibile' : 'non disponibile' }}" class="btn btn-outline" ><i class="fa-2x fa-solid fas fa-fw {{$apartment->visible ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i></button>
                             </form>
                         </td>
                         <td>
-                            <a href="{{ route('user.apartments.show', $apartment->id ) }}" class="btn btn-primary btn-sm w-100">Show</a>
-                            <a href="{{ route('user.apartments.edit', $apartment->id) }}" class="btn btn-warning btn-sm w-100">Edit</a>
-                            <form class="form-deleter" action="{{ route('user.apartments.destroy', $apartment->id) }}" method="POST" data-element-name="{{ $apartment->title }}">
+                            <a href="{{ route('user.apartments.show', $apartment->slug ) }}" class="btn btn-primary btn-sm w-100">Show</a>
+                            <a href="{{ route('user.apartments.edit', $apartment->slug) }}" class="btn btn-warning btn-sm w-100">Edit</a>
+                            <form class="form-deleter" action="{{ route('user.apartments.destroy', $apartment->slug) }}" method="POST" data-element-name="{{ $apartment->title }}">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger btn-sm w-100">Delete</button>

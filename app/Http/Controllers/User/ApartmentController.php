@@ -15,7 +15,7 @@ class ApartmentController extends Controller
 {
 
     protected $validationRules = [
-        'title' => 'required|unique:apartments|string|min:2|max:255',
+        'title' => 'required|string|min:2|max:255',
         'rooms' => 'int|min:1',
         'beds' => 'int|min:1',
         'bathrooms' => 'int|min:1',
@@ -27,7 +27,6 @@ class ApartmentController extends Controller
 
     protected $validationErrorMessages = [
         'title.required' => 'Il titolo è necessario.',
-        'title.unique' => 'Il titolo non può essere uguale ad un altro titolo in archivio.',
         'title.min' => 'Il titolo deve essere lungo almeno 2 caratteri.',
         'title.max' => 'Il titolo non può superare i 255 caratteri.',
 
@@ -57,7 +56,7 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::all();
+        $apartments = Apartment::all()->where('user_id',Auth::user()->id);
         return view('user.apartmentIndex', compact('apartments'));
     }
 

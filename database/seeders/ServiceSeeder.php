@@ -20,7 +20,7 @@ class ServiceSeeder extends Seeder
         ],
         [
             'name' => 'Piscina',
-            'icon' => 'fa-solid fa-water-ladder'
+            'icon' => 'fa-solid fa-person-swimming'
         ],
         [
             'name' => 'Parcheggio gratuito',

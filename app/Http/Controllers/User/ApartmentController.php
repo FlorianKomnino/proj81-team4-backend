@@ -22,7 +22,8 @@ class ApartmentController extends Controller
         'square_meters' => 'int|min:4',
         'address' => 'string',
         'services' => 'nullable',
-        'image' => 'image|max:2048'
+        'image' => 'image|max:2048',
+        'visible' => 'boolean'
     ];
 
     protected $validationErrorMessages = [
@@ -199,5 +200,20 @@ class ApartmentController extends Controller
         $jsonData = $response->json();
         dd($jsonData);
         return view('tomtom.tomtomMap', ['jsonData' => $jsonData]);
+    }
+
+    /**
+     * Toggle on soldout field.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function enableToggle(Apartment $apartment)
+    {
+        $apartment->visible = !$apartment->visible;
+        $apartment->save();
+
+        $message = ($apartment->visible) ? "disponibile" : "non disponibile";
+        return redirect()->back()->with('alert-type', 'success')->with('alert-message', "$apartment->title:&nbsp;<b>$message</b>");
     }
 }

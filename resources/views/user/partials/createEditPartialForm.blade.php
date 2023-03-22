@@ -57,6 +57,11 @@
                 placeholder="Indirizzo dell'appartamento" name="address">
         </div>
         <hr class="mb-0">
+        <div class="d-flex mt-1 p-2">
+            <input class="form-check-input me-2" type="checkbox" value="1" {{ old('visible', $apartment->visible) ? 'checked' : '' }} name="visible" id="visible">
+            <label class="form-check-label" for="visible">Disponibilità</label>
+        </div>
+        <hr class="mb-0">
         <div class="p-0 d-flex">
             @error('image')
                 <p class="text-danger">{{ $message }}</p>
@@ -64,7 +69,6 @@
             <label for="form-file" class="custom-file-upload p-1">Inserisci un'immagine</label>
             <input class="form-control" type="file" placeholder="no file selected" name="image" id="form-file">{{ old('image', $apartment->image) }}
         </div>
-
         <hr class="mt-0">
         <div class="p-2 d-flex justify-content-between">
             @foreach ($services as $service)

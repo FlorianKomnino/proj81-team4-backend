@@ -6,12 +6,13 @@
         <div class="row">
             <div class="col-12">
                 <h1 class="display-5 fw-bold">
-                    Welcome to BoolBnB
+                    Benvenuto su BoolBnB
                 </h1>
                 <h3>
-                    The best app to find an apartment for your vacations or your job trips!
+                    La migliore app per le tue vacanze o i tuoi viaggi di lavoro!
                 </h3>
             </div>
+
         </div>
     </div>
 </div>

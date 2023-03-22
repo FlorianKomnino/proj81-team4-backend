@@ -44,19 +44,19 @@
                             </form>
                         </td>
                         <td>
-                                @forelse ($apartment->services as $service )
-                                    #{{ $service->name }}
-                                @empty
-                                    Nessun servizio incluso
-                                @endforelse
-                            </td>
+                            @forelse ($apartment->services as $service )
+                                #{{ $service->name }}
+                            @empty
+                                Nessun servizio incluso
+                            @endforelse
+                        </td>
                         <td>
-                            <a href="{{ route('user.apartments.show', $apartment->slug ) }}" class="btn btn-primary btn-sm w-25">Visualizza l'appartamento</a>
-                            <a href="{{ route('user.apartments.edit', $apartment->slug) }}" class="btn btn-warning btn-sm w-25 m-0">Modifica l'appartamento</a>
+                            <a href="{{ route('user.apartments.show', $apartment->slug ) }}" class="btn btn-primary btn w-25">Visualizza l'appartamento</a>
+                            <a href="{{ route('user.apartments.edit', $apartment->slug) }}" class="btn btn-warning btn w-25 m-0">Modifica l'appartamento</a>
                             <form class="form-deleter d-inline w-25" action="{{ route('user.apartments.destroy', $apartment->slug) }}" method="POST" data-element-name="{{ $apartment->title }}">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm w-25">Elimina l'appartamento</button>
+                                <button class="btn btn-danger btn w-25">Elimina l'appartamento</button>
                             </form>
                         </td>
                     </tr>

@@ -31,6 +31,17 @@
                     <a href="" class="btn btn-outline-warning">&star; Visualizzazioni</a>
                 </div>
             </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <h2>
+                        I tuoi appartamenti sponsorizzati
+                    </h2>
+                    <p class="fst-italic">
+                        Non hai ancora sponsorizzato appartamenti
+                    </p>
+                    <div class="btn btn-success">Sponsorizza un'appartamento</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

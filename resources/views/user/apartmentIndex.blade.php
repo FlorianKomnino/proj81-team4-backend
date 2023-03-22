@@ -14,31 +14,27 @@
         </div>
         @endif
 
+
+        <h1 class="text-center">
+            I tuoi appartamenti
+        </h1>
         <div class="col-12">
-            <table class="table table-bordered table-hover text-center">
+            <table class="table table-hover text-center">
                 <thead class="align-middle">
                     <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">title</th>
-                        <th scope="col">address</th>
+                        <th scope="col">Titolo</th>
+                        <th scope="col">Indirizzo</th>
                         <th scope="col">Disponibilità</th>
+                        <th scope="col">Servizi</th>
                         <th scope="col">
-                            <a href="{{ route('user.apartments.create') }}" class="btn btn-lg btn-primary my-3 w-100">Add a new apartment</a>
+                            <a href="{{ route('user.apartments.create') }}" class="btn btn-lg btn-primary my-3 w-100"> + Aggiungi un appartamento</a>
                         </th>
                     </tr>
                 </thead>
                 <tbody class="align-middle">
                     @foreach ($apartments as $apartment)
                     <tr>
-                        <th scope="row">{{ $apartment->id }}</th>
                         <td>{{ $apartment->title }}</td>
-                        {{-- <td>
-                            @forelse ($project->technologies as $technology )
-                                {{ $technology->name }}
-                            @empty
-                                No tags
-                            @endforelse
-                        </td> --}}
                         <td>{{ $apartment->address }}</td>
                         <td>
                             <form action="{{ route('user.apartments.toggle', $apartment->slug) }}" method="POST">
@@ -48,12 +44,19 @@
                             </form>
                         </td>
                         <td>
-                            <a href="{{ route('user.apartments.show', $apartment->slug ) }}" class="btn btn-primary btn-sm w-100">Show</a>
-                            <a href="{{ route('user.apartments.edit', $apartment->slug) }}" class="btn btn-warning btn-sm w-100">Edit</a>
-                            <form class="form-deleter" action="{{ route('user.apartments.destroy', $apartment->slug) }}" method="POST" data-element-name="{{ $apartment->title }}">
+                                @forelse ($apartment->services as $service )
+                                    #{{ $service->name }}
+                                @empty
+                                    Nessun servizio incluso
+                                @endforelse
+                            </td>
+                        <td>
+                            <a href="{{ route('user.apartments.show', $apartment->slug ) }}" class="btn btn-primary btn-sm w-25">Visualizza l'appartamento</a>
+                            <a href="{{ route('user.apartments.edit', $apartment->slug) }}" class="btn btn-warning btn-sm w-25 m-0">Modifica l'appartamento</a>
+                            <form class="form-deleter d-inline w-25" action="{{ route('user.apartments.destroy', $apartment->slug) }}" method="POST" data-element-name="{{ $apartment->title }}">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm w-100">Delete</button>
+                                <button class="btn btn-danger btn-sm w-25">Elimina l'appartamento</button>
                             </form>
                         </td>
                     </tr>

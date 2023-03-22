@@ -8,7 +8,7 @@
                 <div class="col-4 card">
                     {{-- <div class="card-header">{{ __('User Dashboard') }}</div> --}}
     
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column text-center justify-content-end">
                         <p class="text-center text-decoration-underline my-3">aggiungi/modifica foto</p>
                         <h4 class="text-success">Utente registrato</h4>
                         <p class="text-secondary">{{Auth::user()->email}}</p>
@@ -22,13 +22,13 @@
                 </div>
 
                 <div class="col-8 px-5 py-4">
-                    <h2>Ciao {{Auth::user()->name}}!</h2>
+                    <h2 class="text-success">Ciao {{Auth::user()->name}}!</h2>
                     <p class="text-secondary">Su Bool BnB dal {{substr(Auth::user()->created_at,0,4)}}</p>
                     <p class="text-decoration-underline my-3">modifica il profilo</p>
-                    <a href="{{route('user.apartments.create')}}" class="btn btn-secondary">+ aggiungi appartamento</a><br>
-                    <a href="{{route('user.apartments.index')}}" class="btn btn-secondary mt-3"> visualizza i tuoi appartamenti</a><br>
-                    <a href="" class="btn btn-secondary my-3">Messaggi</a><br>
-                    <a href="" class="btn btn-secondary">&star; Visualizzazioni</a>
+                    <a href="{{route('user.apartments.create')}}" class="btn btn-success">+ aggiungi appartamento</a><br>
+                    <a href="{{route('user.apartments.index')}}" class="btn btn-primary mt-3"> visualizza i tuoi appartamenti</a><br>
+                    <a href="" class="btn btn-outline-primary my-3">Messaggi</a><br>
+                    <a href="" class="btn btn-outline-warning">&star; Visualizzazioni</a>
                 </div>
             </div>
         </div>

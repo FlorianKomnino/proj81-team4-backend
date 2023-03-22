@@ -24,8 +24,8 @@
                     <tr>
                         <th scope="col">Titolo</th>
                         <th scope="col">Indirizzo</th>
-                        <th scope="col">Servizi</th>
                         <th scope="col">Disponibilità</th>
+                        <th scope="col">Servizi</th>
                         <th scope="col">
                             <a href="{{ route('user.apartments.create') }}" class="btn btn-lg btn-primary my-3 w-100"> + Aggiungi un appartamento</a>
                         </th>
@@ -36,13 +36,6 @@
                     <tr>
                         <td>{{ $apartment->title }}</td>
                         <td>{{ $apartment->address }}</td>
-                        <td>
-                            <form action="{{ route('user.apartments.toggle', $apartment->id) }}" method="POST">
-                            @method('PATCH')
-                            @csrf
-                            <button type="submit" title="{{$apartment->visible ? 'disponibile' : 'non disponibile' }}" class="btn btn-outline" ><i class="fa-2x fa-solid fas fa-fw {{$apartment->visible ? 'fa-toggle-on' : 'fa-toggle-off' }}"></i></button>
-                            </form>
-                        </td>
                         <td>
                             <form action="{{ route('user.apartments.toggle', $apartment->id) }}" method="POST">
                             @method('PATCH')

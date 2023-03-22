@@ -93,7 +93,7 @@ class ApartmentController extends Controller
         $jsonData = $response->json();
 
         $data['user_id'] = Auth::user()->id;
-        isset($data['image']) ? $data['image'] = Storage::put('imgs/', $data['image']) : null;
+        isset($data['image']) ? $data['image'] = Storage::put('imgs/', $data['image']) : $data['image']=asset('logo/home.jpeg');
 
         //wrong address control
         if ($jsonData['results'] != []) {
@@ -168,7 +168,12 @@ class ApartmentController extends Controller
         $jsonData = $response->json();
         $data['user_id'] = Auth::user()->id;
 
-        //! gestire eliminazione dell'immagine su modifica isset($data['image']) ? $data['image']=Storage::put('imgs/', $data['image']) : null;
+        if(isset($data['image'])){
+            Storage::delete($apartment->image);
+            $data['image']=Storage::put('imgs/', $data['image']);
+        } else {
+            $data['image']=asset('logo/home.jpeg');
+        }
 
         //wrong address control
         if ($jsonData['results'] != []) {

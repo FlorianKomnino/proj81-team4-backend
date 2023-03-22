@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class ApartmentController extends Controller
 {
@@ -58,7 +58,7 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::all()->where('user_id',Auth::user()->id);
+        $apartments = Apartment::all()->where('user_id', Auth::user()->id);
         return view('user.apartmentIndex', compact('apartments'));
     }
 
@@ -82,9 +82,11 @@ class ApartmentController extends Controller
     {
         //validations
         $rules = $this->validationRules;
-        array_push($rules['title'],Rule::unique('apartments')->where('user_id', Auth::user()->id));
+        array_push($rules['title'], Rule::unique('apartments')->where('user_id', Auth::user()->id));
         $errors = $this->validationErrorMessages;
         $data = $request->validate($rules, $errors);
+        $data['slug'] = Str::slug($data['title']);
+
 
         //tomtom call
         $response = Http::get("https://api.tomtom.com/search/2/search/" . $data['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
@@ -101,14 +103,18 @@ class ApartmentController extends Controller
             $newApartment = new Apartment();
             $newApartment->fill($data);
             $newApartment->save();
+            $newApartment->slug = $newApartment->slug . $newApartment->id;
+            $newApartment->update();
             $newApartment->services()->sync($data['services'] ?? []);
-            return redirect()->route('user.apartments.edit', $newApartment->id)->with('message', 'Attenzione, l\'appartamento è stato creato correttamente ma l\'indirizzo inserito non ha prodotto alcun risultato! Per favore inserisci un indirizzo valido');
+            return redirect()->route('user.apartments.edit', $newApartment->slug)->with('message', 'Attenzione, l\'appartamento è stato creato correttamente ma l\'indirizzo inserito non ha prodotto alcun risultato! Per favore inserisci un indirizzo valido');
         }
         $newApartment = new Apartment();
         $newApartment->fill($data);
         $newApartment->save();
+        $newApartment->slug = $newApartment->slug . $newApartment->id;
+        $newApartment->update();
         $newApartment->services()->sync($data['services'] ?? []);
-        return redirect()->route('user.apartments.show', $newApartment->id)->with('message', "$newApartment->title has been created")->with('alert-type', 'primary');
+        return redirect()->route('user.apartments.show', $newApartment->slug)->with('message', "$newApartment->title has been created")->with('alert-type', 'primary');
     }
 
     /**
@@ -149,10 +155,13 @@ class ApartmentController extends Controller
     {
         //validations
         $rules = $this->validationRules;
-        array_push($rules['title'], 
-            Rule::unique('apartments')->where('user_id', Auth::user()->id)->ignore($apartment->id));
+        array_push(
+            $rules['title'],
+            Rule::unique('apartments')->where('user_id', Auth::user()->id)->ignore($apartment->id)
+        );
         $errors = $this->validationErrorMessages;
         $data = $request->validate($rules, $errors);
+        $data['slug'] = Str::slug($data['title'] . $apartment->id);
 
         //tomtom call
         $response = Http::get("https://api.tomtom.com/search/2/search/" . $data['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
@@ -167,13 +176,13 @@ class ApartmentController extends Controller
             $data['longitude'] = $jsonData['results'][0]['position']['lon'];
         } else {
             $apartment->update($data);
-            return redirect()->route('user.apartments.edit', $apartment->id)->with('message', 'Attenzione, l\'appartamento è stato creato correttamente ma l\'indirizzo inserito non ha prodotto alcun risultato! Per favore inserisci un indirizzo valido');
+            return redirect()->route('user.apartments.edit', $apartment->slug)->with('message', 'Attenzione, l\'appartamento è stato creato correttamente ma l\'indirizzo inserito non ha prodotto alcun risultato! Per favore inserisci un indirizzo valido');
         }
 
 
         $apartment->services()->sync($data['services'] ?? []);
         $apartment->update($data);
-        return redirect()->route('user.apartments.show', $apartment)->with('message', "Successfully updated")->with('alert-type', 'primary');;
+        return redirect()->route('user.apartments.show', $apartment->slug)->with('message', "Successfully updated")->with('alert-type', 'primary');;
     }
 
     /**
@@ -184,13 +193,15 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        if (Storage::exists($apartment->image)) {
+        // dd(isset($apartment->image));
+        if (isset($apartment->image)) {
             Storage::delete($apartment->image);
         } else {
-            dd('file does not exist');
+            $apartment->delete();
+            return redirect()->route('user.apartments.index')->with('message', 'The apartment has been removed correctly')->with('alert-type', 'danger');
         }
         $apartment->delete();
-        return redirect()->route('user.apartments.index')->with('message', 'The apartment has been removed correctly')->with('message_class', 'danger');
+        return redirect()->route('user.apartments.index')->with('message', 'The apartment has been removed correctly')->with('alert-type', 'danger');
     }
 
     public function APICall()

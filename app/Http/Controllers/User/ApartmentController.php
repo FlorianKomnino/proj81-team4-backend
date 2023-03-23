@@ -21,7 +21,7 @@ class ApartmentController extends Controller
         'bathrooms' => 'int|min:1',
         'square_meters' => 'int|min:4',
         'address' => 'string',
-        'services' => 'nullable',
+        'services' => 'required|array|exists:services,id',
         'image' => 'image|max:2048',
         'visible' => 'boolean'
     ];
@@ -45,6 +45,8 @@ class ApartmentController extends Controller
         'square_meters.min' => 'Il numero di metri quadri non deve essere inferiore a quattro',
 
         'address.string' => 'Il valore inserito deve essere una stringa',
+
+        'services' => 'Seleziona almeno un servizio',
 
         'image.image' => 'Il file inserito deve essere un\'immagine',
         'image.max' => 'Il file inserito non deve superare i 2 Megabyte'
@@ -93,7 +95,7 @@ class ApartmentController extends Controller
         $jsonData = $response->json();
 
         $data['user_id'] = Auth::user()->id;
-        isset($data['image']) ? $data['image'] = Storage::put('imgs/', $data['image']) : $data['image']=asset('logo/home.jpeg');
+        isset($data['image']) ? $data['image'] = Storage::put('imgs/', $data['image']) : $data['image'] = asset('logo/home.jpeg');
 
         //wrong address control
         if ($jsonData['results'] != []) {
@@ -105,7 +107,7 @@ class ApartmentController extends Controller
             $newApartment->save();
             $newApartment->slug = $newApartment->slug . $newApartment->id;
             $newApartment->update();
-            $newApartment->services()->sync($data['services'] ?? []);
+            $newApartment->services()->sync($data['services']);
             return redirect()->route('user.apartments.edit', $newApartment->slug)->with('message', 'Attenzione, l\'appartamento è stato creato correttamente ma l\'indirizzo inserito non ha prodotto alcun risultato! Per favore inserisci un indirizzo valido');
         }
         $newApartment = new Apartment();
@@ -113,7 +115,7 @@ class ApartmentController extends Controller
         $newApartment->save();
         $newApartment->slug = $newApartment->slug . $newApartment->id;
         $newApartment->update();
-        $newApartment->services()->sync($data['services'] ?? []);
+        $newApartment->services()->sync($data['services']);
         return redirect()->route('user.apartments.show', $newApartment->slug)->with('message', "$newApartment->title has been created")->with('alert-type', 'primary');
     }
 
@@ -168,11 +170,11 @@ class ApartmentController extends Controller
         $jsonData = $response->json();
         $data['user_id'] = Auth::user()->id;
 
-        if(isset($data['image'])){
+        if (isset($data['image'])) {
             Storage::delete($apartment->image);
-            $data['image']=Storage::put('imgs/', $data['image']);
+            $data['image'] = Storage::put('imgs/', $data['image']);
         } else {
-            $data['image']=asset('logo/home.jpeg');
+            $data['image'] = asset('logo/home.jpeg');
         }
 
         //wrong address control
@@ -181,12 +183,13 @@ class ApartmentController extends Controller
             $data['longitude'] = $jsonData['results'][0]['position']['lon'];
         } else {
             $apartment->update($data);
+            $apartment->services()->sync($data['services']);
             return redirect()->route('user.apartments.edit', $apartment->slug)->with('message', 'Attenzione, l\'appartamento è stato creato correttamente ma l\'indirizzo inserito non ha prodotto alcun risultato! Per favore inserisci un indirizzo valido');
         }
 
 
-        $apartment->services()->sync($data['services'] ?? []);
         $apartment->update($data);
+        $apartment->services()->sync($data['services']);
         return redirect()->route('user.apartments.show', $apartment->slug)->with('message', "Successfully updated")->with('alert-type', 'primary');;
     }
 

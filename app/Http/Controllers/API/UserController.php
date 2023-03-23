@@ -49,17 +49,6 @@ class UserController extends Controller
         }
     }
 
-    public function servicesFilter(Request $request){
-        $services = Service::with('apartments')->where('id','1')->get();
-        $filteredApartments = $services->map(function($service){
-            return $service->apartments;
-        });
-        return response()->json([
-            'status' => 'success',
-            'data' => $filteredApartments,
-        ]);
-    }
-
     /**
      * Display a listing of the resource.
      *

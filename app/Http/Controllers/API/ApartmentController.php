@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+use App\Models\Service;
 
 class ApartmentController extends Controller
 {
@@ -19,6 +20,23 @@ class ApartmentController extends Controller
         return response()->json([
             'success' => true,
             'results' => $apartments
+        ]);
+    }
+
+    public function servicesFilter(Request $request)
+    {
+        $data = $request->query();
+        $filters = explode(',', $data['services']);
+
+        $filteredApartments = Apartment::with('services')->where('apartments.visible', 1)
+            ->whereHas('services', function ($query) use ($filters) {
+                $query->whereIn('id', $filters);
+            }, '=', count($filters))
+            ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $filteredApartments,
         ]);
     }
 

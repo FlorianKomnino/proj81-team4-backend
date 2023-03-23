@@ -11,6 +11,7 @@
             @error('title')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
+            <label for="title_form">Titolo:</label>
             <textarea class="p-0 border-0" placeholder="Inserisci un titolo descrittivo per l'appartamento" name="title">{{ old('title', $apartment->title) }}</textarea>
         </div>
         <hr>
@@ -18,6 +19,7 @@
             @error('rooms')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
+            <label for="rooms_form">Numero di stanze:</label>
             <input type="number" value="{{ old('rooms', $apartment->rooms) }}" class="p-0 border-0"
                 placeholder="Numero di stanze" name="rooms">
         </div>
@@ -26,6 +28,7 @@
             @error('beds')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
+            <label for="beds_form">Numero di letti:</label>
             <input type="number" value="{{ old('beds', $apartment->beds) }}" class="p-0 border-0"
                 placeholder="Numero di letti" name="beds">
         </div>
@@ -34,6 +37,7 @@
             @error('bathrooms')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
+            <label for="bathrooms_form">Numero di bagni:</label>
             <input type="number" value="{{ old('bathrooms', $apartment->bathrooms) }}" class="p-0 border-0"
                 placeholder="Numero di Bagni" name="bathrooms">
         </div>
@@ -42,6 +46,7 @@
             @error('square_meters')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
+            <label for="square_meters_form">Metri quadrati:</label>
             <input type="number" value="{{ old('square_meters', $apartment->square_meters) }}" class="p-0 border-0"
                 placeholder="Metri quadrati" name="square_meters">
         </div>
@@ -53,6 +58,7 @@
             @if (session('message'))
                 <p class="text-danger">{{session('message')}}</p>
             @endif
+            <label for="address_form">Indirizzo dell'appartamento:</label>
             <input type="text" value="{{ old('address', $apartment->address) }}" class="p-0 border-0"
                 placeholder="Indirizzo dell'appartamento" name="address">
         </div>

@@ -63,7 +63,7 @@
                     <div class="col-12 border-top border-secondary"></div>
 
                     <div class="col-12">
-                        <h5 class="mt-4">Dove ti troverai</h5>
+                        <h5 class="mt-4">Indirizzo dell'appartamento</h5>
                         <div class="icon"></div>
                         <p>{{$apartment->address}}</p>
                         <div class="tomtom-container mb-5">

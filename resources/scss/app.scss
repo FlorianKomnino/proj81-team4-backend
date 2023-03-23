@@ -1,6 +1,8 @@
 @import '~bootstrap/scss/bootstrap';
 @import "@tomtom-international/web-sdk-maps";
 @import "@fortawesome/fontawesome-free/css/all.css";
+@import "../../node_modules/@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css";
+
 
 $main-bg-color: rgb(255,55,92);
 
@@ -39,19 +41,12 @@ $main-bg-color: rgb(255,55,92);
             border: none;
             resize: none
         }
-        .custom-file-upload {
-            height: 40px;
-            margin-right: 5px;
-            min-width: 180px;
-            border-right: 1px solid #ccc;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 8px;
-            display: inline-block;
-            background-color: rgb(248,249,250);
-            cursor: pointer;
-            span{
-                color: gray;
-            }
+        .lightGreyText{
+            color: rgb(132, 129, 129);
+        }
+        button{
+            background-color: $main-bg-color;
+            color: white;
         }
     }
 }

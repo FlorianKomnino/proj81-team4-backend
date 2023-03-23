@@ -11,14 +11,14 @@
             @error('title')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <textarea class="p-0 border-0" placeholder="Inserisci un titolo descrittivo per l'appartamento" name="title">{{ old('title', $apartment->title) }}</textarea>
+            <textarea id="title" class="p-0 border-0" placeholder="Inserisci un titolo descrittivo per l'appartamento" name="title">{{ old('title', $apartment->title) }}</textarea>
         </div>
         <hr>
         <div class="d-flex flex-column p-2">
             @error('rooms')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <input type="number" value="{{ old('rooms', $apartment->rooms) }}" class="p-0 border-0"
+            <input id="rooms" type="number" value="{{ old('rooms', $apartment->rooms) }}" class="p-0 border-0"
                 placeholder="Numero di stanze" name="rooms">
         </div>
         <hr>
@@ -26,7 +26,7 @@
             @error('beds')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <input type="number" value="{{ old('beds', $apartment->beds) }}" class="p-0 border-0"
+            <input id="beds" type="number" value="{{ old('beds', $apartment->beds) }}" class="p-0 border-0"
                 placeholder="Numero di letti" name="beds">
         </div>
         <hr>
@@ -34,7 +34,7 @@
             @error('bathrooms')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <input type="number" value="{{ old('bathrooms', $apartment->bathrooms) }}" class="p-0 border-0"
+            <input id="bathrooms" type="number" value="{{ old('bathrooms', $apartment->bathrooms) }}" class="p-0 border-0"
                 placeholder="Numero di Bagni" name="bathrooms">
         </div>
         <hr>
@@ -42,7 +42,7 @@
             @error('square_meters')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <input type="number" value="{{ old('square_meters', $apartment->square_meters) }}" class="p-0 border-0"
+            <input id="square_meters" type="number" value="{{ old('square_meters', $apartment->square_meters) }}" class="p-0 border-0"
                 placeholder="Metri quadrati" name="square_meters">
         </div>
         <hr>
@@ -53,7 +53,7 @@
             @if (session('message'))
                 <p class="text-danger">{{session('message')}}</p>
             @endif
-            <input type="text" value="{{ old('address', $apartment->address) }}" class="p-0 border-0"
+            <input  id="address" type="text" value="{{ old('address', $apartment->address) }}" class="p-0 border-0"
                 placeholder="Indirizzo dell'appartamento" name="address">
         </div>
         <hr class="mb-0">
@@ -75,7 +75,7 @@
         <div class="p-2 d-flex justify-content-between">
             @foreach ($services as $service)
                 <div class="single-tag d-flex align-items-center">
-                    <input type="checkbox" class="form-check-input" name="services[]" value="{{ $service->id }}"
+                    <input id="services" type="checkbox" class="form-check-input" name="services[]" value="{{ $service->id }}"
                         @if ($errors->any()) @checked(in_array($service->id, old('services',[])))
                         @else
                             @checked($apartment->services->contains($service->id)) @endif>

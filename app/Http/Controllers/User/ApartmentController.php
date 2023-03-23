@@ -16,11 +16,11 @@ class ApartmentController extends Controller
 {
     protected $validationRules = [
         'title' => ['required', 'string', 'min:2', 'max:255'],
-        'rooms' => 'int|min:1',
-        'beds' => 'int|min:1',
-        'bathrooms' => 'int|min:1',
+        'rooms' => 'int|min:1|max:20',
+        'beds' => 'int|min:1|max:40',
+        'bathrooms' => 'int|min:1|max:10',
         'square_meters' => 'int|min:4',
-        'address' => 'string',
+        'address' => 'string|min:2|max:255',
         'services' => 'nullable',
         'image' => 'image|max:2048',
         'visible' => 'boolean'
@@ -32,17 +32,23 @@ class ApartmentController extends Controller
         'title.min' => 'Il titolo deve essere lungo almeno 2 caratteri.',
         'title.max' => 'Il titolo non può superare i 255 caratteri.',
 
-        'rooms.integer' => 'Il valore inserito deve essere un numero',
-        'rooms.min' => 'Il numero di stanze non deve essere inferiore a uno',
+        'rooms.integer' => 'Il valore inserito deve essere un numero compreso tra 1 e 20',
+        'rooms.min' => 'Il numero di stanze non deve essere inferiore a 1',
+        'rooms.max' => 'Il numero di stanze non deve essere superiore a 20',
 
-        'beds.integer' => 'Il valore inserito deve essere un numero',
-        'beds.min' => 'Il numero di letti non deve essere inferiore a uno',
 
-        'bathrooms.integer' => 'Il valore inserito deve essere un numero',
-        'bathrooms.min' => 'Il numero di bagni non deve essere inferiore a uno',
+        'beds.integer' => 'Il valore inserito deve essere un numero compreso tra 1 e 40',
+        'beds.min' => 'Il numero di letti non deve essere inferiore a 1',
+        'beds.max' => 'Il numero di letti non deve essere superiore a 40',
+
+
+        'bathrooms.integer' => 'Il valore inserito deve essere un numero compreso tra 1 e 10',
+        'bathrooms.min' => 'Il numero di bagni non deve essere inferiore a 1',
+        'bathrooms.max' => 'Il numero di bagni non deve essere superiore a 10',
+
 
         'square_meters.integer' => 'Il valore inserito deve essere un numero',
-        'square_meters.min' => 'Il numero di metri quadri non deve essere inferiore a quattro',
+        'square_meters.min' => 'Il numero di metri quadri non deve essere inferiore a 4',
 
         'address.string' => 'Il valore inserito deve essere una stringa',
 
@@ -93,7 +99,7 @@ class ApartmentController extends Controller
         $jsonData = $response->json();
 
         $data['user_id'] = Auth::user()->id;
-        isset($data['image']) ? $data['image'] = Storage::put('imgs/', $data['image']) : $data['image']=asset('logo/home.jpeg');
+        isset($data['image']) ? $data['image'] = Storage::put('imgs/', $data['image']) : $data['image'] = asset('logo/home.jpeg');
 
         //wrong address control
         if ($jsonData['results'] != []) {
@@ -168,11 +174,11 @@ class ApartmentController extends Controller
         $jsonData = $response->json();
         $data['user_id'] = Auth::user()->id;
 
-        if(isset($data['image'])){
+        if (isset($data['image'])) {
             Storage::delete($apartment->image);
-            $data['image']=Storage::put('imgs/', $data['image']);
+            $data['image'] = Storage::put('imgs/', $data['image']);
         } else {
-            $data['image']=asset('logo/home.jpeg');
+            $data['image'] = asset('logo/home.jpeg');
         }
 
         //wrong address control

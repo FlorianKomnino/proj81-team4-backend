@@ -49,6 +49,34 @@ class ApartmentController extends Controller
         'image.max' => 'Il file inserito non deve superare i 2 Megabyte'
     ];
 
+    public function serviceFilter(Apartment $apartment){
+
+
+        // $apartments = Apartment::with('services')->get();
+
+        // $nomediverso = $apartments->reject(function($apartment){
+        //     dd($apartment->services);
+        //     return $apartment->services->where('id','1');
+        // });
+
+        $services = Service::with('apartments')->where('id','1')->get();
+        $filteredApartments = $services->map(function($service){
+            dd($service->apartments);
+            return $service->apartments->where('id','1');
+        });
+
+
+        $apartments = $services->apartments;
+        dd($apartments);
+        // $nomediverso = $apartments->reject(function($apartment){
+        //     dd($apartment->services);
+        //     return $apartment->services->where('id','1');
+        // });
+
+        //$nomediverso
+
+        dd($services);
+    }
 
     /**
      * Display a listing of the resource.

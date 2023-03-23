@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -46,6 +47,17 @@ class UserController extends Controller
                 'data' => 'Unauthorized Access'
             ]);
         }
+    }
+
+    public function servicesFilter(Request $request){
+        $services = Service::with('apartments')->where('id','1')->get();
+        $filteredApartments = $services->map(function($service){
+            return $service->apartments;
+        });
+        return response()->json([
+            'status' => 'success',
+            'data' => $filteredApartments,
+        ]);
     }
 
     /**

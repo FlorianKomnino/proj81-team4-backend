@@ -71,8 +71,13 @@
             @enderror
             <input class="form-control rounded-0" type="file" placeholder="no file selected" name="image" id="form-file">
         </div>
+        
         <hr class="mt-0">
-        <div class="p-2 d-flex justify-content-between">
+    
+        <div class="p-2 d-flex flex-column justify-content-between">
+            @error('services')
+                <p class="text-danger">{{ $message }}</p>
+            @enderror
             @foreach ($services as $service)
                 <div class="single-tag d-flex align-items-center">
                     <input id="services" type="checkbox" class="form-check-input" name="services[]" value="{{ $service->id }}"

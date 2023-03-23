@@ -27,7 +27,7 @@
                         <th scope="col">Disponibilità</th>
                         <th scope="col">Servizi</th>
                         <th scope="col">
-                            <a href="{{ route('user.apartments.create') }}" class="btn btn-lg btn-primary my-3 w-100"> + Aggiungi un appartamento</a>
+                            <a href="{{ route('user.apartments.create') }}" class="btn btn-lg btn-primary my-3 w-100">Aggiungi un appartamento</a>
                         </th>
                     </tr>
                 </thead>
@@ -51,12 +51,12 @@
                             @endforelse
                         </td>
                         <td>
-                            <a href="{{ route('user.apartments.show', $apartment->slug ) }}" class="btn btn-primary btn w-25">Visualizza l'appartamento</a>
-                            <a href="{{ route('user.apartments.edit', $apartment->slug) }}" class="btn btn-warning btn w-25 m-0">Modifica l'appartamento</a>
-                            <form class="form-deleter d-inline w-25" action="{{ route('user.apartments.destroy', $apartment->slug) }}" method="POST" data-element-name="{{ $apartment->title }}">
+                            <a href="{{ route('user.apartments.show', $apartment->slug ) }}" class="btn btn-primary btn">Visualizza</a>
+                            <a href="{{ route('user.apartments.edit', $apartment->slug) }}" class="btn btn-warning btn m-0">Modifica</a>
+                            <form class="form-deleter d-inline" action="{{ route('user.apartments.destroy', $apartment->slug) }}" method="POST" data-element-name="{{ $apartment->title }}">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn w-25">Elimina l'appartamento</button>
+                                <button class="btn btn-danger btn">Elimina</button>
                             </form>
                         </td>
                     </tr>

@@ -34,7 +34,7 @@
                         <div class="col-8">
                             <div class="d-flex justify-content-between">
                                 <div class="description">
-                                    <h3 class="text-danger">tipologia della casa</h3>
+                                    <h3 class="text-danger">Tipologia della casa</h3>
                                     <p>
                                         {{($apartment->rooms == 1) ? $apartment->rooms.' stanza' : $apartment->rooms.' stanze'}} - 
                                         {{($apartment->beds == 1) ? $apartment->beds.' letto' : $apartment->beds.' letti'}} -
@@ -49,11 +49,21 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="row service-box m-0">
+                        <h3 class="text-danger">Cosa troverai</h3>
+                        @foreach ($apartment->services as $service)
+                        <div class="col-2  services">
+                            <p>
+                                <span><i class="{{$service->icon}}"></i></span>
+                                <span></span>{{$service->name}}
+                            </p>
+                        </div>
+                        @endforeach
+                    </div>
                     <div class="col-12 border-top border-secondary"></div>
 
                     <div class="col-12">
-                        <h5 class="mt-4">Dove ti troverai</h5>
+                        <h5 class="mt-4">Indirizzo dell'appartamento</h5>
                         <div class="icon"></div>
                         <p>{{$apartment->address}}</p>
                         <div class="tomtom-container mb-5">

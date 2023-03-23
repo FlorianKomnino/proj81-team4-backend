@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class ApartmentController extends Controller
 {
@@ -22,7 +22,8 @@ class ApartmentController extends Controller
         'square_meters' => 'int|min:4',
         'address' => 'string',
         'services' => 'nullable',
-        'image' => 'image|max:2048'
+        'image' => 'image|max:2048',
+        'visible' => 'boolean'
     ];
 
     protected $validationErrorMessages = [
@@ -85,7 +86,7 @@ class ApartmentController extends Controller
      */
     public function index()
     {
-        $apartments = Apartment::all()->where('user_id',Auth::user()->id);
+        $apartments = Apartment::all()->where('user_id', Auth::user()->id);
         return view('user.apartmentIndex', compact('apartments'));
     }
 
@@ -109,16 +110,18 @@ class ApartmentController extends Controller
     {
         //validations
         $rules = $this->validationRules;
-        array_push($rules['title'],Rule::unique('apartments')->where('user_id', Auth::user()->id));
+        array_push($rules['title'], Rule::unique('apartments')->where('user_id', Auth::user()->id));
         $errors = $this->validationErrorMessages;
         $data = $request->validate($rules, $errors);
+        $data['slug'] = Str::slug($data['title']);
+
 
         //tomtom call
         $response = Http::get("https://api.tomtom.com/search/2/search/" . $data['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
         $jsonData = $response->json();
 
         $data['user_id'] = Auth::user()->id;
-        isset($data['image']) ? $data['image'] = Storage::put('imgs/', $data['image']) : null;
+        isset($data['image']) ? $data['image'] = Storage::put('imgs/', $data['image']) : $data['image']=asset('logo/home.jpeg');
 
         //wrong address control
         if ($jsonData['results'] != []) {
@@ -128,14 +131,18 @@ class ApartmentController extends Controller
             $newApartment = new Apartment();
             $newApartment->fill($data);
             $newApartment->save();
+            $newApartment->slug = $newApartment->slug . $newApartment->id;
+            $newApartment->update();
             $newApartment->services()->sync($data['services'] ?? []);
-            return redirect()->route('user.apartments.edit', $newApartment->id)->with('message', 'Attenzione, l\'appartamento è stato creato correttamente ma l\'indirizzo inserito non ha prodotto alcun risultato! Per favore inserisci un indirizzo valido');
+            return redirect()->route('user.apartments.edit', $newApartment->slug)->with('message', 'Attenzione, l\'appartamento è stato creato correttamente ma l\'indirizzo inserito non ha prodotto alcun risultato! Per favore inserisci un indirizzo valido');
         }
         $newApartment = new Apartment();
         $newApartment->fill($data);
         $newApartment->save();
+        $newApartment->slug = $newApartment->slug . $newApartment->id;
+        $newApartment->update();
         $newApartment->services()->sync($data['services'] ?? []);
-        return redirect()->route('user.apartments.show', $newApartment->id)->with('message', "$newApartment->title has been created")->with('alert-type', 'primary');
+        return redirect()->route('user.apartments.show', $newApartment->slug)->with('message', "$newApartment->title has been created")->with('alert-type', 'primary');
     }
 
     /**
@@ -176,17 +183,25 @@ class ApartmentController extends Controller
     {
         //validations
         $rules = $this->validationRules;
-        array_push($rules['title'], 
-            Rule::unique('apartments')->where('user_id', Auth::user()->id)->ignore($apartment->id));
+        array_push(
+            $rules['title'],
+            Rule::unique('apartments')->where('user_id', Auth::user()->id)->ignore($apartment->id)
+        );
         $errors = $this->validationErrorMessages;
         $data = $request->validate($rules, $errors);
+        $data['slug'] = Str::slug($data['title'] . $apartment->id);
 
         //tomtom call
         $response = Http::get("https://api.tomtom.com/search/2/search/" . $data['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
         $jsonData = $response->json();
         $data['user_id'] = Auth::user()->id;
 
-        //! gestire eliminazione dell'immagine su modifica isset($data['image']) ? $data['image']=Storage::put('imgs/', $data['image']) : null;
+        if(isset($data['image'])){
+            Storage::delete($apartment->image);
+            $data['image']=Storage::put('imgs/', $data['image']);
+        } else {
+            $data['image']=asset('logo/home.jpeg');
+        }
 
         //wrong address control
         if ($jsonData['results'] != []) {
@@ -194,13 +209,13 @@ class ApartmentController extends Controller
             $data['longitude'] = $jsonData['results'][0]['position']['lon'];
         } else {
             $apartment->update($data);
-            return redirect()->route('user.apartments.edit', $apartment->id)->with('message', 'Attenzione, l\'appartamento è stato creato correttamente ma l\'indirizzo inserito non ha prodotto alcun risultato! Per favore inserisci un indirizzo valido');
+            return redirect()->route('user.apartments.edit', $apartment->slug)->with('message', 'Attenzione, l\'appartamento è stato creato correttamente ma l\'indirizzo inserito non ha prodotto alcun risultato! Per favore inserisci un indirizzo valido');
         }
 
 
         $apartment->services()->sync($data['services'] ?? []);
         $apartment->update($data);
-        return redirect()->route('user.apartments.show', $apartment)->with('message', "Successfully updated")->with('alert-type', 'primary');;
+        return redirect()->route('user.apartments.show', $apartment->slug)->with('message', "Successfully updated")->with('alert-type', 'primary');;
     }
 
     /**
@@ -211,13 +226,15 @@ class ApartmentController extends Controller
      */
     public function destroy(Apartment $apartment)
     {
-        if (Storage::exists($apartment->image)) {
+        // dd(isset($apartment->image));
+        if (isset($apartment->image)) {
             Storage::delete($apartment->image);
         } else {
-            dd('file does not exist');
+            $apartment->delete();
+            return redirect()->route('user.apartments.index')->with('message', 'The apartment has been removed correctly')->with('alert-type', 'danger');
         }
         $apartment->delete();
-        return redirect()->route('user.apartments.index')->with('message', 'The apartment has been removed correctly')->with('message_class', 'danger');
+        return redirect()->route('user.apartments.index')->with('message', 'The apartment has been removed correctly')->with('alert-type', 'danger');
     }
 
     public function APICall()
@@ -227,5 +244,20 @@ class ApartmentController extends Controller
         $jsonData = $response->json();
         dd($jsonData);
         return view('tomtom.tomtomMap', ['jsonData' => $jsonData]);
+    }
+
+    /**
+     * Toggle on soldout field.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function enableToggle(Apartment $apartment)
+    {
+        $apartment->visible = !$apartment->visible;
+        $apartment->save();
+
+        $message = ($apartment->visible) ? "disponibile" : "non disponibile";
+        return redirect()->back()->with('alert-type', 'success')->with('alert-message', "$apartment->title:&nbsp;<b>$message</b>");
     }
 }

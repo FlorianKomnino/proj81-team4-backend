@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\ApartmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +24,4 @@ Route::post('/user', [UserController::class, 'store'])->name('api.user.store');
 Route::get('/user/{user}', [UserController::class, 'show'])->name('api.user.show');
 Route::post('login', [UserController::class, 'login'])->name('login');
 
-
+Route::get('/apartments', [ApartmentController::class, 'index'])->name('api.apartments.index');

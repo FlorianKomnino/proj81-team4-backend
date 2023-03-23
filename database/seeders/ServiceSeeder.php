@@ -11,16 +11,16 @@ class ServiceSeeder extends Seeder
 
     public $services = [
         [
-            'name' => 'cucina',
-            'icon' => 'fa-solid fa-hat-chef'
+            'name' => 'Cucina',
+            'icon' => 'fa-solid fa-kitchen-set'
         ],
         [
-            'name' => 'wi-fi',
+            'name' => 'Wi-fi',
             'icon' => 'fa-solid fa-wifi'
         ],
         [
-            'name' => 'piscina',
-            'icon' => 'fa-solid fa-water-ladder'
+            'name' => 'Piscina',
+            'icon' => 'fa-solid fa-person-swimming'
         ],
         [
             'name' => 'Parcheggio gratuito',

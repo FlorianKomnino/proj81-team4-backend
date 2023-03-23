@@ -27,6 +27,7 @@ Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(fu
     })->name('dashboard');
     Route::get('apartments/testshow', [UserApartmentController::class, 'serviceFilter'])->name('apartments.filter');
     Route::resource('apartments', UserApartmentController::class);
+    Route::patch('/{apartment}/toggle', [UserApartmentController::class, 'enableToggle'])->name('apartments.toggle');
 });
 
 Route::middleware('auth')->group(function () {
@@ -35,4 +36,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

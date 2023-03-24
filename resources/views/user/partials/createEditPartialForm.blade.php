@@ -86,7 +86,7 @@
             @enderror
             @foreach ($services as $service)
                 <div class="single-tag d-flex align-items-center">
-                    <input id="service" type="checkbox" class="form-check-input" name="services[]" value="{{ $service->id }}"
+                    <input type="checkbox" class="form-check-input my-service" name="services[]" value="{{ $service->id }}"
                         @if ($errors->any()) @checked(in_array($service->id, old('services',[])))
                         @else
                         @checked($apartment->services->contains($service->id))

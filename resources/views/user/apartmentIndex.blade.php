@@ -5,8 +5,6 @@
 @endsection
     
 @section('content')
-        @include('user.partials.popUp')
-        
 <div class="container">
     <div class="row">
         @if (session('message'))

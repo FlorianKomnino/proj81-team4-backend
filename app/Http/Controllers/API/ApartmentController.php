@@ -58,21 +58,6 @@ class ApartmentController extends Controller
         ]);
     }
 
-
-    public function roomsFilter(Request $request, $rooms = 1, $beds = 1)
-    {
-
-        $filteredApartments = Apartment::where('visible', 1)
-            ->where('rooms', '>=', $rooms)
-            ->where('beds', '>=', $beds)
-            ->get();
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $filteredApartments,
-        ]);
-    }
-
     /**
      * Show the form for creating a new resource.
      *

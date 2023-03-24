@@ -47,6 +47,33 @@ class ApartmentController extends Controller
         ]);
     }
 
+
+    public function roomsFilter(Request $request, $rooms = null, $beds = null)
+    {
+
+        if (!$rooms && !$beds) {
+            $filteredApartments = Apartment::where('visible', 1)->get();
+        } elseif ($beds && $rooms) {
+            $filteredApartments = Apartment::where('visible', 1)
+                ->where('rooms', '>=', $rooms)
+                ->where('beds', '>=', $beds)
+                ->get();
+        } elseif (!$beds && $rooms) {
+            $filteredApartments = Apartment::where('visible', 1)
+                ->where('rooms', '>=', $rooms)
+                ->get();
+        } elseif ($beds && !$rooms) {
+            $filteredApartments = Apartment::where('visible', 1)
+                ->where('beds', '>=', $beds)
+                ->get();
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $filteredApartments,
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -1,84 +1,145 @@
-const formElement = document.getElementById('form')
-const title = document.getElementById('title')
-const rooms = document.getElementById('rooms')
-const beds = document.getElementById('beds')
-const bathrooms = document.getElementById('bathrooms')
-const square_meters = document.getElementById('square_meters')
-const address = document.getElementById('address')
-const services = document.querySelectorAll('input.my-service')
-const image = document.getElementById('image')
+//Dom elements
+{
+    const formElement = document.getElementById('form')
+    
+    const title = document.getElementById('title')
+    const titleError = document.getElementById('title-error')
+    
+    const rooms = document.getElementById('rooms')
+    const roomsError = document.getElementById('rooms-error')
+    
+    const beds = document.getElementById('beds')
+    const bedsError = document.getElementById('beds-error')
+    
+    const bathrooms = document.getElementById('bathrooms')
+    const bathroomsError = document.getElementById('bathrooms-error')
+    
+    const squareMeters = document.getElementById('square_meters')
+    const squareMetersError = document.getElementById('square_meters-error')
+    
+    const address = document.getElementById('address')
+    const addressError = document.getElementById('address-error')
+    
+    const services = document.querySelectorAll('input.my-service')
+    const servicesError = document.getElementById('services-error')
+    
+    const image = document.getElementById('image')
+    const imageError = document.getElementById('image-error')
+}
 let atLeastOne = false
-
-console.log(services)
-
 
 const allowedExtensions = ['.png', '.webp', '.svg', '.jpg', '.jpeg', '.jfif', '.pjpeg', '.pjp', '.gif', '.avif', '.apng', '.bmp', '.ico', '.cur', '.tif', '.tiff']
 
+// custom validations functions
+{
+    function isValid(condition, field){
+        if (condition) {
+            return field.classList.add('invalid-feedback')
+        } else {
+            return field.classList.remove('invalid-feedback')
+        }
+    }
+    
+    function lengthValidation(inputElement, min, max, error){
+        inputElement.addEventListener('input', function(){
+            isValid((inputElement.value.length >= min && inputElement.value.length <= max), error)
+        })
+    }
+    
+    function numberRangeValidation(inputElement, min, max, error){
+        inputElement.addEventListener('input', function(){
+            isValid((inputElement.value >= min && inputElement.value <= max), error)
+        })
+    }
+}
 
+//interactive validations
+{
+    lengthValidation(title, 2, 250, titleError)
+    numberRangeValidation(rooms, 1, 20, roomsError)
+    numberRangeValidation(beds, 1, 40, bedsError)
+    numberRangeValidation(bathrooms, 1, 10, bathroomsError)
+    numberRangeValidation(squareMeters, 4, 250, squareMetersError)
+    lengthValidation(address, 2, 250, addressError)
+}
 
 formElement.addEventListener('submit', function (event) {
     event.preventDefault()
+    let success = true
 
-    if (!title.value) {
-        console.log('a')
-        return
-    } else if (title.value.length < 2 || title.value.length > 255) {
-        console.log('b')
-        return
-    }
-
-    if (!rooms.value) {
-        console.log('c')
-        return
-    } else if (rooms.value < 1 || rooms.value > 20) {
-        console.log('d')
-        return
-    }
-
-    if (!beds.value) {
-        console.log('e')
-        return
-    } else if (beds.value < 1 || beds.value > 40) {
-        console.log('f')
-        return
-    }
-
-    if (!bathrooms.value) {
-        console.log('g')
-        return
-    } else if (bathrooms.value < 1 || bathrooms.value > 10) {
-        console.log('h')
-        return
-    }
-
-    if (!square_meters.value) {
-        console.log('i')
-        return
-    } else if (square_meters.value < 4) {
-        console.log('l')
-        return
-    }
-
-    if (!address.value) {
-        console.log('m')
-        return
-    } else if (address.value.length < 2 || address.value.length > 255) {
-        console.log('n')
-        return
-    }
-
-    services.forEach(service => {
-        if (service.checked) {
-            atLeastOne = true
+    //single fields validation
+    {
+        if (!title.value) {
+            titleError.classList.remove('invalid-feedback')
+            success = false
+        } else if (title.value.length < 2 || title.value.length > 255) {
+            titleError.classList.remove('invalid-feedback')
+            success = false
         }
-    });
+        
+        if (!rooms.value) {
+            roomsError.classList.remove('invalid-feedback')
+            success = false
+        } else if (rooms.value < 1 || rooms.value > 20) {
+            roomsError.classList.remove('invalid-feedback')
+            success = false
+        }
 
-    if (!atLeastOne) {
-        console.log('o')
-        return
+        if (!beds.value) {
+            bedsError.classList.remove('invalid-feedback')
+            success = false
+        } else if (beds.value < 1 || beds.value > 40) {
+            bedsError.classList.remove('invalid-feedback')
+            success = false
+        }
+
+        if (!bathrooms.value) {
+            bathroomsError.classList.remove('invalid-feedback')
+            success = false
+        } else if (bathrooms.value < 1 || bathrooms.value > 10) {
+            bathroomsError.classList.remove('invalid-feedback')
+            success = false
+        }
+
+        if (!squareMeters.value) {
+            squareMetersError.classList.remove('invalid-feedback')
+            success = false
+
+        } else if (squareMeters.value < 4) {
+            squareMetersError.classList.remove('invalid-feedback')
+            success = false
+
+        }
+
+        if (!address.value) {
+            addressError.classList.remove('invalid-feedback')
+            success = false
+
+        } else if (address.value.length < 2 || address.value.length > 255) {
+            addressError.classList.remove('invalid-feedback')
+            success = false
+
+        }
+
+        services.forEach(service => {
+            if (service.checked) {
+                atLeastOne = true
+            }
+        });
+        
+        if (!atLeastOne) {
+            servicesError.classList.remove('invalid-feedback')
+            success = false
+            
+        } else {
+            servicesError.classList.add('invalid-feedback')
+        }
     }
-
-    this.submit();
+    
+    if (success) {
+        this.submit();
+    }
+    return
 })
 
 // const form = document.getElementById('myForm');

@@ -19,16 +19,16 @@ return new class extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users');
-            $table->string('title', 60);
+            $table->string('title');
             $table->string('slug');
-            $table->integer('rooms')->default(1);
-            $table->integer('beds')->default(1);
-            $table->integer('bathrooms')->default(1);
+            $table->integer('rooms');
+            $table->integer('beds');
+            $table->integer('bathrooms');
             $table->integer('square_meters');
             $table->string('address', 255);
             $table->float('longitude', 20, 15)->nullable();
             $table->float('latitude', 20, 15)->nullable();
-            $table->boolean('visible')->default(false);
+            $table->boolean('visible')->default(true);
             $table->string('image', 255)->nullable();
             $table->softDeletes();
             $table->timestamps();

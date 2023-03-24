@@ -16,11 +16,11 @@ class ApartmentController extends Controller
 {
     protected $validationRules = [
         'title' => ['required', 'string', 'min:2', 'max:255'],
-        'rooms' => 'int|min:1|max:20',
-        'beds' => 'int|min:1|max:40',
-        'bathrooms' => 'int|min:1|max:10',
-        'square_meters' => 'int|min:4',
-        'address' => 'string|min:2|max:255',
+        'rooms' => 'required|int|min:1|max:20',
+        'beds' => 'required|int|min:1|max:40',
+        'bathrooms' => 'required|int|min:1|max:10',
+        'square_meters' => 'required|int|min:4',
+        'address' => 'required|string|min:2|max:255',
         'services' => 'required|array|exists:services,id',
         'image' => 'image|max:2048',
         'visible' => 'boolean'
@@ -28,31 +28,36 @@ class ApartmentController extends Controller
 
     protected $validationErrorMessages = [
         'title.required' => 'Il titolo è necessario.',
+        'title.string' => 'Il valore inserito deve essere una stringa',
         'title.unique' => 'Il titolo non può essere uguale ad un altro titolo in archivio.',
         'title.min' => 'Il titolo deve essere lungo almeno 2 caratteri.',
         'title.max' => 'Il titolo non può superare i 255 caratteri.',
 
+        'rooms.required' => 'Il numero di stanze è necessario.',
         'rooms.integer' => 'Il valore inserito deve essere un numero compreso tra 1 e 20',
         'rooms.min' => 'Il numero di stanze non deve essere inferiore a 1',
         'rooms.max' => 'Il numero di stanze non deve essere superiore a 20',
 
-
+        'beds.required' => 'Il numero di letti è necessario.',
         'beds.integer' => 'Il valore inserito deve essere un numero compreso tra 1 e 40',
         'beds.min' => 'Il numero di letti non deve essere inferiore a 1',
         'beds.max' => 'Il numero di letti non deve essere superiore a 40',
 
-
+        'bathrooms.required' => 'Il numero di bagni è necessario.',
         'bathrooms.integer' => 'Il valore inserito deve essere un numero compreso tra 1 e 10',
         'bathrooms.min' => 'Il numero di bagni non deve essere inferiore a 1',
         'bathrooms.max' => 'Il numero di bagni non deve essere superiore a 10',
 
-
+        'square_meters.required' => 'Il numero di metri quadri è necessario.',
         'square_meters.integer' => 'Il valore inserito deve essere un numero',
         'square_meters.min' => 'Il numero di metri quadri non deve essere inferiore a 4',
 
+        'address.required' => 'L\'indirizzo è necessario.',
         'address.string' => 'Il valore inserito deve essere una stringa',
+        'address.min' => 'L\'indirizzo deve essere lungo almeno 2 caratteri.',
+        'address.max' => 'L\'indirizzo non può superare i 255 caratteri.',
 
-        'services' => 'Seleziona almeno un servizio',
+        'services.required' => 'Seleziona almeno un servizio',
 
         'image.image' => 'Il file inserito deve essere un\'immagine',
         'image.max' => 'Il file inserito non deve superare i 2 Megabyte'

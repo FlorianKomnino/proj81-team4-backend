@@ -11,7 +11,7 @@
             @error('title')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <label for="title_form">Titolo:</label>
+            <label for="title">Titolo:</label>
             <textarea id="title" class="p-0 border-0" placeholder="Inserisci un titolo descrittivo per l'appartamento" name="title">{{ old('title', $apartment->title) }}</textarea>
         </div>
         <hr>
@@ -19,7 +19,7 @@
             @error('rooms')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <label for="rooms_form">Numero di stanze:</label>
+            <label for="rooms">Numero di stanze:</label>
             <input id="rooms" type="number" value="{{ old('rooms', $apartment->rooms) }}" class="p-0 border-0"
                 placeholder="Numero di stanze" name="rooms">
         </div>
@@ -28,7 +28,7 @@
             @error('beds')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <label for="beds_form">Numero di letti:</label>
+            <label for="beds">Numero di letti:</label>
             <input id="beds" type="number" value="{{ old('beds', $apartment->beds) }}" class="p-0 border-0"
                 placeholder="Numero di letti" name="beds">
         </div>
@@ -37,7 +37,7 @@
             @error('bathrooms')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <label for="bathrooms_form">Numero di bagni:</label>
+            <label for="bathrooms">Numero di bagni:</label>
             <input id="bathrooms" type="number" value="{{ old('bathrooms', $apartment->bathrooms) }}" class="p-0 border-0"
                 placeholder="Numero di Bagni" name="bathrooms">
         </div>
@@ -46,7 +46,7 @@
             @error('square_meters')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <label for="square_meters_form">Metri quadrati:</label>
+            <label for="square_meters">Metri quadrati:</label>
             <input id="square_meters" type="number" value="{{ old('square_meters', $apartment->square_meters) }}" class="p-0 border-0"
                 placeholder="Metri quadrati" name="square_meters">
         </div>
@@ -58,7 +58,7 @@
             @if (session('message'))
                 <p class="text-danger">{{session('message')}}</p>
             @endif
-            <label for="address_form">Indirizzo dell'appartamento:</label>
+            <label for="address">Indirizzo dell'appartamento:</label>
             <input  id="address" type="text" value="{{ old('address', $apartment->address) }}" class="p-0 border-0"
                 placeholder="Indirizzo dell'appartamento" name="address">
         </div>
@@ -69,13 +69,13 @@
         </div>
         <hr class="mb-0">
 
-        <label for="form-file" class=" p-1">Inserisci un'immagine</label>
+        <label for="image" class=" p-1">Inserisci un'immagine</label>
 
         <div class="p-0 d-flex">
             @error('image')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <input class="form-control rounded-0" type="file" placeholder="no file selected" name="image" id="form-file">
+            <input class="form-control rounded-0" type="file" placeholder="no file selected" name="image" id="image" accept="image/*">
         </div>
         
         <hr class="mt-0">
@@ -86,10 +86,11 @@
             @enderror
             @foreach ($services as $service)
                 <div class="single-tag d-flex align-items-center">
-                    <input id="services" type="checkbox" class="form-check-input" name="services[]" value="{{ $service->id }}"
+                    <input id="service" type="checkbox" class="form-check-input" name="services[]" value="{{ $service->id }}"
                         @if ($errors->any()) @checked(in_array($service->id, old('services',[])))
                         @else
-                            @checked($apartment->services->contains($service->id)) @endif>
+                        @checked($apartment->services->contains($service->id))
+                        @endif>
                     <label class="form-check-label ms-2">{{ $service->name }}</label>
                 </div>
             @endforeach

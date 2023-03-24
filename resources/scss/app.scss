@@ -4,7 +4,19 @@
 @import "../../node_modules/@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css";
 
 
-$main-bg-color: rgb(255,55,92);
+$main-bg-color: rgb(222,18,99);
+
+.bnbButton{
+    background-color: $main-bg-color;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    &:hover{
+        color: white;
+    }
+}
 
 .tomtom-container{
     #map{
@@ -44,9 +56,6 @@ $main-bg-color: rgb(255,55,92);
         .lightGreyText{
             color: rgb(132, 129, 129);
         }
-        button{
-            background-color: $main-bg-color;
-            color: white;
-        }
+        
     }
 }

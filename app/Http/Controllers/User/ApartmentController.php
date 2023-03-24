@@ -217,10 +217,10 @@ class ApartmentController extends Controller
             Storage::delete($apartment->image);
         } else {
             $apartment->delete();
-            return redirect()->route('user.apartments.index')->with('message', 'The apartment has been removed correctly')->with('alert-type', 'danger');
+            return redirect()->route('user.apartments.index');
         }
         $apartment->delete();
-        return redirect()->route('user.apartments.index')->with('message', 'The apartment has been removed correctly')->with('alert-type', 'danger');
+        return redirect()->route('user.apartments.index');
     }
 
     public function APICall()

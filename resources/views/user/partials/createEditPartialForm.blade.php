@@ -55,9 +55,11 @@
             @if ($route == 'user.apartments.update')
                 <span class="lightGreyText">Indirizzo attuale dell'appartamento:</span>
                 <span class="fw-bold">{{ old('address', $apartment->address) }}</span>
+                <input type="text" value="{{ old('address', $apartment->address) }}" class="d-none inputAddress" name="address">
                 <p class="m-0 lightGreyText">Se vuoi cambiarlo, cerca il nuovo qui sotto!</p>
             @else
                 <span class="lightGreyText">Indirizzo dell'appartamento:</span>
+                <input type="text" value="{{ old('address', $apartment->address) }}" class="d-none inputAddress" name="address">
             @endif
             @error('address')
                 <p class="text-danger">{{ $message }}</p>
@@ -104,7 +106,7 @@
         <hr>
 
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn m-2 submitEditCrateForm">{{ $formMethod === 'POST' ? 'Carica l\'appartamento a sistema' : "Modifica l'appartamento" }}</button>
+            <button type="submit" class="m-2 bnbButton">{{ $formMethod === 'POST' ? 'Carica l\'appartamento a sistema' : "Modifica l'appartamento" }}</button>
         </div>
     </form>
 </div>

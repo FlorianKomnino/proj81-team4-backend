@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
 use App\Models\Service;
+use Illuminate\Support\Facades\DB;
 
 class ApartmentController extends Controller
 {
@@ -26,12 +27,18 @@ class ApartmentController extends Controller
     public function servicesFilter(Request $request)
     {
         $data = $request->query();
-        $filters = explode(',', $data['services']);
+        $filters = $data['services'];
 
-        $filteredApartments = Apartment::with('services')->where('apartments.visible', 1)
-            ->whereHas('services', function ($query) use ($filters) {
-                $query->whereIn('id', $filters);
-            }, '=', count($filters))
+        $filteredApartments = Apartment::with('services')
+            ->where('visible', 1)
+            ->whereExists(function ($query) use ($filters) {
+                $query->select(DB::raw(1))
+                    ->from('apartment_service')
+                    ->whereIn('service_id', $filters)
+                    ->whereRaw('apartment_service.apartment_id = apartments.id')
+                    ->groupBy('apartment_id')
+                    ->havingRaw('COUNT(DISTINCT apartment_service.service_id) = ?', [count($filters)]);
+            })
             ->get();
 
         return response()->json([

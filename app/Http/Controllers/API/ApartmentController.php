@@ -24,15 +24,17 @@ class ApartmentController extends Controller
         ]);
     }
 
-    public function servicesFilter(Request $request)
+    public function servicesFilter(Request $request, $rooms = 1, $beds = 1)
     {
         $data = $request->query();
 
         if (isset($data['services'])) {
             $filters = $data['services'];
-    
+
             $filteredApartments = Apartment::with('services')
                 ->where('visible', 1)
+                ->where('rooms', '>=', $rooms)
+                ->where('beds', '>=', $beds)
                 ->whereExists(function ($query) use ($filters) {
                     $query->select(DB::raw(1))
                         ->from('apartment_service')
@@ -43,7 +45,11 @@ class ApartmentController extends Controller
                 })
                 ->get();
         } else {
-            $filteredApartments = Apartment::with('services')->where('apartments.visible', 1)->get();
+            $filteredApartments = Apartment::with('services')
+                ->where('apartments.visible', 1)
+                ->where('rooms', '>=', $rooms)
+                ->where('beds', '>=', $beds)
+                ->get();
         }
 
         return response()->json([
@@ -53,25 +59,13 @@ class ApartmentController extends Controller
     }
 
 
-    public function roomsFilter(Request $request, $rooms = null, $beds = null)
+    public function roomsFilter(Request $request, $rooms = 1, $beds = 1)
     {
 
-        if (!$rooms && !$beds) {
-            $filteredApartments = Apartment::where('visible', 1)->get();
-        } elseif ($beds && $rooms) {
-            $filteredApartments = Apartment::where('visible', 1)
-                ->where('rooms', '>=', $rooms)
-                ->where('beds', '>=', $beds)
-                ->get();
-        } elseif (!$beds && $rooms) {
-            $filteredApartments = Apartment::where('visible', 1)
-                ->where('rooms', '>=', $rooms)
-                ->get();
-        } elseif ($beds && !$rooms) {
-            $filteredApartments = Apartment::where('visible', 1)
-                ->where('beds', '>=', $beds)
-                ->get();
-        }
+        $filteredApartments = Apartment::where('visible', 1)
+            ->where('rooms', '>=', $rooms)
+            ->where('beds', '>=', $beds)
+            ->get();
 
         return response()->json([
             'status' => 'success',

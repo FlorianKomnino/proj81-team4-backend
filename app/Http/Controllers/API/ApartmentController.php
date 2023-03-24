@@ -27,19 +27,24 @@ class ApartmentController extends Controller
     public function servicesFilter(Request $request)
     {
         $data = $request->query();
-        $filters = $data['services'];
 
-        $filteredApartments = Apartment::with('services')
-            ->where('visible', 1)
-            ->whereExists(function ($query) use ($filters) {
-                $query->select(DB::raw(1))
-                    ->from('apartment_service')
-                    ->whereIn('service_id', $filters)
-                    ->whereRaw('apartment_service.apartment_id = apartments.id')
-                    ->groupBy('apartment_id')
-                    ->havingRaw('COUNT(DISTINCT apartment_service.service_id) = ?', [count($filters)]);
-            })
-            ->get();
+        if (isset($data['services'])) {
+            $filters = $data['services'];
+    
+            $filteredApartments = Apartment::with('services')
+                ->where('visible', 1)
+                ->whereExists(function ($query) use ($filters) {
+                    $query->select(DB::raw(1))
+                        ->from('apartment_service')
+                        ->whereIn('service_id', $filters)
+                        ->whereRaw('apartment_service.apartment_id = apartments.id')
+                        ->groupBy('apartment_id')
+                        ->havingRaw('COUNT(DISTINCT apartment_service.service_id) = ?', [count($filters)]);
+                })
+                ->get();
+        } else {
+            $filteredApartments = Apartment::with('services')->where('apartments.visible', 1)->get();
+        }
 
         return response()->json([
             'status' => 'success',

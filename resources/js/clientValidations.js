@@ -1,5 +1,5 @@
 //Dom elements
-{
+
     const formElement = document.getElementById('form')
     
     const title = document.getElementById('title')
@@ -25,13 +25,13 @@
     
     const image = document.getElementById('image')
     const imageError = document.getElementById('image-error')
-}
+
 let atLeastOne = false
 
 const allowedExtensions = ['.png', '.webp', '.svg', '.jpg', '.jpeg', '.jfif', '.pjpeg', '.pjp', '.gif', '.avif', '.apng', '.bmp', '.ico', '.cur', '.tif', '.tiff']
 
 // custom validations functions
-{
+
     function isValid(condition, field){
         if (condition) {
             return field.classList.add('invalid-feedback')
@@ -51,24 +51,24 @@ const allowedExtensions = ['.png', '.webp', '.svg', '.jpg', '.jpeg', '.jfif', '.
             isValid((inputElement.value >= min && inputElement.value <= max), error)
         })
     }
-}
+
 
 //interactive validations
-{
-    lengthValidation(title, 2, 250, titleError)
-    numberRangeValidation(rooms, 1, 20, roomsError)
-    numberRangeValidation(beds, 1, 40, bedsError)
-    numberRangeValidation(bathrooms, 1, 10, bathroomsError)
-    numberRangeValidation(squareMeters, 4, 250, squareMetersError)
-    lengthValidation(address, 2, 250, addressError)
-}
+
+lengthValidation(title, 2, 250, titleError)
+numberRangeValidation(rooms, 1, 20, roomsError)
+numberRangeValidation(beds, 1, 40, bedsError)
+numberRangeValidation(bathrooms, 1, 10, bathroomsError)
+numberRangeValidation(squareMeters, 4, 250, squareMetersError)
+lengthValidation(address, 3, 250, addressError)
+
 
 formElement.addEventListener('submit', function (event) {
     event.preventDefault()
     let success = true
 
     //single fields validation
-    {
+    
         if (!title.value) {
             titleError.classList.remove('invalid-feedback')
             success = false
@@ -134,7 +134,7 @@ formElement.addEventListener('submit', function (event) {
         } else {
             servicesError.classList.add('invalid-feedback')
         }
-    }
+    
     
     if (success) {
         this.submit();

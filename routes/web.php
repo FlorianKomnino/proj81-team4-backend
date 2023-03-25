@@ -28,7 +28,8 @@ Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(fu
     })->name('dashboard');
     Route::resource('apartments', UserApartmentController::class);
     Route::patch('/{apartment}/toggle', [UserApartmentController::class, 'enableToggle'])->name('apartments.toggle');
-    Route::get('/token', [BraintreeController::class, 'createToken'])->name('token');
+    Route::get('/paymentForm', [BraintreeController::class, 'paymentForm'])->name('paymentForm');
+    Route::post('/getToken', [BraintreeController::class, 'getToken'])->name('getToken');
 });
 
 Route::middleware('auth')->group(function () {

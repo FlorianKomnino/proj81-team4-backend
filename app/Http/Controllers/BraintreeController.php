@@ -10,7 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class BraintreeController extends Controller
 {
-    public function createToken(Request $request)
+    public function paymentForm(Request $request)
+    {
+        return view('braintree.payment');
+    }
+
+
+    public function getToken(Request $request)
     {
 
         $gateway = new Gateway([
@@ -22,7 +28,10 @@ class BraintreeController extends Controller
         ]);
         $clientToken = $gateway->clientToken()->generate([]);
 
-        return view('braintree.payment', compact("clientToken"));
+        return response()->json([
+            'success' => true,
+            'results' => $clientToken
+        ]);
     }
     /*
 

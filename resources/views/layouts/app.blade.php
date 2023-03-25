@@ -14,7 +14,6 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js" rel="stylesheet">
     
 
     <!-- Usando Vite -->

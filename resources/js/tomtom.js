@@ -1,102 +1,11 @@
 import tt from '@tomtom-international/web-sdk-maps'
 
-let urlAddress = 'https://api.tomtom.com/search/2/search/';
-let positionUrlAddress = 'https://api.tomtom.com/search/2/geometryFilter.json';
-let apartmentsList = [
-                {
-                    position: {
-                        lat: 9.165437,
-                        lon: 45.464718,
-                    }
-                },
-                {
-                    position: {
-                    lat: 9.163100,
-                    lon: 45.478681,
-                    }
-                },
-                {
-                    position: {
-                    lat: 9.207381,
-                    lon: 45.483141,
-                    }
-                },
-                {
-                    position: {
-                    lat: 9.677238,
-                    lon: 45.698168,
-                    }
-                },
-                {
-                    position: {
-                    lat: 9.661306,
-                    lon: 45.682499,
-                    }
-                }
-            ];
+import { services } from '@tomtom-international/web-sdk-services';
+import SearchBox from '@tomtom-international/web-sdk-plugin-searchbox';
 
-function getHouses() {
-    let locationQuery = document.getElementById('locationQuery').value;
-    console.log(locationQuery)
-    axios.get(urlAddress + `${locationQuery}.json`, {
-        params: {
-            key: "jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr",
-            
-        }
-    })
-    .then((response) => {
-        console.log(response)
-        let centerCoordinate = response.data.results[0].position;
-        let position = `${response.data.results[0].position.lon},${response.data.results[0].position.lat}`;
-        axios.get(positionUrlAddress, {
-            params: {
-                key: "jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr",
-                geometryList: JSON.stringify([
-                    {
-                    type: "CIRCLE",
-                    position: position,
-                    radius: 10000
-                    }
-            ]),
-            poiList: JSON.stringify(apartmentsList)
-        }
-        })
-        .then((response) => {
-            const map = tt.map({
-            key: "jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr",
-            container: "map",
-            center: centerCoordinate,
-            zoom: 13
-            })
-            map.on('load', () => {
-                /* const MarkerEl = document.createElement("div");
-                const iconMarker = document.createElement("div");
-                iconMarker.innerHTML(iconMarker);
-                MarkerEl.classList.add('marker');
-                console.log(MarkerEl); */
-                response.data.results.forEach(function (location) {
-                    let marker = new tt.Marker().setLngLat([location.position.lat, location.position.lon]).addTo(map) 
-                    const popup = new tt.Popup({ anchor: 'top' }).setText('Posizione esatta fornita dopo la prenotazione.')
-                    marker.setPopup(popup)
-                })
-                
-            })
-            map.addControl(new tt.FullscreenControl());
-            map.addControl(new tt.NavigationControl());
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-        .finally(function () {
-
-        });
-    })
-    
-};
-
-function map(locationQuery){
-
-    let center = locationQuery
+// function to make the map appear in the show blade
+function map(coordinates){
+    let center = coordinates
     const map = tt.map({
     key: "jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr",
     container: "map",
@@ -104,26 +13,76 @@ function map(locationQuery){
     zoom: 12
     })
     map.on('load', () => {
-            const iconMarker = document.getElementById('marker');
-            console.log(iconMarker)
-            const popup = new tt.Popup({ anchor: 'top' }).setText('Posizione esatta fornita dopo la prenotazione.')
-            let marker = new tt.Marker({element: iconMarker}).setLngLat(center).setPopup(popup).addTo(map);
-            marker.addTo(map);
-
+        const iconMarker = document.getElementById('marker');
+        const popup = new tt.Popup({ anchor: 'top' }).setText('Posizione esatta fornita dopo la prenotazione.')
+        let marker = new tt.Marker({element: iconMarker}).setLngLat(center).setPopup(popup).addTo(map);
+        marker.addTo(map);
     })
     map.addControl(new tt.FullscreenControl());
     map.addControl(new tt.NavigationControl());
+};
+
+
+// function to make the input search box of TomTom
+function getAddress(){
+    if (document.querySelector('.searchBar')){
+        const option = {
+            idleTimePress: 100,
+            minNumberOfCharacters: 0,
+            searchOptions: {
+                key: 'jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr',
+                language: 'it-IT',
+                limit: 10,
+            },
+            autocompleteOptions: {
+                key: 'jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr',
+                language: 'it-IT'
+            },
+            labels: {
+                noResultsMessage: 'Nessun risultato trovato'
+            },
+            distanceFromPoint: '9.192771,45.463273',
+            units: 'kilometers'
+        }
+        const ttSearchBox = new SearchBox(services, option);
+        const searchBarContainer = document.querySelector('.searchBar');
+        const searchBoxHTML = ttSearchBox.getSearchBoxHTML();
+        searchBarContainer.append(searchBoxHTML);
+        const inputAddress = document.querySelector('.inputAddress');
+        inputAddress.setAttribute('name', 'address');
+        const oldInput = inputAddress.value;
+        const icon = document.querySelector('.tt-search-box-close-icon');
+        ttSearchBox.on("tomtom.searchbox.resultselected", handleResultSelection);
+
+        function handleResultSelection(event) {
+            if (event.data.result.address.freeformAddress){
+                inputAddress.setAttribute('value', event.data.result.address.freeformAddress)
+            }
+        };
+
+        // if you click the "X" on the search bar the handleResultSelection's result will be null and the input will have the old value
+        icon.addEventListener('click', function(){
+            inputAddress.setAttribute('value', oldInput)
+        })
+    }
 }
 
+
+// this function is used in the show blade (it gives to the input named coordinate[] the latitude and the longitude for the map and it triggers the function map())
+// it is used also for the createEditPartialForm beacause it triggers the function getAddress() that show the search bar
 window.addEventListener("DOMContentLoaded", (event) => {
-    let coordinate = document.getElementsByName('coordinate[]');
-    let k = [];
-    for (let i = 0; i < coordinate.length; i++) {
-        let a = coordinate[i]['defaultValue'];
-        k.push(a)
+    let coordinates = document.getElementsByName('coordinate[]');
+    if (coordinates.length>0){
+        let k = [];
+        for (let i = 0; i < coordinates.length; i++) {
+            let a = coordinates[i]['defaultValue'];
+            k.push(a)
+        }
+        let lon = Number(k[0]);
+        let lat = Number(k[1]);
+        coordinates = [lon, lat]
+        map(coordinates);
+    } else if (document.querySelector('.searchBar')) {
+        getAddress();
     }
-    let lon = Number(k[0]);
-    let lat = Number(k[1]);
-    let coordinates = [lon, lat]
-    map(coordinates);
-  });
+});

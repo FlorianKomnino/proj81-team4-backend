@@ -1,13 +1,17 @@
-<div id="container-form" class="container my-4">
+@section('head')
+    @vite(['resources/js/tomtom.js'])
+@endsection
+
+<div id="container-form" class="container my-5">
     <form action="{{ route($route, $apartment->slug) }}" id="form" class="m-auto" method="POST"
         enctype="multipart/form-data">
         @csrf
         @method($formMethod)
 
         <h2 class="text-center m-0 p-3 fw-bold">
-            {{ $formMethod === 'POST' ? 'Create a new apartment' : "Edit the apartment '$apartment->title'" }}
+            {{ $formMethod === 'POST' ? 'Crea un nuovo appartamento' : "Modifica l'appartamento '$apartment->title'" }}
         </h2>
-        <div class="d-flex flex-column p-2">
+        <div class="d-flex flex-column p-2 pb-4">
             @error('title')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -16,7 +20,7 @@
             <textarea id="title" class="p-0 border-0" placeholder="Inserisci un titolo descrittivo per l'appartamento" name="title">{{ old('title', $apartment->title) }}</textarea>
         </div>
         <hr>
-        <div class="d-flex flex-column p-2">
+        <div class="d-flex flex-column p-2 pb-4">
             @error('rooms')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -26,7 +30,7 @@
                 placeholder="Numero di stanze" name="rooms">
         </div>
         <hr>
-        <div class="d-flex flex-column p-2">
+        <div class="d-flex flex-column p-2 pb-4">
             @error('beds')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -36,7 +40,7 @@
                 placeholder="Numero di letti" name="beds">
         </div>
         <hr>
-        <div class="d-flex flex-column p-2">
+        <div class="d-flex flex-column p-2 pb-4">
             @error('bathrooms')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -46,7 +50,7 @@
                 placeholder="Numero di Bagni" name="bathrooms">
         </div>
         <hr>
-        <div class="d-flex flex-column p-2">
+        <div class="d-flex flex-column p-2 pb-4">
             @error('square_meters')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -56,7 +60,16 @@
                 placeholder="Metri quadrati" name="square_meters">
         </div>
         <hr>
-        <div class="d-flex flex-column p-2">
+        <div class="p-2 pb-4">
+            @if ($route == 'user.apartments.update')
+                <span class="lightGreyText">Indirizzo attuale dell'appartamento:</span>
+                <span class="fw-bold">{{ old('address', $apartment->address) }}</span>
+                <input type="text" value="{{ old('address', $apartment->address) }}" class="d-none inputAddress" name="address">
+                <p class="m-0 lightGreyText">Se vuoi cambiarlo, cerca il nuovo qui sotto!</p>
+            @else
+                <span class="lightGreyText">Indirizzo dell'appartamento:</span>
+                <input type="text" value="{{ old('address', $apartment->address) }}" class="d-none inputAddress" name="address">
+            @endif
             @error('address')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
@@ -65,11 +78,14 @@
             @endif
             <label for="address">Indirizzo dell'appartamento:</label>
             <span id="address-error" class="text-danger invalid-feedback">L'indirizzo deve essere di almeno 3 caratteri</span>
-            <input  id="address" type="text" value="{{ old('address', $apartment->address) }}" class="p-0 border-0"
-                placeholder="Indirizzo dell'appartamento" name="address">
+            {{-- Old input, verify if the new implementation is okay --}}
+            {{-- <input  id="address" type="text" value="{{ old('address', $apartment->address) }}" class="p-0 border-0" placeholder="Indirizzo dell'appartamento" name="address"> --}}
+
+            {{-- This is the div in which there il will be the search bar by Tomtom, it is added by "tomtom.js" --}}
+            <div class="searchBar"></div>
         </div>
-        <hr class="mb-0">
-        <div class="d-flex mt-1 p-2">
+        <hr>
+        <div class="d-flex mt-1 p-2 py-3">
             <input class="form-check-input me-2" type="checkbox" value="1" {{ old('visible', $apartment->visible) ? 'checked' : '' }} name="visible" id="visible">
             <label class="form-check-label" for="visible">Visibile al pubblico <em>(Spunta questa casella per rendere subito visibile il tuo appartamento)</em></label>
         </div>

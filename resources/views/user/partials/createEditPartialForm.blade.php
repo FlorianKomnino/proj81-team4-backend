@@ -1,5 +1,5 @@
 @section('head')
-    @vite(['resources/js/tomtom.js'])
+    @vite(['resources/js/tomtom.js','resources/js/clientValidations.js'])
 @endsection
 
 <div id="container-form" class="container my-5">
@@ -76,7 +76,7 @@
             @if (session('message'))
                 <p class="text-danger">{{session('message')}}</p>
             @endif
-            <label for="address">Indirizzo dell'appartamento:</label>
+            {{-- <label for="address">Indirizzo dell'appartamento:</label> --}}
             <span id="address-error" class="text-danger invalid-feedback">L'indirizzo deve essere di almeno 3 caratteri</span>
             {{-- Old input, verify if the new implementation is okay --}}
             {{-- <input  id="address" type="text" value="{{ old('address', $apartment->address) }}" class="p-0 border-0" placeholder="Indirizzo dell'appartamento" name="address"> --}}

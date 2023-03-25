@@ -60,7 +60,7 @@ numberRangeValidation(rooms, 1, 20, roomsError)
 numberRangeValidation(beds, 1, 40, bedsError)
 numberRangeValidation(bathrooms, 1, 10, bathroomsError)
 numberRangeValidation(squareMeters, 4, 250, squareMetersError)
-lengthValidation(address, 3, 250, addressError)
+//lengthValidation(address, 3, 250, addressError)
 
 
 formElement.addEventListener('submit', function (event) {
@@ -107,16 +107,6 @@ formElement.addEventListener('submit', function (event) {
 
         } else if (squareMeters.value < 4) {
             squareMetersError.classList.remove('invalid-feedback')
-            success = false
-
-        }
-
-        if (!address.value) {
-            addressError.classList.remove('invalid-feedback')
-            success = false
-
-        } else if (address.value.length < 2 || address.value.length > 255) {
-            addressError.classList.remove('invalid-feedback')
             success = false
 
         }

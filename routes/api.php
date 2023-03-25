@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ApartmentController;
+use App\Http\Controllers\BraintreeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

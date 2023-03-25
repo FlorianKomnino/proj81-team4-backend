@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\ApartmentController as UserApartmentController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BraintreeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,7 @@ Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(fu
     })->name('dashboard');
     Route::resource('apartments', UserApartmentController::class);
     Route::patch('/{apartment}/toggle', [UserApartmentController::class, 'enableToggle'])->name('apartments.toggle');
+    Route::get('/token', [BraintreeController::class, 'createToken'])->name('token');
 });
 
 Route::middleware('auth')->group(function () {
@@ -34,5 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 require __DIR__ . '/auth.php';

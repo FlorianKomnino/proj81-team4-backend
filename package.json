@@ -18,6 +18,7 @@
         "@tomtom-international/web-sdk-maps": "^6.23.0",
         "@tomtom-international/web-sdk-services": "^6.23.0",
         "bootstrap": "^5.2.2",
+        "braintree": "^3.13.0",
         "cross-env": "^7.0.3",
         "font-awesome": "^4.7.0"
     }

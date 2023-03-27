@@ -8,10 +8,10 @@
 @section('content')
 
 
-<div id="dropin-container"></div>
 
 <form id="checkout" method="POST" action="/checkout">
-
+    
+    <div id="dropin-container"></div>
 <div id="payment-form"></div>
 <input type="submit" value="pay $10">
 

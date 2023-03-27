@@ -90,7 +90,7 @@
             @yield('content')
         </main>
     </div>
+    @yield('bottomBody')
 </body>
-@yield('head')
 
 </html>

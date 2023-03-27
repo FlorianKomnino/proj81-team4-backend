@@ -12,7 +12,7 @@ class BraintreeController extends Controller
 {
     public function paymentForm(Request $request)
     {
-        return view('braintree.payment');
+        return view('braintree.paymentForm');
     }
 
 
@@ -24,13 +24,13 @@ class BraintreeController extends Controller
             'merchantId' => '4j7xxvjbm3nxqjcx',
             'publicKey' => 'tx56955wgpt7q9s8',
             'privateKey' => '558b75f1f99d2616e1f7e639d08fb532',
-            'customer_id' => Auth::user()->id
         ]);
-        $clientToken = $gateway->clientToken()->generate([]);
+
+        $clientTokenFromServer = $gateway->clientToken()->generate([]);
 
         return response()->json([
             'success' => true,
-            'results' => $clientToken
+            'results' => $clientTokenFromServer
         ]);
     }
     /*

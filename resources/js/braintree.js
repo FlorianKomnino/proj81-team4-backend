@@ -3,7 +3,7 @@ let serverToken = null;
 function getToken() {
   axios.post("http://127.0.0.1:8000/user/getToken").then((response) => {
     serverToken = response.data.results;
-    console.log(serverToken)
+    console.log(response)
   })
     .finally(function () {
       // Step two: create a dropin instance using that container (or a string
@@ -11,6 +11,11 @@ function getToken() {
       braintree.dropin.create({
         authorization: serverToken,
         container: document.getElementById('dropin-container'),
+        paypal: {
+          flow: 'vault',
+          amount: '10.00',
+          currency: 'EUR'
+        },
         // ...plus remaining configuration
       }, (error, dropinInstance) => {
         // Use `dropinInstance` here
@@ -22,21 +27,22 @@ function getToken() {
           event.preventDefault();
 
           dropinInstance.requestPaymentMethod((error, payload) => {
-            if (error) console.error(error);
+            if (error) { console.error(error) };
             payload.nonce = 'fake-valid-nonce'
-
+            console.log(payload)
             // Step four: when the user is ready to complete their
             //   transaction, use the dropinInstance to get a payment
             //   method nonce for the user's selected payment method, then add
             //   it a the hidden field before submitting the complete form to
             //   a server-side integration
             document.getElementById('nonce').value = payload.nonce;
-            form.submit();
+            form.submit()
           });
         });
-      });
+      })
+
     })
 }
 
-getToken();
+getToken()
 

@@ -18,7 +18,6 @@ class BraintreeController extends Controller
 
     public function getToken(Request $request)
     {
-
         $gateway = new Gateway([
             'environment' => 'sandbox',
             'merchantId' => '4j7xxvjbm3nxqjcx',
@@ -26,11 +25,21 @@ class BraintreeController extends Controller
             'privateKey' => '558b75f1f99d2616e1f7e639d08fb532',
         ]);
 
+        $result = $gateway->customer()->create([
+            'firstName' => Auth::user()->name,
+            'lastName' => 'Jones',
+            'company' => 'Jones Co.',
+            'email' => 'mike.jones@example.com',
+            'phone' => '281.330.8004',
+            'fax' => '419.555.1235',
+            'website' => 'http://example.com'
+        ]);
+
         $clientTokenFromServer = $gateway->clientToken()->generate([]);
 
         return response()->json([
             'success' => true,
-            'results' => $clientTokenFromServer
+            'results' => $result
         ]);
     }
     /*

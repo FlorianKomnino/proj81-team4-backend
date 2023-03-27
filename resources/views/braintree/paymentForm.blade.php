@@ -2,6 +2,8 @@
 
 @section('head')
     <script src="https://js.braintreegateway.com/web/dropin/1.35.0/js/dropin.min.js"></script>
+    <script src="https://js.braintreegateway.com/web/3.91.0/js/client.min.js"></script>
+
     @vite(['resources/js/braintree.js'])
 @endsection
 

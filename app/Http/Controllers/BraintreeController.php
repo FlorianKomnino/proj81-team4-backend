@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Apartment;
 use Illuminate\Http\Request;
 use Braintree\Gateway;
 use Braintree_Transaction;
@@ -18,12 +18,19 @@ class BraintreeController extends Controller
 
     public function getToken(Request $request)
     {
-
         $gateway = new Gateway([
             'environment' => 'sandbox',
             'merchantId' => '4j7xxvjbm3nxqjcx',
             'publicKey' => 'tx56955wgpt7q9s8',
             'privateKey' => '558b75f1f99d2616e1f7e639d08fb532',
+        ]);
+
+        $result = $gateway->customer()->create([
+            'firstName' => Auth::user()->name,
+            'lastName' => Auth::user()->surname,
+            'company' => 'Jones Co.',
+            'email' => Auth::user()->email,
+            'website' => 'http://boolean.com'
         ]);
 
         $clientTokenFromServer = $gateway->clientToken()->generate([]);
@@ -33,6 +40,17 @@ class BraintreeController extends Controller
             'results' => $clientTokenFromServer
         ]);
     }
+
+    public function sponsorshipIndex(Apartment $apartment)
+    {
+        return view('braintree.sponsorshipIndex', ['apartment' => $apartment]);
+    }
+
+    public function checkout()
+    {
+        return view('braintree.checkoutSuccess');
+    }
+
     /*
 
     

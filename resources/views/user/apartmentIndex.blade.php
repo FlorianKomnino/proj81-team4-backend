@@ -26,6 +26,7 @@
             <table class="table table-hover text-center">
                 <thead class="align-middle">
                     <tr>
+                        <th scope="col">Sponsor</th>
                         <th scope="col">Titolo</th>
                         <th scope="col">Indirizzo</th>
                         <th scope="col">Disponibilità</th>
@@ -35,6 +36,11 @@
                 <tbody class="align-middle">
                     @foreach ($apartments as $apartment)
                     <tr>
+                        <td>
+                            <a href="{{ route('user.sponsorshipIndex', $apartment->slug) }}">
+                                <i class="fa-regular fa-star" class="d-block"></i>
+                            </a>
+                        </td>
                         <td>{{ $apartment->title }}</td>
                         <td>{{ $apartment->address }}</td>
                         <td>

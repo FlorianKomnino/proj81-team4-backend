@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\ApartmentController as UserApartmentController;
+use App\Http\Controllers\User\MessageController as UserMessageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BraintreeController;
 
@@ -31,6 +32,7 @@ Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(fu
     Route::patch('/{apartment}/toggle', [UserApartmentController::class, 'enableToggle'])->name('apartments.toggle');
     Route::get('/paymentForm', [BraintreeController::class, 'paymentForm'])->name('paymentForm');
     Route::post('/getToken', [BraintreeController::class, 'getToken'])->name('getToken');
+    Route::resource('messages', UserMessageController::class);
 });
 
 Route::middleware('auth')->group(function () {

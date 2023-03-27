@@ -30,7 +30,10 @@ Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(fu
     Route::patch('/{apartment}/toggle', [UserApartmentController::class, 'enableToggle'])->name('apartments.toggle');
     Route::get('/paymentForm', [BraintreeController::class, 'paymentForm'])->name('paymentForm');
     Route::post('/getToken', [BraintreeController::class, 'getToken'])->name('getToken');
+    Route::get('/sponsorshipIndex/{apartment}', [BraintreeController::class, 'sponsorshipIndex'])->name('sponsorshipIndex');
 });
+
+Route::post('/checkout', [BraintreeController::class, 'checkout'])->name('checkout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

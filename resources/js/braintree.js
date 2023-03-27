@@ -11,18 +11,18 @@ function getToken() {
       braintree.dropin.create({
         authorization: serverToken,
         container: document.getElementById('dropin-container'),
-        paypal: {
-          flow: 'vault',
-          amount: '10.00',
-          currency: 'EUR'
-        },
+
         // ...plus remaining configuration
       }, (error, dropinInstance) => {
         // Use `dropinInstance` here
         // Methods documented at https://braintree.github.io/braintree-web-drop-in/docs/current/Dropin.html
 
-        if (error) console.error(error);
+        if (error) {
+          console.error(error)
+        }
+
         const form = document.getElementById('payment-form')
+
         form.addEventListener('submit', event => {
           event.preventDefault();
 
@@ -36,8 +36,8 @@ function getToken() {
             //   it a the hidden field before submitting the complete form to
             //   a server-side integration
             document.getElementById('nonce').value = payload.nonce;
-            form.submit()
           });
+          form.submit()
         });
       })
 

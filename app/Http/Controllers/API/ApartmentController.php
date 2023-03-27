@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+use App\Models\Service;
+use Illuminate\Support\Facades\DB;
 
 class ApartmentController extends Controller
 {
@@ -19,6 +21,40 @@ class ApartmentController extends Controller
         return response()->json([
             'success' => true,
             'results' => $apartments
+        ]);
+    }
+
+    public function servicesFilter(Request $request, $rooms = 1, $beds = 1)
+    {
+        $data = $request->query();
+
+        if (isset($data['services'])) {
+            $filters = $data['services'];
+
+            $filteredApartments = Apartment::with('services')
+                ->where('visible', 1)
+                ->where('rooms', '>=', $rooms)
+                ->where('beds', '>=', $beds)
+                ->whereExists(function ($query) use ($filters) {
+                    $query->select(DB::raw(1))
+                        ->from('apartment_service')
+                        ->whereIn('service_id', $filters)
+                        ->whereRaw('apartment_service.apartment_id = apartments.id')
+                        ->groupBy('apartment_id')
+                        ->havingRaw('COUNT(DISTINCT apartment_service.service_id) = ?', [count($filters)]);
+                })
+                ->get();
+        } else {
+            $filteredApartments = Apartment::with('services')
+                ->where('apartments.visible', 1)
+                ->where('rooms', '>=', $rooms)
+                ->where('beds', '>=', $beds)
+                ->get();
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $filteredApartments,
         ]);
     }
 

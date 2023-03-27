@@ -37,6 +37,9 @@ class Apartment extends Model
         return 'slug';
     }
 
+
+    // Apartment relations
+
     public function messages()
     {
         return $this->hasMany(Message::class);

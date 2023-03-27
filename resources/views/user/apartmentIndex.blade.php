@@ -3,7 +3,7 @@
 @section('head')
     @vite(['resources/js/confirmDeletation.js'])
 @endsection
-    
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -15,10 +15,13 @@
         </div>
         @endif
 
-
-        <h1 class="text-center">
-            I tuoi appartamenti
-        </h1>
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="text-center">
+                Ciao {{Auth::user()->name}}, ecco i tuoi appartamenti
+            </h2>
+            <a href="{{ route('user.apartments.create') }}" class="bnbButton my-3">Aggiungi un appartamento</a>
+        </div>
+        
         <div class="col-12">
             <table class="table table-hover text-center">
                 <thead class="align-middle">
@@ -27,9 +30,6 @@
                         <th scope="col">Indirizzo</th>
                         <th scope="col">Disponibilità</th>
                         <th scope="col">Servizi</th>
-                        <th scope="col">
-                            <a href="{{ route('user.apartments.create') }}" class="btn btn-lg btn-primary my-3 w-100">Aggiungi un appartamento</a>
-                        </th>
                     </tr>
                 </thead>
                 <tbody class="align-middle">
@@ -57,7 +57,7 @@
                             <form class="form-deleter d-inline" action="{{ route('user.apartments.destroy', $apartment->slug) }}" method="POST" data-element-name="{{ $apartment->title }}">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn">Elimina</button>
+                                <button class="btn btn-danger">Elimina</button>
                             </form>
                         </td>
                     </tr>

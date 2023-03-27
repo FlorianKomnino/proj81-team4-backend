@@ -16,40 +16,81 @@ class ApartmentController extends Controller
 {
     protected $validationRules = [
         'title' => ['required', 'string', 'min:2', 'max:255'],
-        'rooms' => 'int|min:1',
-        'beds' => 'int|min:1',
-        'bathrooms' => 'int|min:1',
-        'square_meters' => 'int|min:4',
-        'address' => 'string',
-        'services' => 'nullable',
+        'rooms' => 'required|int|min:1|max:20',
+        'beds' => 'required|int|min:1|max:40',
+        'bathrooms' => 'required|int|min:1|max:10',
+        'square_meters' => 'required|int|min:4',
+        'address' => 'required|string|min:2|max:255',
+        'services' => 'required|array|exists:services,id',
         'image' => 'image|max:2048',
         'visible' => 'boolean'
     ];
 
     protected $validationErrorMessages = [
         'title.required' => 'Il titolo è necessario.',
+        'title.string' => 'Il valore inserito deve essere una stringa di lunghezza compresa tra 2 e 255 caratteri inclusi.',
         'title.unique' => 'Il titolo non può essere uguale ad un altro titolo in archivio.',
         'title.min' => 'Il titolo deve essere lungo almeno 2 caratteri.',
         'title.max' => 'Il titolo non può superare i 255 caratteri.',
 
-        'rooms.integer' => 'Il valore inserito deve essere un numero',
-        'rooms.min' => 'Il numero di stanze non deve essere inferiore a uno',
+        'rooms.required' => 'Il numero di stanze è necessario.',
+        'rooms.integer' => 'Il valore inserito deve essere un numero compreso tra 1 e 20.',
+        'rooms.min' => 'Il numero di stanze non deve essere inferiore a 1.',
+        'rooms.max' => 'Il numero di stanze non deve essere superiore a 20.',
 
-        'beds.integer' => 'Il valore inserito deve essere un numero',
-        'beds.min' => 'Il numero di letti non deve essere inferiore a uno',
+        'beds.required' => 'Il numero di letti è necessario.',
+        'beds.integer' => 'Il valore inserito deve essere un numero compreso tra 1 e 40.',
+        'beds.min' => 'Il numero di letti non deve essere inferiore a 1.',
+        'beds.max' => 'Il numero di letti non deve essere superiore a 40.',
 
-        'bathrooms.integer' => 'Il valore inserito deve essere un numero',
-        'bathrooms.min' => 'Il numero di bagni non deve essere inferiore a uno',
+        'bathrooms.required' => 'Il numero di bagni è necessario.',
+        'bathrooms.integer' => 'Il valore inserito deve essere un numero compreso tra 1 e 10.',
+        'bathrooms.min' => 'Il numero di bagni non deve essere inferiore a 1.',
+        'bathrooms.max' => 'Il numero di bagni non deve essere superiore a 10.',
 
-        'square_meters.integer' => 'Il valore inserito deve essere un numero',
-        'square_meters.min' => 'Il numero di metri quadri non deve essere inferiore a quattro',
+        'square_meters.required' => 'Il numero di metri quadri è necessario.',
+        'square_meters.integer' => 'Il valore inserito deve essere un numero.',
+        'square_meters.min' => 'Il numero di metri quadri non deve essere inferiore a 4.',
 
-        'address.string' => 'Il valore inserito deve essere una stringa',
+        'address.required' => 'L\'indirizzo è necessario.',
+        'address.string' => 'Il valore inserito deve essere una stringa.',
+        'address.min' => 'L\'indirizzo deve essere lungo almeno 2 caratteri.',
+        'address.max' => 'L\'indirizzo non può superare i 255 caratteri.',
 
-        'image.image' => 'Il file inserito deve essere un\'immagine',
-        'image.max' => 'Il file inserito non deve superare i 2 Megabyte'
+        'services.required' => 'Seleziona almeno un servizio.',
+
+        'image.image' => 'Il file inserito deve essere un\'immagine.',
+        'image.max' => 'Il file inserito non deve superare i 2 Megabyte.'
     ];
 
+    public function serviceFilter(Apartment $apartment){
+
+
+        // $apartments = Apartment::with('services')->get();
+
+        // $nomediverso = $apartments->reject(function($apartment){
+        //     dd($apartment->services);
+        //     return $apartment->services->where('id','1');
+        // });
+
+        $services = Service::with('apartments')->where('id','1')->get();
+        $filteredApartments = $services->map(function($service){
+            dd($service->apartments);
+            return $service->apartments->where('id','1');
+        });
+
+
+        $apartments = $services->apartments;
+        dd($apartments);
+        // $nomediverso = $apartments->reject(function($apartment){
+        //     dd($apartment->services);
+        //     return $apartment->services->where('id','1');
+        // });
+
+        //$nomediverso
+
+        dd($services);
+    }
 
     /**
      * Display a listing of the resource.
@@ -93,7 +134,7 @@ class ApartmentController extends Controller
         $jsonData = $response->json();
 
         $data['user_id'] = Auth::user()->id;
-        isset($data['image']) ? $data['image'] = Storage::put('imgs/', $data['image']) : $data['image']=asset('logo/home.jpeg');
+        isset($data['image']) ? $data['image'] = Storage::put('imgs/', $data['image']) : $data['image'] = asset('logo/home.jpeg');
 
         //wrong address control
         if ($jsonData['results'] != []) {
@@ -105,7 +146,7 @@ class ApartmentController extends Controller
             $newApartment->save();
             $newApartment->slug = $newApartment->slug . $newApartment->id;
             $newApartment->update();
-            $newApartment->services()->sync($data['services'] ?? []);
+            $newApartment->services()->sync($data['services']);
             return redirect()->route('user.apartments.edit', $newApartment->slug)->with('message', 'Attenzione, l\'appartamento è stato creato correttamente ma l\'indirizzo inserito non ha prodotto alcun risultato! Per favore inserisci un indirizzo valido');
         }
         $newApartment = new Apartment();
@@ -113,7 +154,7 @@ class ApartmentController extends Controller
         $newApartment->save();
         $newApartment->slug = $newApartment->slug . $newApartment->id;
         $newApartment->update();
-        $newApartment->services()->sync($data['services'] ?? []);
+        $newApartment->services()->sync($data['services']);
         return redirect()->route('user.apartments.show', $newApartment->slug)->with('message', "$newApartment->title has been created")->with('alert-type', 'primary');
     }
 
@@ -168,11 +209,11 @@ class ApartmentController extends Controller
         $jsonData = $response->json();
         $data['user_id'] = Auth::user()->id;
 
-        if(isset($data['image'])){
+        if (isset($data['image'])) {
             Storage::delete($apartment->image);
-            $data['image']=Storage::put('imgs/', $data['image']);
+            $data['image'] = Storage::put('imgs/', $data['image']);
         } else {
-            $data['image']=asset('logo/home.jpeg');
+            $data['image'] = asset('logo/home.jpeg');
         }
 
         //wrong address control
@@ -181,12 +222,13 @@ class ApartmentController extends Controller
             $data['longitude'] = $jsonData['results'][0]['position']['lon'];
         } else {
             $apartment->update($data);
+            $apartment->services()->sync($data['services']);
             return redirect()->route('user.apartments.edit', $apartment->slug)->with('message', 'Attenzione, l\'appartamento è stato creato correttamente ma l\'indirizzo inserito non ha prodotto alcun risultato! Per favore inserisci un indirizzo valido');
         }
 
 
-        $apartment->services()->sync($data['services'] ?? []);
         $apartment->update($data);
+        $apartment->services()->sync($data['services']);
         return redirect()->route('user.apartments.show', $apartment->slug)->with('message', "Successfully updated")->with('alert-type', 'primary');;
     }
 

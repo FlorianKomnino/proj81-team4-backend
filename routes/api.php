@@ -26,3 +26,4 @@ Route::get('/user/{user}', [UserController::class, 'show'])->name('api.user.show
 Route::post('login', [UserController::class, 'login'])->name('login');
 
 Route::get('/apartments', [ApartmentController::class, 'index'])->name('api.apartments.index');
+Route::get('/apartments/filter/{rooms?}/{beds?}', [ApartmentController::class, 'servicesFilter'])->name('api.apartments.filter');

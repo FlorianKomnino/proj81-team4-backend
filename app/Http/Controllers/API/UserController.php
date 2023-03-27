@@ -36,7 +36,7 @@ class UserController extends Controller
             $success['name'] =  $user->name;
             $success['surname'] = $user->surname;
             $success['email'] = $user->email;
-            $success['subscribed_from'] = Str::of($user->created_at)->limit(4,'');
+            $success['subscribed_from'] = Str::of($user->created_at)->limit(4, '');
             return response()->json([
                 'status' => 'success',
                 'data' => $success
@@ -49,15 +49,6 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -114,7 +105,8 @@ class UserController extends Controller
      * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user){
+    public function show(User $user)
+    {
         $user = User::findOrFail($user->id);
         return response()->json([
             'success' => true,

@@ -49,7 +49,7 @@ class ApartmentController extends Controller
         'bathrooms.max' => 'Il numero di bagni non deve essere superiore a 10.',
 
         'square_meters.required' => 'Il numero di metri quadri è necessario.',
-        'square_meters.integer' => 'Il valore inserito deve essere un numero.',
+        'square_meters.integer' => 'Il valore inserito deve essere un numero maggiore o uguale a 4.',
         'square_meters.min' => 'Il numero di metri quadri non deve essere inferiore a 4.',
 
         'address.required' => 'L\'indirizzo è necessario.',
@@ -63,7 +63,8 @@ class ApartmentController extends Controller
         'image.max' => 'Il file inserito non deve superare i 2 Megabyte.'
     ];
 
-    public function serviceFilter(Apartment $apartment){
+    public function serviceFilter(Apartment $apartment)
+    {
 
 
         // $apartments = Apartment::with('services')->get();
@@ -73,10 +74,10 @@ class ApartmentController extends Controller
         //     return $apartment->services->where('id','1');
         // });
 
-        $services = Service::with('apartments')->where('id','1')->get();
-        $filteredApartments = $services->map(function($service){
+        $services = Service::with('apartments')->where('id', '1')->get();
+        $filteredApartments = $services->map(function ($service) {
             dd($service->apartments);
-            return $service->apartments->where('id','1');
+            return $service->apartments->where('id', '1');
         });
 
 

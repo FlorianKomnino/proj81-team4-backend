@@ -109,7 +109,7 @@ formElement.addEventListener('submit', function (event) {
         squareMetersError.classList.remove('invalid-feedback')
         success = false
     }
-    console.log(address)
+
     if (!address.value) {
         addressError.classList.remove('invalid-feedback')
         success = false
@@ -129,64 +129,28 @@ formElement.addEventListener('submit', function (event) {
         servicesError.classList.add('invalid-feedback')
     }
 
+    if (image.value) {
+        const imageSize = Math.round(image.files[0].size / 1024 / 1024)
+        if (imageSize > 2) {
+            imageError.classList.remove('invalid-feedback')
+            console.log(imageSize)
+            success = false
+            for (let i = 0; i < allowedExtensions.length; i++) {
+                if (!image.value.endsWith(allowedExtensions[i])) {
+                    imageError.classList.remove('invalid-feedback')
+                    success = false
+                }
+            }
+
+        } else if (imageSize <= 2) {
+            imageError.classList.add('invalid-feedback')
+        }
+
+    }
+
 
     if (success) {
         this.submit();
     }
     return
 })
-
-// const form = document.getElementById('myForm');
-// form.addEventListener('submit', function (event) {
-//     event.preventDefault();
-//     const name = document.getElementById('name').value.trim();
-//     const email = document.getElementById('email').value.trim();
-//     if (!name) {
-//         alert('Inserisci il tuo nome.');
-//         return;
-//     }
-//     if (!email) {
-//         alert('Inserisci la tua email.');
-//         return;
-//     }
-//     if (!validateEmail(email)) {
-//         alert('Inserisci un indirizzo email valido.');
-//         return;
-//     }
-//     // Se i campi sono validi, invia il form
-//     form.submit();
-// });
-// function validateEmail(email) {
-//     const re = /\S+@\S+\.\S+/;
-//     return re.test(email);
-// }
-
-
-// if (title.value && title.value.length >= 2 && title.value.length <= 255) {
-//     if (rooms.value && rooms.value >= 1 && rooms.value <= 20) {
-//         if (beds.value && beds.value >= 1 && beds.value <= 40) {
-//             if (bathrooms.value && bathrooms.value >= 1 && bathrooms.value <= 10) {
-//                 if (square_meters.value && square_meters.value >= 4) {
-//                     if (address.value && address.value.length >= 2 && address.value.length <= 255) {
-//                         services.forEach(service => {
-//                             if (service.checked) {
-//                                 if (!image.value) {
-//                                     this.submit()
-//                                 } else {
-//                                     for (let i = 0; i < allowedExtensions.length; i++) {
-//                                         if (image.value.endsWith(allowedExtensions[i])) {
-//                                             const imageSize = Math.round(image.files[0].size / 1024 / 1024)
-//                                             if (imageSize <= 2) {
-//                                                 this.submit()
-//                                             }
-//                                         }
-//                                     }
-//                                 }
-//                             }
-//                         })
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }

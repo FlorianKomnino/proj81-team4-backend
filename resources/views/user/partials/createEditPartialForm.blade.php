@@ -88,6 +88,8 @@
         <hr class="mb-0">
 
         <label for="image" class=" p-1">Inserisci un'immagine</label>
+        <span id="image-error" class="text-danger invalid-feedback">Il file inserito deve essere un'immagine di dimensioni non superiori a 2 megabyte</span>
+
 
         <div class="p-0 d-flex">
             @error('image')

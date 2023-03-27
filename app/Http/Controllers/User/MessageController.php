@@ -18,8 +18,7 @@ class MessageController extends Controller
      */
     public function index(Apartment $apartment)
     {
-        dd($apartment);
-        $messages = Message::all()->where('apartment_id', $apartment->id);
+        $messages = Message::where('apartment_id', $apartment->id)->get();
         return view('user.message.indexApartmentMessage', compact('messages', 'apartment'));
     }
 

@@ -32,7 +32,8 @@ Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(fu
     Route::patch('/{apartment}/toggle', [UserApartmentController::class, 'enableToggle'])->name('apartments.toggle');
     Route::get('/paymentForm', [BraintreeController::class, 'paymentForm'])->name('paymentForm');
     Route::post('/getToken', [BraintreeController::class, 'getToken'])->name('getToken');
-    Route::resource('messages', UserMessageController::class);
+    //Route::resource('messages', UserMessageController::class);
+    Route::get('/messages/{apartment}', [UserMessageController::class, 'index'])->name('messages');
 });
 
 Route::middleware('auth')->group(function () {

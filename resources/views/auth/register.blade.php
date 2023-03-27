@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('head')
+    @vite(['resources/js/userRegisterFormValidations.js'])
+@endsection
+
 @section('content')
     <div class="container mt-4">
         <div class="row justify-content-center">
@@ -8,17 +12,17 @@
                     <div class="card-header">{{ __('Register') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" id="form" action="{{ route('register') }}">
                             @csrf
 
                             {{-- email --}}
+                            <span id="email-error" class="text-danger invalid-feedback">L'email è necessaria</span>
                             <div class="mb-4 row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">Email: * </label>
-
                                 <div class="col-md-6">
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ old('email') }}" required autocomplete="email">
+                                        value="{{ old('email') }}" autocomplete="email">
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -29,13 +33,14 @@
                             </div>
 
                             {{-- password --}}
+                            <span id="password-error" class="text-danger invalid-feedback">La password è necessaria</span>
                             <div class="mb-4 row">
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Password: *</label>
 
                                 <div class="col-md-6">
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="new-password">
+                                         autocomplete="new-password">
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -46,17 +51,19 @@
                             </div>
 
                             {{-- password confirm --}}
+                            <span id="confirmPassword-error" class="text-danger invalid-feedback">Conferma la tua password</span>
                             <div class="mb-4 row">
                                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm
                                     password: *</label>
 
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
-                                        name="password_confirmation" required autocomplete="new-password">
+                                        name="password_confirmation"  autocomplete="new-password">
                                 </div>
                             </div>
 
                             {{-- name --}}
+                            <span id="name-error" class="text-danger invalid-feedback">Inserisci almeno 3 caratteri</span>
                             <div class="mb-4 row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Name: </label>
 
@@ -74,6 +81,7 @@
                             </div>
 
                             {{-- surname --}}
+                            <span id="surname-error" class="text-danger invalid-feedback">Inserisci almeno 3 caratteri</span>
                             <div class="mb-4 row">
                                 <label for="surname" class="col-md-4 col-form-label text-md-right">Surname:</label>
 
@@ -91,6 +99,7 @@
                             </div>
 
                             {{-- birth_date --}}
+                            <span id="birth_date-error" class="text-danger invalid-feedback">Seleziona una data</span>
                             <div class="mb-4 row">
                                 <label for="birth_date" class="col-md-4 col-form-label text-md-right">Birth date:</label>
 

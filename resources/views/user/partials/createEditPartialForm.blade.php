@@ -64,11 +64,11 @@
             @if ($route == 'user.apartments.update')
                 <span class="lightGreyText">Indirizzo attuale dell'appartamento:</span>
                 <span class="fw-bold">{{ old('address', $apartment->address) }}</span>
-                <input type="text" value="{{ old('address', $apartment->address) }}" class="d-none inputAddress" name="address">
-                <p class="m-0 lightGreyText">Se vuoi cambiarlo, cerca il nuovo qui sotto!</p>
+                <input type="text" id="address" value="{{ old('address', $apartment->address) }}" class="d-none inputAddress" name="address">
+                <p class="m-0 lightGreyText">Se vuoi cambiarlo, cerca e seleziona dal menu un indirizzo valido!</p>
             @else
                 <span class="lightGreyText">Indirizzo dell'appartamento:</span>
-                <input type="text" value="{{ old('address', $apartment->address) }}" class="d-none inputAddress" name="address">
+                <input type="text" id="address" value="{{ old('address', $apartment->address) }}" class="d-none inputAddress" name="address">
             @endif
             @error('address')
                 <p class="text-danger">{{ $message }}</p>
@@ -76,12 +76,8 @@
             @if (session('message'))
                 <p class="text-danger">{{session('message')}}</p>
             @endif
-            {{-- <label for="address">Indirizzo dell'appartamento:</label> --}}
-            <span id="address-error" class="text-danger invalid-feedback">L'indirizzo deve essere di almeno 3 caratteri</span>
-            {{-- Old input, verify if the new implementation is okay --}}
-            {{-- <input  id="address" type="text" value="{{ old('address', $apartment->address) }}" class="p-0 border-0" placeholder="Indirizzo dell'appartamento" name="address"> --}}
+            <span id="address-error" class="text-danger invalid-feedback">L'indirizzo deve essere selezionato dal menu a tendina</span>
 
-            {{-- This is the div in which there il will be the search bar by Tomtom, it is added by "tomtom.js" --}}
             <div class="searchBar"></div>
         </div>
         <hr>

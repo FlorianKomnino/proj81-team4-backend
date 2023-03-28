@@ -15,7 +15,7 @@
             <div class="col-12">
                 <div class="col-12 d-flex justify-content-between">
                     <h3>{{$apartment->title}}</h3>
-                    <a href="{{ route('user.messages', $apartment) }}" class="btn btn-primary">Statistiche e messaggi</a>
+                    <a href="{{ route('user.messages.index', $apartment) }}" class="btn btn-primary">Statistiche e messaggi</a>
                 </div>
                 
                 <p><span class="text-danger">13 recensioni</span> - <span>{{$user->name}}</span></span></p>

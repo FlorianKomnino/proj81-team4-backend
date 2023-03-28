@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
+use App\Models\Message;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -240,7 +241,7 @@ class ApartmentController extends Controller
      * @param  Apartment $apartment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Apartment $apartment)
+    public function destroy(Apartment $apartment, Message $message)
     {
         // dd(isset($apartment->image));
         if (isset($apartment->image)) {
@@ -249,6 +250,8 @@ class ApartmentController extends Controller
             $apartment->delete();
             return redirect()->route('user.apartments.index');
         }
+        // remove comment if you want to delete messages with apartment's soft delete
+        // $message = Message::where('apartment_id', $apartment->id)->delete();
         $apartment->delete();
         return redirect()->route('user.apartments.index');
     }

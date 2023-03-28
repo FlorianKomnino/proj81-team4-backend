@@ -128,10 +128,12 @@ class ApartmentController extends Controller
         $errors = $this->validationErrorMessages;
         $data = $request->validate($rules, $errors);
         $data['slug'] = Str::slug($data['title']);
-
+        if (str_contains($data['address'], '/')){
+            $newAddress = str_replace('/', '_', $data['address']);
+        }
 
         //tomtom call
-        $response = Http::get("https://api.tomtom.com/search/2/search/" . $data['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
+        $response = Http::get("https://api.tomtom.com/search/2/search/" . $newAddress . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
         $jsonData = $response->json();
 
         $data['user_id'] = Auth::user()->id;

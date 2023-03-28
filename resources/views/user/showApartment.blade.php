@@ -77,9 +77,9 @@
                             <div class="row w-50 d-none"> 
                                 <div class="input-group mb-3 col-3 p-0">
                                     <input name="coordinate[]" type="text" class="form-control shadow-none" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                                    placeholder="Search" id="locationQuery" value="{{$jsonData['results'][0]['position']['lon']}}">
+                                    placeholder="Search" id="locationQuery" value="{{$apartment->longitude}}">
                                     <input name="coordinate[]" type="text" class="form-control shadow-none" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                                    placeholder="Search" id="locationQuery" value="{{$jsonData['results'][0]['position']['lat']}}">
+                                    placeholder="Search" id="locationQuery" value="{{$apartment->latitude}}">
                                 </div>
                             </div>
                             <div id="map" class="map">

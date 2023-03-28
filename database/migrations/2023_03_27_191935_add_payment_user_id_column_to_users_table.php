@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('payment_user_id')->after('payment_token');
+            $table->integer('payment_user_id')->after('payment_token')->default(0);
         });
     }
 

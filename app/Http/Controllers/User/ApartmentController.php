@@ -216,7 +216,6 @@ class ApartmentController extends Controller
         } else {
             $data['image'] = asset('logo/home.jpeg');
         }
-
         //wrong address control
         if ($jsonData['results'] != []) {
             $data['latitude'] = $jsonData['results'][0]['position']['lat'];

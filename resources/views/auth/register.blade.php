@@ -9,7 +9,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Register') }}</div>
+                    <div class="card-header">{{ __('Registrati') }}</div>
 
                     <div class="card-body">
                         <form method="POST" id="form" action="{{ route('register') }}">
@@ -53,7 +53,7 @@
                             {{-- password confirm --}}
                             <span id="confirmPassword-error" class="text-danger invalid-feedback">Conferma la tua password</span>
                             <div class="mb-4 row">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm
+                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Conferma 
                                     password: *</label>
 
                                 <div class="col-md-6">
@@ -65,7 +65,7 @@
                             {{-- name --}}
                             <span id="name-error" class="text-danger invalid-feedback">Inserisci almeno 3 caratteri</span>
                             <div class="mb-4 row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">Name: </label>
+                                <label for="name" class="col-md-4 col-form-label text-md-right">Nome: </label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text"
@@ -83,7 +83,7 @@
                             {{-- surname --}}
                             <span id="surname-error" class="text-danger invalid-feedback">Inserisci almeno 3 caratteri</span>
                             <div class="mb-4 row">
-                                <label for="surname" class="col-md-4 col-form-label text-md-right">Surname:</label>
+                                <label for="surname" class="col-md-4 col-form-label text-md-right">Cognome:</label>
 
                                 <div class="col-md-6">
                                     <input id="surname" type="text"
@@ -101,7 +101,7 @@
                             {{-- birth_date --}}
                             <span id="birth_date-error" class="text-danger invalid-feedback">Seleziona una data</span>
                             <div class="mb-4 row">
-                                <label for="birth_date" class="col-md-4 col-form-label text-md-right">Birth date:</label>
+                                <label for="birth_date" class="col-md-4 col-form-label text-md-right">Data di nascita:</label>
 
                                 <div class="col-md-6">
                                     <input id="birth_date" type="date"
@@ -119,7 +119,7 @@
                             <div class="mb-4 row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ __('Register') }}
+                                        {{ __('Registrati') }}
                                     </button>
                                 </div>
                             </div>

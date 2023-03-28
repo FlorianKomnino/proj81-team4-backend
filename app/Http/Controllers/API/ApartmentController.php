@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+use App\Models\Message;
 use App\Models\Service;
 use Illuminate\Support\Facades\DB;
 
@@ -55,6 +56,25 @@ class ApartmentController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => $filteredApartments,
+        ]);
+    }
+
+    public function receivedMessage(Request $request)
+    {
+        
+        //$receivedMessage->text_content = 
+        //$receivedMessage->email = 
+        $data = $request->query();
+
+        $receivedMessage = new Message();
+
+        $receivedMessage->text_content = $data['message'];
+        $receivedMessage->email = $data['email'];
+        //$receivedMessage->save();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $receivedMessage,
         ]);
     }
 

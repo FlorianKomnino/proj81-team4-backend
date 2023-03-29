@@ -129,8 +129,9 @@ class ApartmentController extends Controller
         $errors = $this->validationErrorMessages;
         $data = $request->validate($rules, $errors);
         $data['slug'] = Str::slug($data['title']);
-        if (str_contains($data['address'], '/')){
-            $newAddress = str_replace('/', '_', $data['address']);
+        $newAddress = $data['address'];
+        if (str_contains($newAddress, '/')) {
+            $newAddress = str_replace('/', '_', $newAddress);
         }
 
         //tomtom call

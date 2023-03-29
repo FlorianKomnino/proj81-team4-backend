@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('head')
+    @vite(['resources/js/confirmDeletation.js'])
+@endsection
 @section('content')
     <div class="container">
         <div class="row">

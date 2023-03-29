@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Apartment;
+use App\Models\Sponsorship;
 use Illuminate\Http\Request;
 use Braintree\Gateway;
 use Braintree_Transaction;
@@ -10,9 +11,9 @@ use Illuminate\Support\Facades\Auth;
 
 class BraintreeController extends Controller
 {
-    public function paymentForm(Request $request)
+    public function paymentForm(Request $request, Apartment $apartment, Sponsorship $sponsorship)
     {
-        return view('braintree.paymentForm');
+        return view('braintree.paymentForm', ['apartment' => $apartment, 'sponsorship' => $sponsorship]);
     }
 
 
@@ -43,11 +44,13 @@ class BraintreeController extends Controller
 
     public function sponsorshipIndex(Apartment $apartment)
     {
-        return view('braintree.sponsorshipIndex', ['apartment' => $apartment]);
+        $sponsorships = Sponsorship::all();
+        return view('braintree.sponsorshipIndex', ['apartment' => $apartment, 'sponsorships' => $sponsorships]);
     }
 
-    public function checkout()
+    public function checkout(Sponsorship $sponsorship, Apartment $apartment)
     {
+        dd($apartment);
         return view('braintree.checkoutSuccess');
     }
 

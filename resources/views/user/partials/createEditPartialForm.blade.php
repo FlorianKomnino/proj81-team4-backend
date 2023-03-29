@@ -17,7 +17,7 @@
                 <p class="text-danger">{{ $message }}</p>
             @enderror
             <label for="title">Titolo:</label>
-            <span id="title-error" class="text-danger invalid-feedback">Il Titolo è necessario</span>
+            <span id="title-error" class="text-danger invalid-feedback"></span>
             <textarea id="title" class="p-0 border-0" placeholder="Inserisci un titolo descrittivo per l'appartamento" name="title">{{ old('title', $apartment->title) }}</textarea>
         </div>
         <hr>
@@ -27,7 +27,7 @@
                 <p class="text-danger">{{ $message }}</p>
             @enderror
             <label for="rooms">Numero di stanze:</label>
-            <span id="rooms-error" class="text-danger invalid-feedback">Il n° di stanze è necessario</span>
+            <span id="rooms-error" class="text-danger invalid-feedback"></span>
             <input id="rooms" type="number" value="{{ old('rooms', $apartment->rooms) }}" class="p-0 border-0"
                 placeholder="Numero di stanze" name="rooms">
         </div>
@@ -38,7 +38,7 @@
                 <p class="text-danger">{{ $message }}</p>
             @enderror
             <label for="beds">Numero di letti:</label>
-            <span id="beds-error" class="text-danger invalid-feedback">Il n° di letti è necessario</span>
+            <span id="beds-error" class="text-danger invalid-feedback"></span>
             <input id="beds" type="number" value="{{ old('beds', $apartment->beds) }}" class="p-0 border-0"
                 placeholder="Numero di letti" name="beds">
         </div>
@@ -49,7 +49,7 @@
                 <p class="text-danger">{{ $message }}</p>
             @enderror
             <label for="bathrooms">Numero di bagni:</label>
-            <span id="bathrooms-error" class="text-danger invalid-feedback">Il n° di bagni è necessario</span>
+            <span id="bathrooms-error" class="text-danger invalid-feedback"></span>
             <input id="bathrooms" type="number" value="{{ old('bathrooms', $apartment->bathrooms) }}" class="p-0 border-0"
                 placeholder="Numero di Bagni" name="bathrooms">
         </div>
@@ -59,8 +59,8 @@
             @error('square_meters')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <label for="square_meters">Metri quadrati:</label>
-            <span id="square_meters-error" class="text-danger invalid-feedback">Il numero di metri quadri è necessario</span>
+            <label for="square_meters">Metri quadri:</label>
+            <span id="square_meters-error" class="text-danger invalid-feedback"></span>
             <input id="square_meters" type="number" value="{{ old('square_meters', $apartment->square_meters) }}" class="p-0 border-0"
                 placeholder="Metri quadrati" name="square_meters">
         </div>
@@ -82,7 +82,7 @@
             @if (session('message'))
                 <p class="text-danger">{{session('message')}}</p>
             @endif
-            <span id="address-error" class="text-danger invalid-feedback">L'indirizzo deve essere selezionato dal menu a tendina</span>
+            <span id="address-error" class="text-danger invalid-feedback"></span>
 
             <div class="searchBar"></div>
         </div>
@@ -95,7 +95,7 @@
         <hr class="mb-0">
         {{-- image --}}
         <label for="image" class=" p-1">Inserisci un'immagine</label>
-        <span id="image-error" class="text-danger invalid-feedback">Il file inserito deve essere un'immagine di dimensioni non superiori a 2 megabyte</span>
+        <span id="image-error" class="text-danger invalid-feedback"></span>
         <div class="p-0 d-flex">
             @error('image')
                 <p class="text-danger">{{ $message }}</p>
@@ -108,7 +108,7 @@
             @error('services')
                 <p class="text-danger">{{ $message }}</p>
             @enderror
-            <span id="services-error" class="text-danger invalid-feedback">Almeno un servizio deve essere selezionato</span>
+            <span id="services-error" class="text-danger invalid-feedback"></span>
             @foreach ($services as $service)
                 <div class="single-tag d-flex align-items-center">
                     <input type="checkbox" class="form-check-input my-service" name="services[]" value="{{ $service->id }}"

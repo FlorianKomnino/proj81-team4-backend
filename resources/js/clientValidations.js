@@ -27,30 +27,27 @@ const image = document.getElementById('image')
 const imageError = document.getElementById('image-error')
 
 
-
-const allowedExtensions = ['.png', '.webp', '.svg', '.jpg', '.jpeg', '.jfif', '.pjpeg', '.pjp', '.gif', '.avif', '.apng', '.bmp', '.ico', '.cur', '.tif', '.tiff']
-
 // custom validations functions
 
-function isValid(condition, field) {
-    if (condition) {
-        return field.classList.add('invalid-feedback')
-    } else {
-        return field.classList.remove('invalid-feedback')
-    }
-}
+// function isValid(condition, field) {
+//     if (condition) {
+//         return field.classList.add('invalid-feedback')
+//     } else {
+//         return field.classList.remove('invalid-feedback')
+//     }
+// }
 
-function lengthValidation(inputElement, min, max, error) {
-    inputElement.addEventListener('input', function () {
-        isValid((inputElement.value.length >= min && inputElement.value.length <= max), error)
-    })
-}
+// function lengthValidation(inputElement, min, max, error) {
+//     inputElement.addEventListener('input', function () {
+//         isValid((inputElement.value.length >= min && inputElement.value.length <= max), error)
+//     })
+// }
 
-function numberRangeValidation(inputElement, min, max, error) {
-    inputElement.addEventListener('input', function () {
-        isValid((inputElement.value >= min && inputElement.value <= max), error)
-    })
-}
+// function numberRangeValidation(inputElement, min, max, error) {
+//     inputElement.addEventListener('input', function () {
+//         isValid((inputElement.value >= min && inputElement.value <= max), error)
+//     })
+// }
 
 
 //interactive validations
@@ -71,96 +68,72 @@ formElement.addEventListener('submit', function (event) {
 
     // title
     if (!title.value) {
+        titleError.innerText = 'Il titolo è necessario'
+        titleError.classList.remove('invalid-feedback')
+        success = false
+    } else if (title.value.length < 2 || title.value.length > 255) {
+        titleError.innerText = 'La lunghezza deve essere compresa tra 2 e 255 caratteri inclusi'
         titleError.classList.remove('invalid-feedback')
         success = false
     } else {
         titleError.classList.add('invalid-feedback')
     }
 
-    if (title.value) {
-        if (title.value.length < 2 || title.value.length > 255) {
-            titleError.innerText = 'La lunghezza deve essere compresa tra 2 e 255 caratteri inclusi'
-            titleError.classList.remove('invalid-feedback')
-            success = false
-        } else {
-            titleError.classList.add('invalid-feedback')
-        }
-    }
-
     // rooms
     if (!rooms.value) {
+        roomsError.innerText = 'Il n° di stanze è necessario'
+        roomsError.classList.remove('invalid-feedback')
+        success = false
+    } else if (rooms.value < 1 || rooms.value > 20) {
+        roomsError.innerText = 'Il numero di stanze deve essere compreso tra 1 e 20 inclusi'
         roomsError.classList.remove('invalid-feedback')
         success = false
     } else {
         roomsError.classList.add('invalid-feedback')
     }
 
-    if (rooms.value) {
-        if (rooms.value < 1 || rooms.value > 20) {
-            roomsError.innerText = 'Il numero di stanze deve essere compreso tra 1 e 20 inclusi'
-            roomsError.classList.remove('invalid-feedback')
-            success = false
-        } else {
-            roomsError.classList.add('invalid-feedback')
-        }
-    }
-
     // beds
     if (!beds.value) {
+        bedsError.innerText = 'Il n° di letti è necessario'
+        bedsError.classList.remove('invalid-feedback')
+        success = false
+    } else if (beds.value < 1 || beds.value > 40) {
+        bedsError.innerText = 'Il numero di letti deve essere compreso tra 1 e 40 inclusi'
         bedsError.classList.remove('invalid-feedback')
         success = false
     } else {
         bedsError.classList.add('invalid-feedback')
     }
 
-    if (beds.value) {
-        if (beds.value < 1 || beds.value > 40) {
-            bedsError.innerText = 'Il numero di letti deve essere compreso tra 1 e 40 inclusi'
-            bedsError.classList.remove('invalid-feedback')
-            success = false
-        } else {
-            bedsError.classList.add('invalid-feedback')
-        }
-    }
-
     // bathrooms
     if (!bathrooms.value) {
+        bathroomsError.innerText = 'Il n° di bagni è necessario'
+        bathroomsError.classList.remove('invalid-feedback')
+        success = false
+    } else if (bathrooms.value < 1 || bathrooms.value > 10) {
+        bathroomsError.innerText = 'Il numero di bagni deve essere compreso tra 1 e 10 inclusi'
         bathroomsError.classList.remove('invalid-feedback')
         success = false
     } else {
         bathroomsError.classList.add('invalid-feedback')
     }
 
-    if (bathrooms.value) {
-        if (bathrooms.value < 1 || bathrooms.value > 10) {
-            bathroomsError.innerText = 'Il numero di bagni deve essere compreso tra 1 e 10 inclusi'
-            bathroomsError.classList.remove('invalid-feedback')
-            success = false
-        } else {
-            bathroomsError.classList.add('invalid-feedback')
-        }
-    }
-
     // squareMeters
     if (!squareMeters.value) {
+        squareMetersError.innerText = 'Il n° di metri quadri è necessario'
+        squareMetersError.classList.remove('invalid-feedback')
+        success = false
+    } else if (squareMeters.value < 4) {
+        squareMetersError.innerText = 'Il numero di metri quadri deve essere maggiore o uguale a 4'
         squareMetersError.classList.remove('invalid-feedback')
         success = false
     } else {
         squareMetersError.classList.add('invalid-feedback')
     }
 
-    if (squareMeters.value) {
-        if (squareMeters.value < 4) {
-            squareMetersError.innerText = 'Il numero di metri quadri deve essere maggiore o uguale a 4'
-            squareMetersError.classList.remove('invalid-feedback')
-            success = false
-        } else {
-            squareMetersError.classList.add('invalid-feedback')
-        }
-    }
-
     // address
     if (!address.value) {
+        addressError.innerText = 'L\'indirizzo deve essere selezionato dal menu a tendina'
         addressError.classList.remove('invalid-feedback')
         success = false
     } else {
@@ -177,6 +150,7 @@ formElement.addEventListener('submit', function (event) {
     });
 
     if (!atLeastOne) {
+        servicesError.innerText = 'Almeno un servizio deve essere selezionato'
         servicesError.classList.remove('invalid-feedback')
         success = false
 
@@ -185,9 +159,12 @@ formElement.addEventListener('submit', function (event) {
     }
 
     // image
+    const allowedExtensions = ['.png', '.webp', '.svg', '.jpg', '.jpeg', '.jfif', '.pjpeg', '.pjp', '.gif', '.avif', '.apng', '.bmp', '.ico', '.cur', '.tif', '.tiff']
+
     if (image.value) {
         const imageSize = Math.round(image.files[0].size / 1024 / 1024)
         if (imageSize > 2) {
+            imageError.innerText = 'Il file inserito deve essere un\'immagine di dimensioni non superiori a 2 megabyte'
             imageError.classList.remove('invalid-feedback')
             success = false
             for (let i = 0; i < allowedExtensions.length; i++) {
@@ -197,7 +174,7 @@ formElement.addEventListener('submit', function (event) {
                 }
             }
 
-        } else if (imageSize <= 2) {
+        } else {
             imageError.classList.add('invalid-feedback')
         }
 

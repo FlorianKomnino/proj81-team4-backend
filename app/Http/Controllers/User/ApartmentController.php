@@ -218,7 +218,7 @@ class ApartmentController extends Controller
             Storage::delete($apartment->image);
             $data['image'] = Storage::put('imgs/', $data['image']);
         } else {
-            $data['image'] = asset('logo/home.jpeg');
+            $data['image'] = $apartment->image;
         }
         //wrong address control
         if ($jsonData['results'] != []) {

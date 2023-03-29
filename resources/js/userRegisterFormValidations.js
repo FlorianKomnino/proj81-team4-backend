@@ -32,14 +32,16 @@ formElement.addEventListener('submit', function (event) {
 
     //single fields validation
 
+    // email
     if (!email.value) {
+        emailError.innerText = 'L\'email è necessaria'
         emailError.classList.remove('invalid-feedback')
         success = false
-    } else if (email.value) {
+    } else {
         let regex = /\S+@\S+\.\S+/;
 
         if (!regex.test(email.value)) {
-            console.log("Email non valida");
+            emailError.innerText = 'Email non valida'
             emailError.classList.remove('invalid-feedback')
             success = false
         } else {
@@ -47,59 +49,58 @@ formElement.addEventListener('submit', function (event) {
         }
     }
 
-
+    // password
     if (!password.value) {
+        passwordError.innerText = 'Inserisci la tua password'
         passwordError.classList.remove('invalid-feedback')
         success = false
-        console.log('inserisci la passw')
-    }
-
-    if (password.value && password.value.length < 8) {
+    } else if (password.value.length < 8) {
+        passwordError.innerText = 'Inserisci almeno 8 caratteri'
         passwordError.classList.remove('invalid-feedback')
         success = false
-        console.log('8 caratteri minimi')
+    } else {
+        passwordError.classList.add('invalid-feedback')
     }
 
-    if (password.value != confirmPassword.value) {
-        passwordError.classList.remove('invalid-feedback')
-        confirmPasswordError.classList.remove('invalid-feedback')
-        success = false
-        console.log('Le password non coincidono')
-    }
-
+    // confirmPassword
     if (!confirmPassword.value) {
+        confirmPasswordError.innerText = 'Conferma la tua password'
         confirmPasswordError.classList.remove('invalid-feedback')
         success = false
-        console.log('Conferma la passw')
-    }
-
-    if (confirmPassword.value != password.value) {
+    } else if (confirmPassword.value != password.value) {
+        confirmPasswordError.innerText = 'Le password non coincidono'
+        confirmPasswordError.classList.remove('invalid-feedback')
+        passwordError.innerText = 'Le password non coincidono'
         passwordError.classList.remove('invalid-feedback')
-        confirmPasswordError.classList.remove('invalid-feedback')
         success = false
-        console.log('le passw non coincidono')
+    } else {
+        passwordError.classList.add('invalid-feedback')
+        confirmPasswordError.classList.add('invalid-feedback')
     }
 
-    if (userName.value && userName.value.length < 3) {
+    // name
+    if (userName.value && userName.value.length < 2) {
+        nameError.innerHTML = 'Inserisci almeno 2 caratteri'
         nameError.classList.remove('invalid-feedback')
         success = false
-        console.log('le passw non coincidono')
     } else {
         nameError.classList.add('invalid-feedback')
     }
 
-    if (userSurname.value && userSurname.value.length < 3) {
+    // surname
+    if (userSurname.value && userSurname.value.length < 2) {
+        surnameError.innerHTML = 'Inserisci almeno 2 caratteri'
         surnameError.classList.remove('invalid-feedback')
         success = false
-        console.log('le passw non coincidono')
     } else {
         surnameError.classList.add('invalid-feedback')
     }
 
+    // birthDate
     if (birthDate.value) {
         let regexp = /^\d{4}-\d{2}-\d{2}$/;
         if (!regexp.test(birthDate.value)) {
-            console.log("Inserisci una data valida");
+            birthDateError.innerText = 'Inserisci una data valida'
             birthDateError.classList.remove('invalid-feedback')
             success = false
         } else {

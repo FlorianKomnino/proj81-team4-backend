@@ -30,7 +30,7 @@ Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(fu
     Route::get('apartments/testshow', [UserApartmentController::class, 'serviceFilter'])->name('apartments.filter');
     Route::resource('apartments', UserApartmentController::class);
     Route::patch('/{apartment}/toggle', [UserApartmentController::class, 'enableToggle'])->name('apartments.toggle');
-    Route::get('/paymentForm', [BraintreeController::class, 'paymentForm'])->name('paymentForm');
+    Route::get('/paymentForm/{apartment}/{sponsorship}', [BraintreeController::class, 'paymentForm'])->name('paymentForm');
     Route::post('/getToken', [BraintreeController::class, 'getToken'])->name('getToken');
     
     Route::delete('/messages/{message}', [UserMessageController::class, 'destroy'])->name('messages.destroy');
@@ -39,7 +39,7 @@ Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(fu
     Route::get('/sponsorshipIndex/{apartment}', [BraintreeController::class, 'sponsorshipIndex'])->name('sponsorshipIndex');
 });
 
-Route::post('/checkout', [BraintreeController::class, 'checkout'])->name('checkout');
+Route::post('/checkout/{sponsorship}/{apartment}', [BraintreeController::class, 'checkout'])->name('checkout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

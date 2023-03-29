@@ -6,20 +6,16 @@
 @endsection
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-6">
-            <form  id="payment-form" method="POST" action="/checkout">
-                @csrf
-                <div id="dropin-container"></div>
-                <input type="hidden" id="nonce" name="payment_method_nonce"/>
-                <input type="submit" value="pay $10">
-            
-            </form> 
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <form  id="payment-form" method="POST" action="{{route('checkout', [$sponsorship, $apartment])}}">
+                    @csrf
+                    <div id="dropin-container"></div>
+                    <input type="hidden" id="nonce" name="payment_method_nonce"/>
+                    <input type="submit" value="pay &euro;{{$sponsorship->price}}">
+                </form> 
+            </div>
         </div>
     </div>
-</div>
-
-
-
 @endsection

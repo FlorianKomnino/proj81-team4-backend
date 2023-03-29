@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Apartment;
+use App\Models\Sponsorship;
 use Illuminate\Http\Request;
 use Braintree\Gateway;
 use Braintree_Transaction;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BraintreeController extends Controller
 {
-    public function paymentForm(Request $request)
+    public function paymentForm(Request $request, Apartment $apartment, Sponsorship $sponsorship)
     {
-        return view('braintree.paymentForm');
+        return view('braintree.paymentForm', ['apartment' => $apartment, 'sponsorship' => $sponsorship]);
     }
 
 
@@ -43,11 +46,42 @@ class BraintreeController extends Controller
 
     public function sponsorshipIndex(Apartment $apartment)
     {
-        return view('braintree.sponsorshipIndex', ['apartment' => $apartment]);
+        $sponsorships = Sponsorship::all();
+        return view('braintree.sponsorshipIndex', ['apartment' => $apartment, 'sponsorships' => $sponsorships]);
     }
 
-    public function checkout()
+    public function checkout(Sponsorship $sponsorship, Apartment $apartment)
     {
+        if (
+            $apartment->sponsorships()->where('apartment_id', $apartment->id)->exists()
+            && DB::table('apartment_sponsorship')->where('apartment_id', $apartment->id)->orderBy('id', 'desc')->limit(1)->get()[0]->ending_time > now()
+        ) {
+            $valueToUpdate = DB::table('apartment_sponsorship')
+            ->where('apartment_id', $apartment->id)
+            ->orderBy('id', 'desc')
+            ->limit(1)
+            ->get()[0]
+            ->ending_time;
+            $newEndingDateTime = Carbon::parse($valueToUpdate)->addHours($sponsorship->duration_hours);
+
+            DB::table('apartment_sponsorship')
+            ->where('apartment_id', $apartment->id)
+            ->where('ending_time', '=', $valueToUpdate)        
+            ->update(['ending_time' => $newEndingDateTime, 'sponsorship_id' => $sponsorship->id, 'updated_at' => now()]);
+            
+        } else {
+            $sponsorship->apartments()
+                ->attach(
+                    $apartment,
+                    [
+                        'apartment_id' => $apartment->id,
+                        'sponsorship_id' => $sponsorship->id,
+                        'starting_time' => now(),
+                        'ending_time' => now()->addHours($sponsorship->duration_hours),
+                        'created_at' => now(),
+                    ]
+                );
+        }
         return view('braintree.checkoutSuccess');
     }
 

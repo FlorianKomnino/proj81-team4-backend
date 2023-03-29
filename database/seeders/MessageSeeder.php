@@ -79,9 +79,9 @@ class MessageSeeder extends Seeder
      */
     public function run()
     {
-        foreach($this->messages as $message){
+        foreach ($this->messages as $message) {
             $newMessage = new Message();
-            $newMessage->apartment_id = 7;
+            $newMessage->apartment_id = 1;
             $newMessage->text_content = $message['text_content'];
             $newMessage->email = $message['email'];
             $newMessage->name = $message['name'];

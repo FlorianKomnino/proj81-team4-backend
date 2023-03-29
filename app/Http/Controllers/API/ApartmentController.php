@@ -61,21 +61,14 @@ class ApartmentController extends Controller
 
     public function receivedMessage(Request $request)
     {
-        
-        //$receivedMessage->text_content = 
-        //$receivedMessage->email = 
-        $data = $request->query();
-
+        $data = $request->all();
         $receivedMessage = new Message();
 
-        $receivedMessage->text_content = $data['message'];
+        $receivedMessage->text_content = $data['text_content'];
         $receivedMessage->email = $data['email'];
-        //$receivedMessage->save();
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $receivedMessage,
-        ]);
+        $receivedMessage->apartment_id = $data['apartment_id'];
+        $receivedMessage->name = $data['name'];
+        $receivedMessage->save();
     }
 
     /**

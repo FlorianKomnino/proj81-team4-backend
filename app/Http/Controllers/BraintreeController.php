@@ -53,25 +53,22 @@ class BraintreeController extends Controller
     public function checkout(Sponsorship $sponsorship, Apartment $apartment)
     {
         if (
-            $sponsorship->apartments()->where('apartment_id', $apartment->id)->exists()
+            $apartment->sponsorships()->where('apartment_id', $apartment->id)->exists()
             && DB::table('apartment_sponsorship')->where('apartment_id', $apartment->id)->orderBy('id', 'desc')->limit(1)->get()[0]->ending_time > now()
         ) {
             $valueToUpdate = DB::table('apartment_sponsorship')
-                ->where('apartment_id', $apartment->id)
-                ->orderBy('id', 'desc')
-                ->limit(1)
-                ->get()[0]
-                ->ending_time;
+            ->where('apartment_id', $apartment->id)
+            ->orderBy('id', 'desc')
+            ->limit(1)
+            ->get()[0]
+            ->ending_time;
             $newEndingDateTime = Carbon::parse($valueToUpdate)->addHours($sponsorship->duration_hours);
 
-            $sponsorship->apartments()
-                ->updateExistingPivot(
-                    $apartment->id,
-                    [
-                        'ending_time' => $newEndingDateTime,
-                        'updated_at' => now(),
-                    ]
-                );
+            DB::table('apartment_sponsorship')
+            ->where('apartment_id', $apartment->id)
+            ->where('ending_time', '=', $valueToUpdate)        
+            ->update(['ending_time' => $newEndingDateTime, 'sponsorship_id' => $sponsorship->id, 'updated_at' => now()]);
+            
         } else {
             $sponsorship->apartments()
                 ->attach(
@@ -85,11 +82,6 @@ class BraintreeController extends Controller
                     ]
                 );
         }
-
-
-
-
-
         return view('braintree.checkoutSuccess');
     }
 

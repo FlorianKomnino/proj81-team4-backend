@@ -62,7 +62,7 @@
             <label for="square_meters">Metri quadri:</label>
             <span id="square_meters-error" class="text-danger invalid-feedback"></span>
             <input id="square_meters" type="number" value="{{ old('square_meters', $apartment->square_meters) }}" class="p-0 border-0"
-                placeholder="Metri quadrati" name="square_meters">
+                placeholder="Metri quadri" name="square_meters">
         </div>
         <hr>
         {{-- address --}}

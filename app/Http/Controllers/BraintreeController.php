@@ -31,7 +31,6 @@ class BraintreeController extends Controller
         $result = $gateway->customer()->create([
             'firstName' => Auth::user()->name,
             'lastName' => Auth::user()->surname,
-            'company' => 'Jones Co.',
             'email' => Auth::user()->email,
             'website' => 'http://boolean.com'
         ]);
@@ -50,25 +49,34 @@ class BraintreeController extends Controller
         return view('braintree.sponsorshipIndex', ['apartment' => $apartment, 'sponsorships' => $sponsorships]);
     }
 
-    public function checkout(Sponsorship $sponsorship, Apartment $apartment)
+    public function checkout(Request $request, Sponsorship $sponsorship, Apartment $apartment)
     {
+
+        // $result = $gateway->transaction()->sale([
+        //     'amount' => '10.00',
+        //     'paymentMethodNonce' => $nonceFromTheClient,
+        //     'deviceData' => $deviceDataFromTheClient,
+        //     'options' => [
+        //         'submitForSettlement' => True
+        //     ]
+        // ]);
+
         if (
             $apartment->sponsorships()->where('apartment_id', $apartment->id)->exists()
             && DB::table('apartment_sponsorship')->where('apartment_id', $apartment->id)->orderBy('id', 'desc')->limit(1)->get()[0]->ending_time > now()
         ) {
             $valueToUpdate = DB::table('apartment_sponsorship')
-            ->where('apartment_id', $apartment->id)
-            ->orderBy('id', 'desc')
-            ->limit(1)
-            ->get()[0]
-            ->ending_time;
+                ->where('apartment_id', $apartment->id)
+                ->orderBy('id', 'desc')
+                ->limit(1)
+                ->get()[0]
+                ->ending_time;
             $newEndingDateTime = Carbon::parse($valueToUpdate)->addHours($sponsorship->duration_hours);
 
             DB::table('apartment_sponsorship')
-            ->where('apartment_id', $apartment->id)
-            ->where('ending_time', '=', $valueToUpdate)        
-            ->update(['ending_time' => $newEndingDateTime, 'sponsorship_id' => $sponsorship->id, 'updated_at' => now()]);
-            
+                ->where('apartment_id', $apartment->id)
+                ->where('ending_time', '=', $valueToUpdate)
+                ->update(['ending_time' => $newEndingDateTime, 'sponsorship_id' => $sponsorship->id, 'updated_at' => now()]);
         } else {
             $sponsorship->apartments()
                 ->attach(

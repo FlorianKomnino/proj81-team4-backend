@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Apartment;
 use App\Models\Message;
 use App\Models\Service;
+use App\Models\Visualization;
 use Illuminate\Support\Facades\DB;
 
 class ApartmentController extends Controller
@@ -69,6 +70,17 @@ class ApartmentController extends Controller
         $receivedMessage->apartment_id = $data['apartment_id'];
         $receivedMessage->name = $data['name'];
         $receivedMessage->save();
+    }
+
+
+    public function receiveVisualization(Request $request, Apartment $apartment)
+    {
+
+        $dataFromClient = $request->query();
+        $newVisualization = new Visualization();
+        $newVisualization->apartment_id = $dataFromClient['apartment_id'];
+        $newVisualization->user_ip = $dataFromClient['clientIp'];
+        $newVisualization->save();
     }
 
     /**

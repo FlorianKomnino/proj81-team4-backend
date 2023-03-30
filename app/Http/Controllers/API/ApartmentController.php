@@ -74,13 +74,10 @@ class ApartmentController extends Controller
 
     public function sponsoredApartments(Sponsorship $sponsorship, Apartment $apartment)
     {
-        $allSponsoredApartments = DB::table('apartment_sponsorship')->orderBy('id', 'desc')->get();
+        $allSponsoredApartments = DB::table('apartment_sponsorship')->orderBy('id', 'desc')->where('ending_time', '>', now())->get();
         $idSponsoredApartmentsNow = [];
         foreach ($allSponsoredApartments as $sponsoredApartment){
-            if ($sponsoredApartment->ending_time > now()){
-                array_push($idSponsoredApartmentsNow, $sponsoredApartment->apartment_id);
-            }
-            
+            array_push($idSponsoredApartmentsNow, $sponsoredApartment->apartment_id); 
         }
         $apartmentsToShow = Apartment::with('services')->whereIn('apartments.id', $idSponsoredApartmentsNow)->get();   
         return response()->json([

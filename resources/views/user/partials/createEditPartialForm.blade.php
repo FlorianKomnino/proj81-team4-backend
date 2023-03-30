@@ -120,6 +120,12 @@
                 </div>
             @endforeach
         </div>
-        <button type="submit" class="m-2">Submit</button>
+        <div class="d-flex justify-content-end">
+            @if ($route == 'user.apartments.update')
+                <button type="submit" class="m-3">Modifica</button>
+            @else
+                <button type="submit" class="m-3">Crea</button>
+            @endif
+        </div>
     </form>
 </div>

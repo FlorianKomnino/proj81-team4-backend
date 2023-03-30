@@ -53,7 +53,7 @@
                 </div> --}}
                 @foreach ($apartments as $apartment)
                 <div class="apartment-container row col-12">
-                    <div class="row col-12 col-md-9 align-items-center content">
+                    <div class="row col-12 col-md-8 col-lg-9 align-items-center content">
                         <div class="col-1 d-none d-md-block sponsor-wrapper">
                             <a href="{{ route('user.sponsorshipIndex', $apartment->slug) }}">
                                 <i class="fa-regular fa-star" class="d-block"></i>
@@ -78,7 +78,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-12 col-md-3 d-flex justify-content-evenly apartment-buttons">
+                    <div class="col-12 col-md-4 col-lg-3 d-flex justify-content-evenly apartment-buttons">
                         <a class="col-1 d-md-none sponsor-wrapper d-flex align-items-center justify-content-center" href="{{ route('user.sponsorshipIndex', $apartment->slug) }}">
                             <i class="fa-regular fa-star"></i>
                         </a>

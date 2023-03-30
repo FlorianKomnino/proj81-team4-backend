@@ -2,7 +2,7 @@
     @vite(['resources/js/tomtom.js','resources/js/clientValidations.js'])
 @endsection
 
-<div id="container-form" class="container my-5">
+<div id="container-form" class="apartment-create-edit container my-5">
     <form action="{{ route($route, $apartment->slug) }}" id="form" class="m-auto" method="POST"
         enctype="multipart/form-data">
         @csrf
@@ -120,6 +120,12 @@
                 </div>
             @endforeach
         </div>
-        <button type="submit" class="btn btn-primary m-2">Submit</button>
+        <div class="d-flex justify-content-end">
+            @if ($route == 'user.apartments.update')
+                <button type="submit" class="m-3">Modifica</button>
+            @else
+                <button type="submit" class="m-3">Crea</button>
+            @endif
+        </div>
     </form>
 </div>

@@ -1,0 +1,18 @@
+.apartment-create-edit{
+    button{
+        background: linear-gradient(108deg, white 0 45%, $main-bg-color 45% 92%, white 92% 100%);
+        background-size: 200%;
+        border: none;
+        padding: 10px 30px;
+        border-radius: 30px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        text-decoration: none;
+        color: $main-bg-color;
+        transition: all .3s;
+
+        &:hover {
+            color: white;
+            background-position: right;
+        }
+    }
+}

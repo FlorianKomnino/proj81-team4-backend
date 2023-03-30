@@ -269,15 +269,13 @@ class ApartmentController extends Controller
     /**
      * Toggle on soldout field.
      *
-     * @param  int  $id
+     * @param  Apartment $apartment
      * @return \Illuminate\Http\Response
      */
     public function enableToggle(Apartment $apartment)
     {
         $apartment->visible = !$apartment->visible;
         $apartment->save();
-
-        $message = ($apartment->visible) ? "disponibile" : "non disponibile";
-        return redirect()->back()->with('alert-type', 'success')->with('alert-message', "$apartment->title:&nbsp;<b>$message</b>");
+        return redirect()->back()->with('alert-type', 'success');
     }
 }

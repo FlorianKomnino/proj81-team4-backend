@@ -3,8 +3,10 @@
 @import "@fortawesome/fontawesome-free/css/all.css";
 @import "../../node_modules/@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css";
 
+@import "./auth/login.scss";
 
-$main-bg-color: rgb(222,18,99);
+
+$main-bg-color: #ff375c;
 
 .bnbButton{
     background-color: $main-bg-color;

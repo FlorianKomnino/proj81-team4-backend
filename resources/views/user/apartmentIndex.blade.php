@@ -38,7 +38,41 @@
                     <tr>
                         <td>
                             <a href="{{ route('user.sponsorshipIndex', $apartment->slug) }}">
-                                <i class="fa-regular fa-star" class="d-block"></i>
+                                @if ($apartment->sponsored_until > date('Y-m-d H:i:s'))
+                                    <i class="fa-solid fa-star"></i>
+
+                                    <p>sponsor scade tra: 
+                                        @php
+                                            $diff = abs(strtotime($apartment->sponsored_until) - strtotime(date('Y-m-d H:i:s')));
+                                            $remainingDays = (int)($diff / 60 / 60 / 24);
+                                            $remainingHours = (int)((int)($diff - ($remainingDays * 24*60*60)) / 60 / 60)
+                                        @endphp
+
+                                        @if ($remainingDays >= 1)
+                                                {{
+                                                    $remainingDays
+                                                }}
+                                            @if ($remainingDays > 1)
+                                                giorni,
+                                            @else
+                                                giorno,
+                                            @endif
+                                        @endif
+
+                                        @if ($remainingHours >= 1)
+                                                {{
+                                                    $remainingHours
+                                                }}
+                                            @if ($remainingHours > 1)
+                                            ore,
+                                            @else
+                                                ora,
+                                            @endif
+                                        @endif
+                                    </p>
+                                @else
+                                    <i class="fa-regular fa-star" class="d-block"></i>
+                                @endif
                             </a>
                         </td>
                         <td>{{ $apartment->title }}</td>

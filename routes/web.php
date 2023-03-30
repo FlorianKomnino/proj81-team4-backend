@@ -32,7 +32,7 @@ Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(fu
     Route::patch('/{apartment}/toggle', [UserApartmentController::class, 'enableToggle'])->name('apartments.toggle');
     Route::get('/paymentForm/{apartment}/{sponsorship}', [BraintreeController::class, 'paymentForm'])->name('paymentForm');
     Route::post('/getToken', [BraintreeController::class, 'getToken'])->name('getToken');
-    
+
     Route::delete('/messages/{message}', [UserMessageController::class, 'destroy'])->name('messages.destroy');
     Route::get('/messages/{apartment}', [UserMessageController::class, 'index'])->name('messages.index');
     //Route::resource('messages', UserMessageController::class);

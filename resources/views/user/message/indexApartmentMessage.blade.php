@@ -6,6 +6,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
+                <h1>Questo appartamento è stato visualizzato {{ $apartment->visualizations->where('apartment_id',$apartment->id)->count()}} volte</h1>
                 @if(isset($messages[0]))
                 <table class="table table-hover text-center">
                     <thead class="align-middle">

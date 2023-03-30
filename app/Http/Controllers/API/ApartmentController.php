@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+use App\Models\Sponsorship;
 use App\Models\Message;
 use App\Models\Service;
 use Illuminate\Support\Facades\DB;
@@ -69,6 +70,23 @@ class ApartmentController extends Controller
         $receivedMessage->apartment_id = $data['apartment_id'];
         $receivedMessage->name = $data['name'];
         $receivedMessage->save();
+    }
+
+    public function sponsoredApartments(Sponsorship $sponsorship, Apartment $apartment)
+    {
+        $allSponsoredApartments = DB::table('apartment_sponsorship')->orderBy('id', 'desc')->get();
+        $idSponsoredApartmentsNow = [];
+        foreach ($allSponsoredApartments as $sponsoredApartment){
+            if ($sponsoredApartment->ending_time > now()){
+                array_push($idSponsoredApartmentsNow, $sponsoredApartment->apartment_id);
+            }
+            
+        }
+        $apartmentsToShow = Apartment::with('services')->whereIn('apartments.id', $idSponsoredApartmentsNow)->get();   
+        return response()->json([
+            'success' => true,
+            'results' => $apartmentsToShow
+        ]);
     }
 
     /**

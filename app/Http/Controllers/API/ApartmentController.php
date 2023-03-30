@@ -34,6 +34,7 @@ class ApartmentController extends Controller
             $filters = $data['services'];
 
             $filteredApartments = Apartment::with('services')
+                ->with('sponsorships')
                 ->where('visible', 1)
                 ->where('rooms', '>=', $rooms)
                 ->where('beds', '>=', $beds)
@@ -48,6 +49,7 @@ class ApartmentController extends Controller
                 ->get();
         } else {
             $filteredApartments = Apartment::with('services')
+                ->with('sponsorships')
                 ->where('apartments.visible', 1)
                 ->where('rooms', '>=', $rooms)
                 ->where('beds', '>=', $beds)

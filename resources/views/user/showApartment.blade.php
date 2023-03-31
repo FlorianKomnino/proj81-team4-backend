@@ -40,8 +40,8 @@
                     </div>
                 </div>
                 <div class="row mt-3 g-0">
-                    <div class="col-12 col-lg-4">
-                        <div class="row">
+                    <div class="col-12 col-lg-5">
+                        <div class="row g-0">
                             <div class="col-12 d-flex justify-content-between description">
                                 <div class="description">
                                     <p class="subTitleSize mb-1">Caratteristiche dell'alloggio</p>
@@ -71,50 +71,49 @@
                     </div>
                     <div class="col-12 d-flex d-lg-none border-top border-secondary my-3"></div>
                     @if(isset($messages[0]))
-                        <div class="col-12 col-lg-8 textContainer position-relative">
-                            <div class="d-block d-lg-flex justify-content-center position-sticky">
+                        <div id="apartment-messages-index" class="col-12 col-lg-7 textContainer position-relative border">
+                            <div class="d-flex justify-content-center sticky-top bg-white border-bottom">
                                 <p class="subTitleSize m-0">
-                                    Messaggi dell'appartamento
+                                    Preview dei messaggi
                                 </p>
                             </div>
-                            <div class="col-12 border-top my-1"></div>
-                            <table class="table text-center m-0">
-                                <thead class="align-middle">
-                                    <tr>
-                                        <th scope="col">Mittente</th>
-                                        <th scope="col">Messaggio</th>
-                                        <th scope="col">Data</th>
-                                        <th scope="col">Azione</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="align-middle">
-                                        @foreach ($messages as $message)
-                                        <tr class="{{!$message->status ? 'table-active' : ''}}">
-                                            <td>{{ $message->email }}</td> 
-                                            <td class="textMessageContainer">
-                                                <div class="w-100 textMessage">
-                                                    {{ $message->text_content }}
-                                                </div>
-                                            </td>
-                                            <td>{{ $message->created_at }}</td></td>
-                                            <td>
-                                                <div class="d-flex justify-content-evenly">
-                                                    <form action="{{ route('user.messages.toggle', $message->id) }}" method="POST">
-                                                    @method('PATCH')
+                            <div class="messageContainer col-12 my-1">
+                                <div class="row text-center border-bottom d-flex justify-content-between">
+                                    <div class="col-3 fs-5">
+                                        <p class="my-1">Mittente</p>
+                                    </div>
+                                    <div class="col-5 fs-5">
+                                        <p class="my-1 pippo">Messaggio</p>
+                                    </div>
+                                    <div class="col-3 fs-5">
+                                        <p class="my-1">Azione</p>
+                                    </div>
+                                </div>
+                                @foreach ($messages as $message)
+                                    <div class="row g-0 message-element align-items-center d-flex justify-content-between border-bottom py-3 {{!$message->status ? 'unread-message' : ''}}">
+                                        <div class="col-3 col-lg-3">
+                                            <p class="m-0 ps-2 text-truncate">{{ $message->email }}</p>
+                                        </div> 
+                                        <div class="col-6 col-lg-5">
+                                            <p class="m-0 text-truncate">{{ $message->text_content }}</p>
+                                        </div>
+                                        <div class="col-3 col-lg-3">
+                                            <div class="d-flex justify-content-evenly">
+                                                <form action="{{ route('user.messages.toggle', $message->id) }}" method="POST">
+                                                @method('PATCH')
+                                                @csrf
+                                                    <button type="submit" title="{{!$message->status ? 'Segna come già letto' : 'Segna come da leggere' }}" class="see-message visibility-button border-0" ><i class="fa-2x fa-solid {{$message->status ? 'fa-envelope-open-text' : 'fa-envelope' }}"></i></button>
+                                                </form>
+                                                <form class="form-deleter d-inline" action="{{ route('user.messages.destroy', ['message'=>$message, 'apartment'=>$apartment] ) }}" method="POST" data-element-name="{{ $message->email }}">
                                                     @csrf
-                                                        <button type="submit" title="{{!$message->status ? 'Segna come già letto' : 'Segna come da leggere' }}" class="visibility-button border-0" ><i class="fa-2x fa-solid {{$message->status ? 'fa-envelope-open-text' : 'fa-envelope' }}"></i></button>
-                                                    </form>
-                                                    <form class="form-deleter d-inline" action="{{ route('user.messages.destroy', ['message'=>$message, 'apartment'=>$apartment] ) }}" method="POST" data-element-name="{{ $message->email }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger">Elimina</button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                </tbody>
-                            </table>
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                         @else
                             <div class="col-12 col-lg-8 align-items-center d-flex justify-content-center textSize">

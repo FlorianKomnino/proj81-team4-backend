@@ -73,6 +73,9 @@ class BraintreeController extends Controller
                 ->ending_time;
             $newEndingDateTime = Carbon::parse($valueToUpdate)->addHours($sponsorship->duration_hours);
 
+            $apartment->sponsored_until = $newEndingDateTime;
+            $apartment->update();
+
             DB::table('apartment_sponsorship')
                 ->where('apartment_id', $apartment->id)
                 ->where('ending_time', '=', $valueToUpdate)
@@ -84,11 +87,13 @@ class BraintreeController extends Controller
                     [
                         'apartment_id' => $apartment->id,
                         'sponsorship_id' => $sponsorship->id,
-                        'starting_time' => now(),
-                        'ending_time' => now()->addHours($sponsorship->duration_hours),
+                        'starting_time' => now()->addHours(2),
+                        'ending_time' => now()->addHours($sponsorship->duration_hours)->addHours(1),
                         'created_at' => now(),
                     ]
                 );
+            $apartment->sponsored_until = now()->addHours($sponsorship->duration_hours)->addHours(1);
+            $apartment->update();
         }
         return view('braintree.checkoutSuccess');
     }

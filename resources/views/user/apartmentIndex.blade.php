@@ -53,41 +53,42 @@
                 </div> --}}
                 @foreach ($apartments as $apartment)
                 <div class="apartment-container row col-12">
+                    @if ($apartment->sponsored_until > date('Y-m-d H:i:s'))
+                        <p class="sponsor-alert">sponsor scade tra: 
+                                @php
+                                    $diff = abs(strtotime($apartment->sponsored_until) - strtotime(date('Y-m-d H:i:s')));
+                                    $remainingDays = (int)($diff / 60 / 60 / 24);
+                                    $remainingHours = (int)((int)($diff - ($remainingDays * 24*60*60)) / 60 / 60)
+                                @endphp
+
+                                @if ($remainingDays >= 1)
+                                        {{
+                                            $remainingDays
+                                        }}
+                                    @if ($remainingDays > 1)
+                                        giorni,
+                                    @else
+                                        giorno,
+                                    @endif
+                                @endif
+
+                                @if ($remainingHours >= 1)
+                                        {{
+                                            $remainingHours
+                                        }}
+                                    @if ($remainingHours > 1)
+                                    ore,
+                                    @else
+                                        ora,
+                                    @endif
+                                @endif
+                        </p>
+                    @endif
                     <div class="row col-12 col-md-8 col-lg-9 align-items-center content">
                         <div class="col-1 d-none d-md-block sponsor-wrapper">
                             <a href="{{ route('user.sponsorshipIndex', $apartment->slug) }}">
                                 @if ($apartment->sponsored_until > date('Y-m-d H:i:s'))
                                     <i class="fa-solid fa-star"></i>
-
-                                    <p>sponsor scade tra: 
-                                        @php
-                                            $diff = abs(strtotime($apartment->sponsored_until) - strtotime(date('Y-m-d H:i:s')));
-                                            $remainingDays = (int)($diff / 60 / 60 / 24);
-                                            $remainingHours = (int)((int)($diff - ($remainingDays * 24*60*60)) / 60 / 60)
-                                        @endphp
-
-                                        @if ($remainingDays >= 1)
-                                                {{
-                                                    $remainingDays
-                                                }}
-                                            @if ($remainingDays > 1)
-                                                giorni,
-                                            @else
-                                                giorno,
-                                            @endif
-                                        @endif
-
-                                        @if ($remainingHours >= 1)
-                                                {{
-                                                    $remainingHours
-                                                }}
-                                            @if ($remainingHours > 1)
-                                            ore,
-                                            @else
-                                                ora,
-                                            @endif
-                                        @endif
-                                    </p>
                                 @else
                                     <i class="fa-regular fa-star" class="d-block"></i>
                                 @endif
@@ -114,7 +115,11 @@
                     </div>
                     <div class="col-12 col-md-4 col-lg-3 d-flex justify-content-evenly apartment-buttons">
                         <a class="col-1 d-md-none sponsor-wrapper d-flex align-items-center justify-content-center" href="{{ route('user.sponsorshipIndex', $apartment->slug) }}">
-                            <i class="fa-regular fa-star"></i>
+                            @if ($apartment->sponsored_until > date('Y-m-d H:i:s'))
+                                <i class="fa-solid fa-star"></i>
+                            @else
+                                <i class="fa-regular fa-star" class="d-block"></i>
+                            @endif
                         </a>
                         <a href="{{ route('user.apartments.show', $apartment->slug ) }}" class="d-flex visualize-button align-items-center justify-content-center"><i class="fa-solid fa-eye"></i></a>
                         <a href="{{ route('user.apartments.edit', $apartment->slug) }}" class="d-flex modify-button align-items-center justify-content-center"><i class="fa-solid fa-pencil"></i></a>

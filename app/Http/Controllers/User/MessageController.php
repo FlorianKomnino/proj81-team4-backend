@@ -12,14 +12,6 @@ use Illuminate\Support\Facades\Auth;
 class MessageController extends Controller
 {
 
-
-    public function getVisualizationStats()
-    {
-        $allVisualizationForThisApartment = Visualization::where('apartment_id', 4)->get();
-        return redirect()->back()->with($allVisualizationForThisApartment);
-    }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +21,8 @@ class MessageController extends Controller
     public function index(Apartment $apartment)
     {
         $messages = Message::where('apartment_id', $apartment->id)->orderBy('email', 'asc')->get();
-        return view('user.message.indexApartmentMessage', compact('messages', 'apartment'));
+        $getVisualizationsForThisApartment = Visualization::where('apartment_id', $apartment->id)->get();
+        return view('user.message.indexApartmentMessage', compact('messages', 'apartment', 'getVisualizationsForThisApartment'));
     }
 
     /**

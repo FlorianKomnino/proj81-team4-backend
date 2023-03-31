@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Models\Message;
 use App\Models\Service;
+use App\Models\Visualization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -176,7 +177,9 @@ class ApartmentController extends Controller
         $response = Http::get("https://api.tomtom.com/search/2/search/" . $apartment['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
 
         $jsonData = $response->json();
-        return view('user.showApartment', ['apartment' => $apartment, 'user' => $user, 'jsonData' => $jsonData, 'messages' => $messages]);
+
+        $getVisualizationsForThisApartment = Visualization::where('apartment_id', $apartment->id)->get();
+        return view('user.showApartment', ['apartment' => $apartment, 'user' => $user, 'jsonData' => $jsonData, 'messages' => $messages, 'getVisualizationsForThisApartment' => $getVisualizationsForThisApartment]);
     }
 
     /**

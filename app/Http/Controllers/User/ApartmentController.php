@@ -282,4 +282,11 @@ class ApartmentController extends Controller
         $apartment->save();
         return redirect()->back()->with('alert-type', 'success');
     }
+
+
+    public function allApartmentsStats()
+    {
+        $apartments = Apartment::all()->where('user_id', Auth::user()->id);
+        return view('user.apartmentIndex', compact('apartments'));
+    }
 }

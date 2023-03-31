@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Apartment;
+use App\Models\Sponsorship;
 use Illuminate\Http\Request;
 use Braintree\Gateway;
 use Braintree_Transaction;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BraintreeController extends Controller
 {
-    public function paymentForm(Request $request)
+    public function paymentForm(Request $request, Apartment $apartment, Sponsorship $sponsorship)
     {
-        return view('braintree.paymentForm');
+        return view('braintree.paymentForm', ['apartment' => $apartment, 'sponsorship' => $sponsorship]);
     }
 
 
@@ -28,7 +31,6 @@ class BraintreeController extends Controller
         $result = $gateway->customer()->create([
             'firstName' => Auth::user()->name,
             'lastName' => Auth::user()->surname,
-            'company' => 'Jones Co.',
             'email' => Auth::user()->email,
             'website' => 'http://boolean.com'
         ]);
@@ -43,11 +45,56 @@ class BraintreeController extends Controller
 
     public function sponsorshipIndex(Apartment $apartment)
     {
-        return view('braintree.sponsorshipIndex', ['apartment' => $apartment]);
+        $sponsorships = Sponsorship::all();
+        return view('braintree.sponsorshipIndex', ['apartment' => $apartment, 'sponsorships' => $sponsorships]);
     }
 
-    public function checkout()
+    public function checkout(Request $request, Sponsorship $sponsorship, Apartment $apartment)
     {
+
+        // $result = $gateway->transaction()->sale([
+        //     'amount' => '10.00',
+        //     'paymentMethodNonce' => $nonceFromTheClient,
+        //     'deviceData' => $deviceDataFromTheClient,
+        //     'options' => [
+        //         'submitForSettlement' => True
+        //     ]
+        // ]);
+
+        if (
+            $apartment->sponsorships()->where('apartment_id', $apartment->id)->exists()
+            && DB::table('apartment_sponsorship')->where('apartment_id', $apartment->id)->orderBy('id', 'desc')->limit(1)->get()[0]->ending_time > now()
+        ) {
+            $valueToUpdate = DB::table('apartment_sponsorship')
+                ->where('apartment_id', $apartment->id)
+                ->orderBy('id', 'desc')
+                ->limit(1)
+                ->get()[0]
+                ->ending_time;
+            $newEndingDateTime = Carbon::parse($valueToUpdate)->addHours($sponsorship->duration_hours);
+
+            $apartment->sponsored_until = $newEndingDateTime;
+            $apartment->update();
+
+            DB::table('apartment_sponsorship')
+                ->where('apartment_id', $apartment->id)
+                ->where('ending_time', '=', $valueToUpdate)
+                ->update(['ending_time' => $newEndingDateTime, 'sponsorship_id' => $sponsorship->id, 'updated_at' => now()]);
+        } else {
+            $sponsorship->apartments()
+                ->attach(
+                    $apartment,
+                    [
+                        'apartment_id' => $apartment->id,
+                        'sponsorship_id' => $sponsorship->id,
+                        'starting_time' => now()->addHours(2),
+                        'ending_time' => now()->addHours($sponsorship->duration_hours)->addHours(1),
+                        'created_at' => now(),
+                    ]
+                );
+            $apartment->sponsored_until = now()->addHours($sponsorship->duration_hours)->addHours(1);
+            $apartment->update();
+        }
         return view('braintree.checkoutSuccess');
     }
 

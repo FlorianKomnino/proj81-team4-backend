@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
+use App\Models\Message;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -128,10 +129,13 @@ class ApartmentController extends Controller
         $errors = $this->validationErrorMessages;
         $data = $request->validate($rules, $errors);
         $data['slug'] = Str::slug($data['title']);
-
+        $newAddress = $data['address'];
+        if (str_contains($newAddress, '/')) {
+            $newAddress = str_replace('/', '_', $newAddress);
+        }
 
         //tomtom call
-        $response = Http::get("https://api.tomtom.com/search/2/search/" . $data['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
+        $response = Http::get("https://api.tomtom.com/search/2/search/" . $newAddress . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
         $jsonData = $response->json();
 
         $data['user_id'] = Auth::user()->id;
@@ -168,10 +172,11 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         $user = Auth::user();
+        $messages = Message::where('apartment_id', $apartment->id)->orderBy('email', 'asc')->get();
         $response = Http::get("https://api.tomtom.com/search/2/search/" . $apartment['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
 
         $jsonData = $response->json();
-        return view('user.showApartment', ['apartment' => $apartment, 'user' => $user, 'jsonData' => $jsonData]);
+        return view('user.showApartment', ['apartment' => $apartment, 'user' => $user, 'jsonData' => $jsonData, 'messages' => $messages]);
     }
 
     /**
@@ -214,7 +219,7 @@ class ApartmentController extends Controller
             Storage::delete($apartment->image);
             $data['image'] = Storage::put('imgs/', $data['image']);
         } else {
-            $data['image'] = asset('logo/home.jpeg');
+            $data['image'] = $apartment->image;
         }
         //wrong address control
         if ($jsonData['results'] != []) {
@@ -238,7 +243,7 @@ class ApartmentController extends Controller
      * @param  Apartment $apartment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Apartment $apartment)
+    public function destroy(Apartment $apartment, Message $message)
     {
         // dd(isset($apartment->image));
         if (isset($apartment->image)) {
@@ -247,6 +252,8 @@ class ApartmentController extends Controller
             $apartment->delete();
             return redirect()->route('user.apartments.index');
         }
+        // remove comment if you want to delete messages with apartment's soft delete
+        // $message = Message::where('apartment_id', $apartment->id)->delete();
         $apartment->delete();
         return redirect()->route('user.apartments.index');
     }
@@ -263,15 +270,13 @@ class ApartmentController extends Controller
     /**
      * Toggle on soldout field.
      *
-     * @param  int  $id
+     * @param  Apartment $apartment
      * @return \Illuminate\Http\Response
      */
     public function enableToggle(Apartment $apartment)
     {
         $apartment->visible = !$apartment->visible;
         $apartment->save();
-
-        $message = ($apartment->visible) ? "disponibile" : "non disponibile";
-        return redirect()->back()->with('alert-type', 'success')->with('alert-message', "$apartment->title:&nbsp;<b>$message</b>");
+        return redirect()->back()->with('alert-type', 'success');
     }
 }

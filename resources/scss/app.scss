@@ -2,9 +2,19 @@
 @import "@tomtom-international/web-sdk-maps";
 @import "@fortawesome/fontawesome-free/css/all.css";
 @import "../../node_modules/@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css";
+//auth
+@import "./auth/login.scss";
+@import "./auth/registration.scss";
+//user
+@import "./User/dashboard.scss";
+
+    //apartments
+    @import "./User/apartments/createEditApartment.scss";
+    @import "./User/apartments/apartmentIndex.scss";
+    @import "./partials/variables";
 
 
-$main-bg-color: rgb(222,18,99);
+$main-bg-color: #ff375c;
 
 .bnbButton{
     background-color: $main-bg-color;
@@ -18,20 +28,18 @@ $main-bg-color: rgb(222,18,99);
     }
 }
 
-.tomtom-container{
-    #map{
-        height: 500px;
-        #marker{
-                background-color: $main-bg-color;
-                border-radius: 50%;
-                height: 50px;
-                width: 50px;
-                padding: 10px;
-            .marker-container{
-                filter: invert(100%);
-            }
+
+#map{
+    height: 500px;
+    #marker{
+            background-color: $main-bg-color;
+            border-radius: 50%;
+            height: 50px;
+            width: 50px;
+            padding: 10px;
+        .marker-container{
+            filter: invert(100%);
         }
-        
     }
 }
 
@@ -58,4 +66,18 @@ $main-bg-color: rgb(222,18,99);
         }
         
     }
+}
+
+.textContainer{
+    max-height: 300px;
+    max-width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    .textMessageContainer{
+        overflow-y: auto;
+        .textMessage{
+            max-width: 100px;
+        }
+    }
+    
 }

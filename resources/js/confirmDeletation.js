@@ -7,7 +7,7 @@ deleteBtns.forEach((formDelete) => {
 formDelete.addEventListener('submit', function (event) {
     event.preventDefault();
     Swal.fire({
-        title: 'Sei sicuro di voler eliminare questo appartamento?',
+        title: 'Sei sicuro di voler eliminare questo elemento?',
         text: "Perfavore conferma la tua richiesta !",
         icon: 'warning',
         showCancelButton: true,
@@ -20,7 +20,7 @@ formDelete.addEventListener('submit', function (event) {
             Swal.fire({
                 position: 'mid',
                 icon: 'success',
-                title: 'Il tuo appartamento è stato eliminato',
+                title: 'Il tuo elemento è stato eliminato',
                 showConfirmButton: false,
                 timer: 1500
             }).then(() => {

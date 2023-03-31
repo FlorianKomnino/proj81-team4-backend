@@ -1,0 +1,1 @@
+// per codificare una variabile presente nel blade.php

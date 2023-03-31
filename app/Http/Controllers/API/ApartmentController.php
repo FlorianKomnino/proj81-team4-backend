@@ -5,8 +5,12 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+use App\Models\Sponsorship;
+use App\Models\Message;
 use App\Models\Service;
+use App\Models\Visualization;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class ApartmentController extends Controller
 {
@@ -32,6 +36,7 @@ class ApartmentController extends Controller
             $filters = $data['services'];
 
             $filteredApartments = Apartment::with('services')
+                ->with('sponsorships')
                 ->where('visible', 1)
                 ->where('rooms', '>=', $rooms)
                 ->where('beds', '>=', $beds)
@@ -46,6 +51,7 @@ class ApartmentController extends Controller
                 ->get();
         } else {
             $filteredApartments = Apartment::with('services')
+                ->with('sponsorships')
                 ->where('apartments.visible', 1)
                 ->where('rooms', '>=', $rooms)
                 ->where('beds', '>=', $beds)
@@ -56,6 +62,57 @@ class ApartmentController extends Controller
             'status' => 'success',
             'data' => $filteredApartments,
         ]);
+    }
+
+    public function receivedMessage(Request $request)
+    {
+        $data = $request->all();
+        $receivedMessage = new Message();
+
+        $receivedMessage->text_content = $data['text_content'];
+        $receivedMessage->email = $data['email'];
+        $receivedMessage->apartment_id = $data['apartment_id'];
+        $receivedMessage->name = $data['name'];
+        $receivedMessage->save();
+    }
+
+    public function sponsoredApartments(Sponsorship $sponsorship, Apartment $apartment)
+    {
+        $allSponsoredApartments = DB::table('apartment_sponsorship')->orderBy('id', 'desc')->where('ending_time', '>', now())->get();
+        $idSponsoredApartmentsNow = [];
+        foreach ($allSponsoredApartments as $sponsoredApartment) {
+            array_push($idSponsoredApartmentsNow, $sponsoredApartment->apartment_id);
+        }
+        $apartmentsToShow = Apartment::with('services')->where('visible', 1)->whereIn('apartments.id', $idSponsoredApartmentsNow)->get();
+        return response()->json([
+            'success' => true,
+            'results' => $apartmentsToShow
+        ]);
+    }
+
+    public function receiveVisualization(Request $request, Apartment $apartment)
+    {
+
+        $dataFromClient = $request->query();
+
+        $possibleRowChecked = Visualization::where('user_ip', $dataFromClient['clientIp'])->where('apartment_id', $dataFromClient['apartment_id'])->orderBy('created_at', 'desc')->get()->first();
+
+        if ($possibleRowChecked) {
+            if (Carbon::parse($possibleRowChecked['created_at']) < now()->addHours(2)->subMinute()) {
+                $newVisualization = new Visualization();
+                $newVisualization->apartment_id = $dataFromClient['apartment_id'];
+                $newVisualization->user_ip = $dataFromClient['clientIp'];
+                $newVisualization->created_at = now()->addHours(2);
+                $newVisualization->save();
+            } else {
+            }
+        } else {
+            $newVisualization = new Visualization();
+            $newVisualization->apartment_id = $dataFromClient['apartment_id'];
+            $newVisualization->user_ip = $dataFromClient['clientIp'];
+            $newVisualization->created_at = now()->addHours(2);
+            $newVisualization->save();
+        }
     }
 
     /**
@@ -87,7 +144,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        $apartment = Apartment::findOrFail($apartment->id);
+        $apartment = Apartment::with('services')->findOrFail($apartment->id);
         return response()->json([
             'status' => 'success',
             'data' => $apartment,

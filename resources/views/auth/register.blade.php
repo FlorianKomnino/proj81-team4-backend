@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="container mt-4">
+    <div id="user-registration" class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -16,7 +16,7 @@
                             @csrf
 
                             {{-- email --}}
-                            <span id="email-error" class="text-danger invalid-feedback">L'email è necessaria</span>
+                            <span id="email-error" class="text-danger invalid-feedback"></span>
                             <div class="mb-4 row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">Email: * </label>
                                 <div class="col-md-6">
@@ -33,7 +33,7 @@
                             </div>
 
                             {{-- password --}}
-                            <span id="password-error" class="text-danger invalid-feedback">La password è necessaria</span>
+                            <span id="password-error" class="text-danger invalid-feedback"></span>
                             <div class="mb-4 row">
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Password: *</label>
 
@@ -51,7 +51,7 @@
                             </div>
 
                             {{-- password confirm --}}
-                            <span id="confirmPassword-error" class="text-danger invalid-feedback">Conferma la tua password</span>
+                            <span id="confirmPassword-error" class="text-danger invalid-feedback"></span>
                             <div class="mb-4 row">
                                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Conferma 
                                     password: *</label>
@@ -63,7 +63,7 @@
                             </div>
 
                             {{-- name --}}
-                            <span id="name-error" class="text-danger invalid-feedback">Inserisci almeno 3 caratteri</span>
+                            <span id="name-error" class="text-danger invalid-feedback"></span>
                             <div class="mb-4 row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Nome: </label>
 
@@ -81,7 +81,7 @@
                             </div>
 
                             {{-- surname --}}
-                            <span id="surname-error" class="text-danger invalid-feedback">Inserisci almeno 3 caratteri</span>
+                            <span id="surname-error" class="text-danger invalid-feedback"></span>
                             <div class="mb-4 row">
                                 <label for="surname" class="col-md-4 col-form-label text-md-right">Cognome:</label>
 
@@ -99,7 +99,7 @@
                             </div>
 
                             {{-- birth_date --}}
-                            <span id="birth_date-error" class="text-danger invalid-feedback">Seleziona una data</span>
+                            <span id="birth_date-error" class="text-danger invalid-feedback"></span>
                             <div class="mb-4 row">
                                 <label for="birth_date" class="col-md-4 col-form-label text-md-right">Data di nascita:</label>
 

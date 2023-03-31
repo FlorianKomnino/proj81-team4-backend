@@ -1,0 +1,62 @@
+$main-bg-color: #ff375c;
+
+#apartment-index{
+    .sponsor-wrapper a i{
+        color: $main-bg-color;
+        font-size: 1.7rem;
+    }
+
+    .text-brand{
+        color: $main-bg-color;
+    }
+    .apartment-container{
+        margin-bottom: 25px;
+        border-radius: 25px;
+        background: #eaeaea;
+        box-shadow:  15px 15px 21px #7b7b7b, -15px -15px 21px #ffffff;
+
+        .content{
+            margin: 25px 0;
+        }
+
+        .visibility-button{
+            border: none;
+            color: $main-bg-color;
+            &:hover{
+                background-color: #ffffff00;
+            }
+        }
+
+        .apartment-buttons a,
+        .apartment-buttons button{
+            border: none;
+            width: 45px;
+            font-size: 1.7rem;
+            background-color: $main-bg-color;
+            text-decoration: none;
+            transition: all .25s;
+            color: white;
+            transform: skew(-15deg);
+            i{
+                transform: skew(15deg);
+            }
+
+            &.visualize-button:hover{
+                background-color: #6e48e9;
+                width: 85px;
+            }
+            &.modify-button:hover{
+                background-color: #eba605;
+                width: 85px;
+            }
+            &.trash-button:hover{
+                background-color: #e80e0e;
+                width: 85px;
+            }
+        }
+
+        #smartphone-visibility i{
+            font-size: 1.7rem;
+        }
+    }
+}

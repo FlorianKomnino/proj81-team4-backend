@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-    <div id="payment-form" class="container">
+    <div id="payment-container" class="container">
         <div class="row justify-content-center">
             <div class="col-6">
                 <form  id="payment-form" method="POST" action="{{route('checkout', [$sponsorship, $apartment])}}">

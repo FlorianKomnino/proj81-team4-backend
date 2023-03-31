@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('head')
-{{-- <script>
-var sites = {!! json_encode($allVisualizationForThisApartment -> toArray())!!}
-</script>     --}}
+<script>    
+    var visualizations = {!! json_encode($getVisualizationsForThisApartment->toArray()) !!};
+</script>
 @vite(['resources/js/confirmDeletation.js', 'resources/js/charts.js'])
 @endsection
 @section('content')
@@ -11,6 +11,9 @@ var sites = {!! json_encode($allVisualizationForThisApartment -> toArray())!!}
             <div class="col-12">
                 <div class="stats_container">
                     <h4 class="mb-5">Questo appartamento è stato <span class="brand-color">visualizzato</span> {{ $apartment->visualizations->where('apartment_id',$apartment->id)->count()}} volte</h4>
+                    <div class="col-6 ms-auto">
+                        <canvas id="myChart"></canvas>
+                    </div>
                 </div>
                 @if(isset($messages[0]))
                 <div class="container">

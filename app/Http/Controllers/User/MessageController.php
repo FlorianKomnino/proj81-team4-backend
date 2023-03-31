@@ -6,10 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Models\Apartment;
+use App\Models\Visualization;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
+
+
+    public function getVisualizationStats()
+    {
+        $allVisualizationForThisApartment = Visualization::where('apartment_id', 4)->get();
+        return redirect()->back()->with($allVisualizationForThisApartment);
+    }
+
+
     /**
      * Display a listing of the resource.
      *

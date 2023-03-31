@@ -25,10 +25,9 @@ Route::post('/user', [UserController::class, 'store'])->name('api.user.store');
 Route::get('/user/{user}', [UserController::class, 'show'])->name('api.user.show');
 Route::post('login', [UserController::class, 'login'])->name('login');
 
-
+Route::get('/visualization', [ApartmentController::class, 'receiveVisualization'])->name('visualization');
 Route::get('/apartments', [ApartmentController::class, 'index'])->name('api.apartments.index');
 Route::get('/sponsoredApartments', [ApartmentController::class, 'sponsoredApartments'])->name('api.sponsoredApartments');
 Route::post('/apartments/message', [ApartmentController::class, 'receivedMessage'])->name('api.apartments.message');
-Route::get('/apartments/{apartment}', [ ApartmentController::class, 'show'])->name('api.apartments.show');
+Route::get('/apartments/{apartment}', [ApartmentController::class, 'show'])->name('api.apartments.show');
 Route::get('/apartments/filter/{rooms?}/{beds?}', [ApartmentController::class, 'servicesFilter'])->name('api.apartments.filter');
-

@@ -8,7 +8,9 @@ use App\Models\Apartment;
 use App\Models\Sponsorship;
 use App\Models\Message;
 use App\Models\Service;
+use App\Models\Visualization;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class ApartmentController extends Controller
 {
@@ -86,6 +88,31 @@ class ApartmentController extends Controller
             'success' => true,
             'results' => $apartmentsToShow
         ]);
+    }
+
+    public function receiveVisualization(Request $request, Apartment $apartment)
+    {
+
+        $dataFromClient = $request->query();
+
+        $possibleRowChecked = Visualization::where('user_ip', $dataFromClient['clientIp'])->where('apartment_id', $dataFromClient['apartment_id'])->orderBy('created_at', 'desc')->get()->first();
+
+        if ($possibleRowChecked) {
+            if (Carbon::parse($possibleRowChecked['created_at']) < now()->addHours(2)->subMinute()) {
+                $newVisualization = new Visualization();
+                $newVisualization->apartment_id = $dataFromClient['apartment_id'];
+                $newVisualization->user_ip = $dataFromClient['clientIp'];
+                $newVisualization->created_at = now()->addHours(2);
+                $newVisualization->save();
+            } else {
+            }
+        } else {
+            $newVisualization = new Visualization();
+            $newVisualization->apartment_id = $dataFromClient['apartment_id'];
+            $newVisualization->user_ip = $dataFromClient['clientIp'];
+            $newVisualization->created_at = now()->addHours(2);
+            $newVisualization->save();
+        }
     }
 
     /**

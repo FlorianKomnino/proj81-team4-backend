@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('payment_user_id')->after('payment_token')->default(0);
+        Schema::table('apartments', function (Blueprint $table) {
+            $table->dateTime('sponsored_until')->after('address')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('payment_user_id');
+        Schema::table('apartments', function (Blueprint $table) {
+            $table->dropColumn('sponsored_until');
         });
     }
 };

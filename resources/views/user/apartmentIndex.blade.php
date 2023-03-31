@@ -16,43 +16,21 @@
         @endif
 
         <div class="d-flex justify-content-between align-items-center">
-            <h2>
-                Ciao <span class="text-brand">{{Auth::user()->name}}</span>, ecco i tuoi appartamenti
-            </h2>
+            <p class="title">
+                Ciao <span class="text-brand title">{{Auth::user()->name}}</span>, 
+                @if (count($apartments)>0)
+                <span>ecco i tuoi appartamenti</span>
+                @else
+                <span>aggiungi il tuo primo appartamento!</span>
+                @endif
+            </p>
             <a href="{{ route('user.apartments.create') }}" class="bnbButton my-3">Aggiungi un appartamento</a>
         </div>
         
         <div class="col-12 mt-4">
-            <div class="row">
-                {{-- <div class="row col-12 text-center">
-                    <div class="col-1">
-                        <h4>
-                            Sponsor
-                        </h4> 
-                    </div>
-                    <div class="col-5">
-                        <h4>
-                            Titolo
-                        </h4> 
-                    </div>
-                    <div class="col-3">
-                        <h4>
-                            Indirizzo
-                        </h4> 
-                    </div>
-                    <div class="col-2">
-                        <h4>
-                            Servizi
-                        </h4> 
-                    </div>
-                    <div class="col-1">
-                        <h4>
-                            Disponibilità
-                        </h4> 
-                    </div>
-                </div> --}}
+            <div class="row g-0">
                 @foreach ($apartments as $apartment)
-                <div class="apartment-container row col-12">
+                <div class="apartment-container row col-12 g-0">
                     @if ($apartment->sponsored_until > date('Y-m-d H:i:s'))
                         <p class="sponsor-alert">sponsor scade tra: 
                                 @php
@@ -85,7 +63,7 @@
                         </p>
                     @endif
                     <div class="row col-12 col-md-8 col-lg-9 align-items-center content">
-                        <div class="col-1 d-none d-md-block sponsor-wrapper">
+                        <div class="col-1 d-none d-md-flex sponsor-wrapper">
                             <a href="{{ route('user.sponsorshipIndex', $apartment->slug) }}">
                                 @if ($apartment->sponsored_until > date('Y-m-d H:i:s'))
                                     <i class="fa-solid fa-star"></i>
@@ -94,13 +72,13 @@
                                 @endif
                             </a>
                         </div>
-                        <div class="col-4">{{ $apartment->title }}</div>
+                        <div class="col-4 fw-bold fs-5 pe-0 pe-xl-5">{{ $apartment->title }}</div>
                         <div class="col-3">{{ $apartment->address }}</div>
                         <div class="row col-5 col-md-3 justify-content-evenly">
                             @forelse ($apartment->services as $service )
-                                <div class="col-4 col-md-12 service-element">
+                                <div class="col-4 col-md-12 service-element d-flex align-items-center">
                                     <i class="{{ $service->icon }} py-2"></i>
-                                    <span class="d-none d-lg-inline">{{$service->name}}</span>
+                                    <span class="d-none d-lg-inline ms-2">{{$service->name}}</span>
                                 </div> 
                             @empty
                                 Nessun servizio incluso

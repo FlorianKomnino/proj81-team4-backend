@@ -10,8 +10,10 @@
         <div class="row">
             <div class="col-12">
                 <div class="stats_container">
-                    <h4 class="d-inline">Questo appartamento è stato visualizzato {{ $apartment->visualizations->where('apartment_id',$apartment->id)->count()}} volte</h4>
-                    <canvas id="myChart"></canvas>
+                    <h4 class="col-6 d-inline">Questo appartamento è stato visualizzato {{ $apartment->visualizations->where('apartment_id',$apartment->id)->count()}} volte</h4>
+                    <div class="w-75">
+                        <canvas id="myChart"></canvas>
+                    </div>
                 </div>
                 @if(isset($messages[0]))
                 <table class="table text-center">

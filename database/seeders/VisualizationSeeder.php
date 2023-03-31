@@ -18,11 +18,13 @@ class VisualizationSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        for ($i=0; $i < 150; $i++) { 
+        for ($i = 0; $i < 150; $i++) {
             $newVisualization = new Visualization();
             $newVisualization->apartment_id = Apartment::inRandomOrder()->first()->id;
-            $newVisualization->user_ip = $faker->numberBetween(1,255).'.'.$faker->numberBetween(1,255).'.'.$faker->numberBetween(1,255).'.'.$faker->numberBetween(1,255);
+            $newVisualization->user_ip = $faker->numberBetween(1, 255) . '.' . $faker->numberBetween(1, 255) . '.' . $faker->numberBetween(1, 255) . '.' . $faker->numberBetween(1, 255);
             $newVisualization->save();
+            $newVisualization->created_at = $faker->dateTimeBetween('-1 year', '-1 day');
+            $newVisualization->update();
         }
     }
 }

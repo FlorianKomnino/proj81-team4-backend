@@ -11,6 +11,7 @@ use App\Models\Service;
 use App\Models\Visualization;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class ApartmentController extends Controller
 {
@@ -67,13 +68,30 @@ class ApartmentController extends Controller
     public function receivedMessage(Request $request)
     {
         $data = $request->all();
-        $receivedMessage = new Message();
 
-        $receivedMessage->text_content = $data['text_content'];
-        $receivedMessage->email = $data['email'];
-        $receivedMessage->apartment_id = $data['apartment_id'];
-        $receivedMessage->name = $data['name'];
+        $validator = Validator::make(
+            $data,
+            [
+                'name' => 'nullable',
+                'email' => 'required',
+                'text_content' => 'required'
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors(),
+            ]);
+        }
+
+        $receivedMessage = new Message();
+        $receivedMessage->fill($data);
         $receivedMessage->save();
+
+        return response()->json([
+            'success' => true,
+        ]);
     }
 
     public function sponsoredApartments(Sponsorship $sponsorship, Apartment $apartment)

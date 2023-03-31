@@ -1,12 +1,17 @@
 @extends('layouts.app')
 @section('head')
-    @vite(['resources/js/confirmDeletation.js'])
+{{-- <script>
+var sites = {!! json_encode($allVisualizationForThisApartment -> toArray())!!}
+</script>     --}}
+@vite(['resources/js/confirmDeletation.js', 'resources/js/charts.js'])
 @endsection
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1>Questo appartamento è stato visualizzato {{ $apartment->visualizations->where('apartment_id',$apartment->id)->count()}} volte</h1>
+                <div class="stats_container">
+                    <h4 class="d-inline">Questo appartamento è stato visualizzato {{ $apartment->visualizations->where('apartment_id',$apartment->id)->count()}} volte</h4>
+                </div>
                 @if(isset($messages[0]))
                 <table class="table text-center">
                     <thead class="align-middle">

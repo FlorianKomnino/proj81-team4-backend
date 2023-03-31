@@ -34,6 +34,7 @@ Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(fu
 
     Route::post('/getToken', [BraintreeController::class, 'getToken'])->name('getToken');
 
+    Route::get('/getVisualizationsData', [UserMessageController::class, 'getVisualizationStats'])->name('getVisualizationStats');
     Route::get('/messages/{apartment}', [UserMessageController::class, 'index'])->name('messages.index');
     Route::delete('/messages/{message}', [UserMessageController::class, 'destroy'])->name('messages.destroy');
     Route::patch('/messages/{message}/toggle', [UserMessageController::class, 'enableToggle'])->name('messages.toggle');

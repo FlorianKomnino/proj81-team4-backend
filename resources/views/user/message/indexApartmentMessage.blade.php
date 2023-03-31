@@ -9,9 +9,9 @@
     <div id="apartment-messages-index" class="container">
         <div class="row">
             <div class="col-12">
-                <div class="stats_container">
-                    <h4 class="mb-5">Questo appartamento è stato <span class="brand-color">visualizzato</span> {{ $apartment->visualizations->where('apartment_id',$apartment->id)->count()}} volte</h4>
-                    <div class="col-6 ms-auto">
+                <div class="stats_container row">
+                    <h4 class="col-12 col-lg-6 mb-5">Questo appartamento è stato <span class="brand-color">visualizzato</span> {{ $apartment->visualizations->where('apartment_id',$apartment->id)->count()}} volte</h4>
+                    <div class="col-12 col-lg-6 ms-auto mb-3">
                         <canvas id="myChart"></canvas>
                     </div>
                 </div>

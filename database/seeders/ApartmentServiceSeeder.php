@@ -22,7 +22,7 @@ class ApartmentServiceSeeder extends Seeder
         $servicesIds = Service::all()->pluck('id');
 
         foreach ($apartments as $apartment) {
-            $apartment->services()->attach($faker->randomElements($servicesIds, 2));
+            $apartment->services()->attach($faker->randomElements($servicesIds, 3));
         }
     }
 }

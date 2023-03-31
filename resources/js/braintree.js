@@ -1,4 +1,6 @@
 let serverToken = null;
+const loader = document.getElementById('braintree-loader');
+const submitButton = document.getElementById('payment-submit');
 
 function getToken() {
   axios.post("http://127.0.0.1:8000/user/getToken").then((response) => {
@@ -57,9 +59,13 @@ function getToken() {
           });
         });
       })
+      loader.classList.toggle('d-none')
+      submitButton.classList.toggle('d-none')
 
     })
 }
 
 getToken()
+
+
 

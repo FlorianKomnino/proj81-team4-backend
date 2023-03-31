@@ -31,6 +31,13 @@ $main-bg-color: #ff375c;
         }
         .content{
             margin: 25px 0;
+
+            .service-element{
+                i{
+                    font-size: 1.5rem;
+                    color: $main-bg-color;
+                }
+            }
         }
 
         .visibility-button{

@@ -94,12 +94,13 @@
                                 @endif
                             </a>
                         </div>
-                        <div class="col-5">{{ $apartment->title }}</div>
+                        <div class="col-4">{{ $apartment->title }}</div>
                         <div class="col-3">{{ $apartment->address }}</div>
-                        <div class="col-2">
+                        <div class="row col-5 col-md-3 justify-content-evenly">
                             @forelse ($apartment->services as $service )
-                                <div class="col-12">
-                                    #{{ $service->name }}
+                                <div class="col-4 col-md-12 service-element">
+                                    <i class="{{ $service->icon }} py-2"></i>
+                                    <span class="d-none d-lg-inline">{{$service->name}}</span>
                                 </div> 
                             @empty
                                 Nessun servizio incluso

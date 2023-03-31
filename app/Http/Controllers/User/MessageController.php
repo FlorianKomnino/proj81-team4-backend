@@ -88,4 +88,17 @@ class MessageController extends Controller
         $message->delete();
         return redirect()->back();
     }
+
+    /**
+     * Toggle on soldout field.
+     *
+     * @param  Message $message
+     * @return \Illuminate\Http\Response
+     */
+    public function enableToggle(Message $message)
+    {
+        $message->status = !$message->status;
+        $message->save();
+        return redirect()->back()->with('alert-type', 'success');
+    }
 }

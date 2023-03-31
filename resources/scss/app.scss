@@ -2,9 +2,18 @@
 @import "@tomtom-international/web-sdk-maps";
 @import "@fortawesome/fontawesome-free/css/all.css";
 @import "../../node_modules/@tomtom-international/web-sdk-plugin-searchbox/dist/SearchBox.css";
+//auth
+@import "./auth/login.scss";
+@import "./auth/registration.scss";
+//user
+@import "./User/dashboard.scss";
+
+    //apartments
+    @import "./User/apartments/createEditApartment.scss";
+    @import "./User/apartments/apartmentIndex.scss";
 
 
-$main-bg-color: rgb(222,18,99);
+$main-bg-color: #ff375c;
 
 .bnbButton{
     background-color: $main-bg-color;

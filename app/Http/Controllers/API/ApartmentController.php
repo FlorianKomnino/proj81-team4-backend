@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Apartment;
+use App\Models\Sponsorship;
 use App\Models\Message;
 use App\Models\Service;
 use App\Models\Visualization;
@@ -35,6 +36,7 @@ class ApartmentController extends Controller
             $filters = $data['services'];
 
             $filteredApartments = Apartment::with('services')
+                ->with('sponsorships')
                 ->where('visible', 1)
                 ->where('rooms', '>=', $rooms)
                 ->where('beds', '>=', $beds)
@@ -49,6 +51,7 @@ class ApartmentController extends Controller
                 ->get();
         } else {
             $filteredApartments = Apartment::with('services')
+                ->with('sponsorships')
                 ->where('apartments.visible', 1)
                 ->where('rooms', '>=', $rooms)
                 ->where('beds', '>=', $beds)
@@ -73,6 +76,19 @@ class ApartmentController extends Controller
         $receivedMessage->save();
     }
 
+    public function sponsoredApartments(Sponsorship $sponsorship, Apartment $apartment)
+    {
+        $allSponsoredApartments = DB::table('apartment_sponsorship')->orderBy('id', 'desc')->where('ending_time', '>', now())->get();
+        $idSponsoredApartmentsNow = [];
+        foreach ($allSponsoredApartments as $sponsoredApartment) {
+            array_push($idSponsoredApartmentsNow, $sponsoredApartment->apartment_id);
+        }
+        $apartmentsToShow = Apartment::with('services')->whereIn('apartments.id', $idSponsoredApartmentsNow)->get();
+        return response()->json([
+            'success' => true,
+            'results' => $apartmentsToShow
+        ]);
+    }
 
     public function receiveVisualization(Request $request, Apartment $apartment)
     {

@@ -27,7 +27,7 @@
                                         <form action="{{ route('user.messages.toggle', $message->id) }}" method="POST">
                                         @method('PATCH')
                                         @csrf
-                                            <button type="submit" title="{{!$message->status ? 'Segna come già letto' : 'Segna come da leggere' }}" class="visibility-button" ><i class="fa-2x fa-solid {{!$message->status ? 'fa-envelope-open-text' : 'fa-envelope' }}"></i></button>
+                                            <button type="submit" title="{{!$message->status ? 'Segna come già letto' : 'Segna come da leggere' }}" class="visibility-button border-0" ><i class="fa-2x fa-solid {{$message->status ? 'fa-envelope-open-text' : 'fa-envelope' }}"></i></button>
                                         </form>
                                         <form class="form-deleter d-inline" action="{{ route('user.messages.destroy', ['message'=>$message, 'apartment'=>$apartment] ) }}" method="POST" data-element-name="{{ $message->email }}">
                                             @csrf

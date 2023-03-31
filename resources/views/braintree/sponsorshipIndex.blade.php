@@ -7,8 +7,6 @@
         <div class="col-12">
             <h1>
                 Seleziona la tua <span class="brand-color">sponsorizzazione</span> per:
-            </h1>
-            <h1>
                 {{$apartment->title}}
             </h1>
             <div class="row cards-container">
@@ -24,9 +22,9 @@
                             <p class="py-4">
                                 Sponsorizzazione livello base della durata di <span class="brand-color">{{$sponsorship->duration_hours}}</span> ore.
                             </p>
-                            <p class="py-4">
+                            <h5 class="py-4">
                                 Costo <span class="brand-color">{{$sponsorship->price}}&euro;</span>
-                            </p>
+                            </h5>
                             <a href="{{route('user.paymentForm', [$apartment->slug, $sponsorship])}}" class="my-4">
                                 Vai al pagamento
                             </a>

@@ -96,7 +96,7 @@
                         </div>
                         <div class="col-4">{{ $apartment->title }}</div>
                         <div class="col-3">{{ $apartment->address }}</div>
-                        <div class="row col-6 col-md-3 justify-content-evenly">
+                        <div class="row col-5 col-md-3 justify-content-evenly">
                             @forelse ($apartment->services as $service )
                                 <div class="col-4 col-md-12 service-element">
                                     <i class="{{ $service->icon }} py-2"></i>

@@ -1,4 +1,5 @@
 $main-bg-color: #ff375c;
+@import "../../partials/variables";
 
 #apartment-index{
     .sponsor-wrapper a i{
@@ -14,8 +15,8 @@ $main-bg-color: #ff375c;
         margin-bottom: 25px;
         border-radius: 25px;
         background: #eaeaea;
-        box-shadow:  15px 15px 21px #7b7b7b, -15px -15px 21px #ffffff;
-
+        box-shadow: $standardShadow;
+        //15px 15px 21px #7b7b7b, -15px -15px 21px #ffffff
         .sponsor-alert{
             position: absolute;
             top: -10px;
@@ -34,6 +35,7 @@ $main-bg-color: #ff375c;
 
             .service-element{
                 i{
+                    width: 23px;
                     font-size: 1.5rem;
                     color: $main-bg-color;
                 }

@@ -1,14 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
 
+$main-bg-color: #ff375c;
 $mainFont: 'Roboto', sans-serif;
 $mainTitleSize: 35px;
 $subTitleSize: 22px;
 $textSize: 16px;
 $smTextSize: 16px;
+$standardShadow: rgba(99, 99, 99, 0.5) 0px 2px 8px 0px;
 
 .title{
     font-size: $mainTitleSize;
     font-weight: 500;
+    margin: 0;
 }
 
 .subTitleSize{

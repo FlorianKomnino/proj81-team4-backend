@@ -10,8 +10,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="stats_container">
-                    <h4 class="col-6 d-inline">Questo appartamento è stato visualizzato {{ $apartment->visualizations->where('apartment_id',$apartment->id)->count()}} volte</h4>
-                    <div class="w-75">
+                    <h4 class="col-6">Questo appartamento è stato visualizzato {{ $apartment->visualizations->where('apartment_id',$apartment->id)->count()}} volte</h4>
+                    <div class="col-6 ms-auto">
                         <canvas id="myChart"></canvas>
                     </div>
                 </div>

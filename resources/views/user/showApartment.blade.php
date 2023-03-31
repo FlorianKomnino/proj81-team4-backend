@@ -67,6 +67,58 @@
                         </div>
                     </div>
                     <div class="col-12 d-flex d-lg-none border-top border-secondary my-3"></div>
+                    @if(isset($messages[0]))
+                        <div class="col-12 col-lg-8 textContainer position-relative">
+                            <div class="d-block d-lg-flex justify-content-center position-sticky">
+                                <p class="subTitleSize m-0">
+                                    Messaggi dell'appartamento
+                                </p>
+                            </div>
+                            <div class="col-12 border-top my-1"></div>
+                            <table class="table table-hover text-center m-0">
+                                <thead class="align-middle">
+                                    <tr>
+                                        <th scope="col">Mittente</th>
+                                        <th scope="col">Messaggio</th>
+                                        <th scope="col">Data</th>
+                                        <th scope="col">Azione</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="align-middle">
+                                        @foreach ($messages as $message)
+                                        <tr>
+                                            <td>{{ $message->email }}</td> 
+                                            <td class="textMessageContainer">
+                                                <div class="w-100 textMessage">
+                                                    {{ $message->text_content }}
+                                                </div>
+                                            </td>
+                                            <td>{{ $message->created_at }}</td></td>
+                                            <td>
+                                                <div class="d-flex justify-content-evenly">
+                                                    <form action="{{ route('user.messages.toggle', $message->id) }}" method="POST">
+                                                    @method('PATCH')
+                                                    @csrf
+                                                        <button type="submit" title="{{!$message->status ? 'Segna come già letto' : 'Segna come da leggere' }}" class="visibility-button border-0" ><i class="fa-2x fa-solid {{$message->status ? 'fa-envelope-open-text' : 'fa-envelope' }}"></i></button>
+                                                    </form>
+                                                    <form class="form-deleter d-inline" action="{{ route('user.messages.destroy', ['message'=>$message, 'apartment'=>$apartment] ) }}" method="POST" data-element-name="{{ $message->email }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger">Elimina</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        @else
+                            <div class="col-12 col-lg-8 align-items-center d-flex justify-content-center textSize">
+                                Non hai nessun messaggio in arrivo per questo appartamento
+                            </div>
+                        @endif
+                    </div>
                 
                 {{-- these rows (56-63) is used to send coordinates to tomtom.js and visualize the map --}}
                 <div class="row w-50 d-none">

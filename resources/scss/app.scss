@@ -13,6 +13,11 @@
     @import "./User/apartments/apartmentIndex.scss";
     @import "./partials/variables";
 
+    //braintree
+    @import "./User/braintree/paymentForm.scss";
+    @import "./User/braintree/sponsorshipIndex.scss";
+    @import "./User/braintree/checkoutSuccess.scss";
+
 
 $main-bg-color: #ff375c;
 

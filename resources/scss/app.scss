@@ -11,6 +11,7 @@
     //apartments
     @import "./User/apartments/createEditApartment.scss";
     @import "./User/apartments/apartmentIndex.scss";
+    @import "./partials/variables";
 
 
 $main-bg-color: #ff375c;
@@ -27,20 +28,18 @@ $main-bg-color: #ff375c;
     }
 }
 
-.tomtom-container{
-    #map{
-        height: 500px;
-        #marker{
-                background-color: $main-bg-color;
-                border-radius: 50%;
-                height: 50px;
-                width: 50px;
-                padding: 10px;
-            .marker-container{
-                filter: invert(100%);
-            }
+
+#map{
+    height: 500px;
+    #marker{
+            background-color: $main-bg-color;
+            border-radius: 50%;
+            height: 50px;
+            width: 50px;
+            padding: 10px;
+        .marker-container{
+            filter: invert(100%);
         }
-        
     }
 }
 
@@ -67,4 +66,18 @@ $main-bg-color: #ff375c;
         }
         
     }
+}
+
+.textContainer{
+    max-height: 300px;
+    max-width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    .textMessageContainer{
+        overflow-y: auto;
+        .textMessage{
+            max-width: 100px;
+        }
+    }
+    
 }

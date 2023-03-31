@@ -172,10 +172,11 @@ class ApartmentController extends Controller
     public function show(Apartment $apartment)
     {
         $user = Auth::user();
+        $messages = Message::where('apartment_id', $apartment->id)->orderBy('email', 'asc')->get();
         $response = Http::get("https://api.tomtom.com/search/2/search/" . $apartment['address'] . ".json?key=jEFhMI0rD5tTkGjuW8dYlC2x3UFxNRJr");
 
         $jsonData = $response->json();
-        return view('user.showApartment', ['apartment' => $apartment, 'user' => $user, 'jsonData' => $jsonData]);
+        return view('user.showApartment', ['apartment' => $apartment, 'user' => $user, 'jsonData' => $jsonData, 'messages' => $messages]);
     }
 
     /**

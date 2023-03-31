@@ -28,6 +28,7 @@ Route::middleware(['auth', 'verified'])->prefix('user')->name('user.')->group(fu
         return view('dashboard');
     })->name('dashboard');
     Route::get('apartments/testshow', [UserApartmentController::class, 'serviceFilter'])->name('apartments.filter');
+    Route::get('/apartments/news', [UserApartmentController::class, 'news'])->name('apartments.news');
     Route::resource('apartments', UserApartmentController::class);
     Route::patch('/apartments/{apartment}/toggle', [UserApartmentController::class, 'enableToggle'])->name('apartments.toggle');
     Route::get('/paymentForm/{apartment}/{sponsorship}', [BraintreeController::class, 'paymentForm'])->name('paymentForm');

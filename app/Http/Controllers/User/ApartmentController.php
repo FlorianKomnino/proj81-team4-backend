@@ -282,4 +282,14 @@ class ApartmentController extends Controller
         $apartment->save();
         return redirect()->back()->with('alert-type', 'success');
     }
+
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function news(){
+        $apartments = Apartment::all()->where('user_id', Auth::user()->id);
+        return view('user.message.indexUserMessage', compact('apartments'));
+    }
 }

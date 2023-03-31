@@ -93,7 +93,10 @@ new Chart(ctx, {
                     monthlyVisualizations[10].count,
                     monthlyVisualizations[11].count
                 ],
-            borderWidth: 1
+            borderWidth: 1,
+            borderColor: '#ff4859dd',
+            backgroundColor: '#ff485977',
+
         }]
     },
     options: {
@@ -101,6 +104,9 @@ new Chart(ctx, {
             y: {
                 beginAtZero: true
             }
+        },
+        font: {
+            size: 20
         }
     }
 });

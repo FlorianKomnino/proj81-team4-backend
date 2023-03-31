@@ -7,7 +7,7 @@
 
 @section('content')
     <div id="payment-container" class="container">
-        <div id="braintree-loader" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+        <div id="braintree-loader" class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
         <div class="row justify-content-center">
             <div class="col-6">
                 <form  id="payment-form" method="POST" action="{{route('checkout', [$sponsorship, $apartment])}}">

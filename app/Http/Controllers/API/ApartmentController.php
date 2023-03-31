@@ -66,7 +66,12 @@ class ApartmentController extends Controller
 
     public function receivedMessage(Request $request)
     {
-        $data = $request->all();
+        // $data = $request->all();
+        $data = $request->validate([
+            'name' => 'string|nullable',
+            'email' => 'required|email||max:50',
+            'text_content' => 'required|string|max:300',
+        ]);
         $receivedMessage = new Message();
 
         $receivedMessage->text_content = $data['text_content'];

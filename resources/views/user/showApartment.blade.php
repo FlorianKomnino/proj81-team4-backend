@@ -78,7 +78,7 @@
                                 </p>
                             </div>
                             <div class="col-12 border-top my-1"></div>
-                            <table class="table table-hover text-center m-0">
+                            <table class="table text-center m-0">
                                 <thead class="align-middle">
                                     <tr>
                                         <th scope="col">Mittente</th>
@@ -89,7 +89,7 @@
                                 </thead>
                                 <tbody class="align-middle">
                                         @foreach ($messages as $message)
-                                        <tr>
+                                        <tr class="{{!$message->status ? 'table-active' : ''}}">
                                             <td>{{ $message->email }}</td> 
                                             <td class="textMessageContainer">
                                                 <div class="w-100 textMessage">

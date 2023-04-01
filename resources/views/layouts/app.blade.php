@@ -15,6 +15,8 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
     <!-- Usando Vite -->
     @vite(['resources/js/app.js'])
@@ -24,8 +26,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
 </head>
 
-<body>
-    <div id="app">
+<body>        
+    <div id="loader">
+        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    <div id="app" hidden>
+
 
 
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-5">
@@ -83,12 +89,18 @@
                 </div>
             </div>
         </nav>
-
-        <main class="">
+    
+        <main>
             @yield('content')
         </main>
     </div>
     @yield('bottomBody')
-</body>
 
+</body>
+<script>
+    $(window).on('load',function() {
+        $('#loader').hide();
+        document.getElementById('app').removeAttribute('hidden')
+    });
+</script>
 </html>

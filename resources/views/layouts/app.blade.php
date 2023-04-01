@@ -21,7 +21,7 @@
     <script>
         $(window).on('load',function() {
             $('#loader').hide();
-            document.getElementById('app').removeAttribute('hidden')
+            document.getElementById('app').style.zIndex(0)
         });
     </script>
 
@@ -37,7 +37,7 @@
     <div id="loader">
         <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>
-    <div id="app" hidden>
+    <div id="app">
 
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-5">
             <div class="container">

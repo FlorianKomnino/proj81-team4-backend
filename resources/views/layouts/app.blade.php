@@ -18,6 +18,13 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
+    <script>
+        $(window).on('load',function() {
+            $('#loader').hide();
+            document.getElementById('app').removeAttribute('hidden')
+        });
+    </script>
+
     <!-- Usando Vite -->
     @vite(['resources/js/app.js'])
     @yield('head')
@@ -27,11 +34,10 @@
 </head>
 
 <body>        
-    {{-- <div id="loader">
+    <div id="loader">
         <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-    </div> --}}
-    {{-- <div id="app" hidden> --}}
-    <div id="app">
+    </div>
+    <div id="app" hidden>
 
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-5">
             <div class="container">
@@ -94,12 +100,5 @@
         </main>
     </div>
     @yield('bottomBody')
-
-    {{-- <script>
-        $(window).on('load',function() {
-            $('#loader').hide();
-            document.getElementById('app').removeAttribute('hidden')
-        });
-    </script> --}}
 </body>
 </html>

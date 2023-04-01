@@ -27,12 +27,11 @@
 </head>
 
 <body>        
-    <div id="loader">
+    {{-- <div id="loader">
         <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-    </div>
-    <div id="app" hidden>
-
-
+    </div> --}}
+    {{-- <div id="app" hidden> --}}
+    <div id="app">
 
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-5">
             <div class="container">
@@ -96,11 +95,11 @@
     </div>
     @yield('bottomBody')
 
+    {{-- <script>
+        $(window).on('load',function() {
+            $('#loader').hide();
+            document.getElementById('app').removeAttribute('hidden')
+        });
+    </script> --}}
 </body>
-<script>
-    $(window).on('load',function() {
-        $('#loader').hide();
-        document.getElementById('app').removeAttribute('hidden')
-    });
-</script>
 </html>

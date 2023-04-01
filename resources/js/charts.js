@@ -5,6 +5,9 @@ console.log(visualizations)
 
 let months = ['Apr 2022', 'Mag 2022', 'Giu 2022', 'Lug 2022', 'Ago 2022', 'Set 2022', 'Ott 2022', 'Nov 2022', 'Dic 2022', 'Gen 2023', 'Feb 2023', 'Mar 2023'];
 
+
+
+
 let monthlyVisualizations = [
 
     {
@@ -70,6 +73,21 @@ for (let i = 0; i < visualizations.length; i++) {
     }
 }
 
+let resultingVisualizations = [
+    monthlyVisualizations[0].count,
+    monthlyVisualizations[1].count,
+    monthlyVisualizations[2].count,
+    monthlyVisualizations[3].count,
+    monthlyVisualizations[4].count,
+    monthlyVisualizations[5].count,
+    monthlyVisualizations[6].count,
+    monthlyVisualizations[7].count,
+    monthlyVisualizations[8].count,
+    monthlyVisualizations[9].count,
+    monthlyVisualizations[10].count,
+    monthlyVisualizations[11].count
+]
+
 const ctx = document.getElementById('myChart');
 
 new Chart(ctx, {
@@ -77,22 +95,8 @@ new Chart(ctx, {
     data: {
         labels: months,
         datasets: [{
-            label: '# of Visualizations',
-            data:
-                [
-                    monthlyVisualizations[0].count,
-                    monthlyVisualizations[1].count,
-                    monthlyVisualizations[2].count,
-                    monthlyVisualizations[3].count,
-                    monthlyVisualizations[4].count,
-                    monthlyVisualizations[5].count,
-                    monthlyVisualizations[6].count,
-                    monthlyVisualizations[7].count,
-                    monthlyVisualizations[8].count,
-                    monthlyVisualizations[9].count,
-                    monthlyVisualizations[10].count,
-                    monthlyVisualizations[11].count
-                ],
+            label: 'Numero di visualizzazioni',
+            data: resultingVisualizations,
             borderWidth: 1,
             borderColor: '#ff4859dd',
             backgroundColor: '#ff485977',

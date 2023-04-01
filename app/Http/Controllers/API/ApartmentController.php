@@ -162,7 +162,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        $apartment = Apartment::with('services')->findOrFail($apartment->id);
+        $apartment = Apartment::with('user')->with('services')->findOrFail($apartment->id);
         return response()->json([
             'status' => 'success',
             'data' => $apartment,

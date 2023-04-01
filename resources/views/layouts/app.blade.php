@@ -26,8 +26,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
 </head>
 
-<body>
-    <div id="app">
+<body>        
+    <div id="loader">
+        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    <div id="app" hidden>
 
 
 
@@ -86,10 +89,8 @@
                 </div>
             </div>
         </nav>
-        <div id="loading">
-            <img id="loading-image" src="{{asset('logo/rainbow-spinner-loading.gif')}}" alt="Loading...">
-        </div>
-        <main class="">
+    
+        <main>
             @yield('content')
         </main>
     </div>
@@ -98,7 +99,8 @@
 </body>
 <script>
     $(window).on('load',function() {
-        $('#loading').hide();
+        $('#loader').hide();
+        document.getElementById('app').removeAttribute('hidden')
     });
 </script>
 </html>

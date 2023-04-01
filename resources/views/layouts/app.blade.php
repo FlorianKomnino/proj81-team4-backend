@@ -15,6 +15,8 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
     <!-- Usando Vite -->
     @vite(['resources/js/app.js'])
@@ -26,6 +28,7 @@
 
 <body>
     <div id="app">
+
 
 
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-5">
@@ -83,12 +86,19 @@
                 </div>
             </div>
         </nav>
-
+        <div id="loading">
+            <img id="loading-image" src="{{asset('logo/rainbow-spinner-loading.gif')}}" alt="Loading...">
+        </div>
         <main class="">
             @yield('content')
         </main>
     </div>
     @yield('bottomBody')
-</body>
 
+</body>
+<script>
+    $(window).on('load',function() {
+        $('#loading').hide();
+    });
+</script>
 </html>

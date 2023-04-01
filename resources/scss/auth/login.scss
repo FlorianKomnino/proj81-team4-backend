@@ -1,9 +1,9 @@
 $main-bg-color: #ff375c;
 
 
-#user-login{
+#user-login {
 
-    button{
+    button {
         background: linear-gradient(108deg, white 0 45%, $main-bg-color 45% 92%, white 92% 100%);
         background-size: 200%;
         border: none;
@@ -19,11 +19,17 @@ $main-bg-color: #ff375c;
             background-position: right;
         }
     }
-    a{
+
+    a {
         text-decoration: none;
         color: $main-bg-color;
-        &:hover{
+
+        &:hover {
             text-decoration: underline;
         }
     }
+}
+
+.headbar-custom-color {
+    background-color: #feedf0;
 }

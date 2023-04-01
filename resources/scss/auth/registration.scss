@@ -1,7 +1,7 @@
 $main-bg-color: #ff375c;
 
-#user-registration{
-    button{
+#user-registration {
+    button {
         background: linear-gradient(108deg, white 0 45%, $main-bg-color 45% 92%, white 92% 100%);
         background-size: 200%;
         border: none;
@@ -18,4 +18,8 @@ $main-bg-color: #ff375c;
         }
     }
 
+}
+
+.headbar-custom-color {
+    background-color: #feedf0;
 }

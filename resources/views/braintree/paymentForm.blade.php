@@ -7,6 +7,7 @@
 
 @section('content')
     <div id="payment-container" class="container">
+        <div id="braintree-loader" class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
         <div class="row justify-content-center">
             <div class="col-6">
                 <form  id="payment-form" method="POST" action="{{route('checkout', [$sponsorship, $apartment])}}">
@@ -14,7 +15,7 @@
                     <div id="dropin-container"></div>
                     <input type="hidden" id="nonce" name="payment_method_nonce"/>
                     <input type="hidden" id="nonce" name="device_data_element"/>
-                    <input type="submit" value="paga &euro;{{$sponsorship->price}}">
+                    <input id="payment-submit" class="d-none" type="submit" value="paga &euro;{{$sponsorship->price}}">
                 </form> 
             </div>
         </div>

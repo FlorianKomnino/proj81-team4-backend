@@ -23,18 +23,20 @@
             <p class="title mb-5">
                 Statistiche visualizzazioni singoli appartamenti
             </p>
-            <div class="row g-0">
+            <div class="row justify-content-between">
                 @foreach ($apartments as $apartment)
-                <div id="container{{ $loop->index }}" class="apartment-container row col-6 g-0">
-                    <div class="col-3 d-none d-sm-block img-wrapper p-0">
-                        <img src="{{$apartment->image}}" alt="">
-                    </div>
-                    <div class="row p-0 col-8">
-                        <p>{{$apartment->title}}</p>
-                        <canvas id="{{ $loop->index }}"></canvas>
-                    </div>
-                    <div class="col-2 col-sm-1 d-flex justify-content-evenly apartment-buttons">
-                        <a href="{{ route('user.messages.index', $apartment->slug ) }}" class="d-flex visualize-button align-items-center justify-content-center"><i class="fa-solid fa-eye"></i></a>
+                <div class="card-wrapper col-12 col-lg-6">
+                    <div id="container{{ $loop->index }}" class="apartment-container row justify-content-between g-0">
+                        <div class="col-3 d-none d-lg-block img-wrapper p-0">
+                            <img src="{{$apartment->image}}" alt="">
+                        </div>
+                        <div class="row p-4 col-10 col-lg-8">
+                            <p>{{$apartment->title}}</p>
+                            <canvas id="{{ $loop->index }}"></canvas>
+                        </div>
+                        <div class="col-2 col-sm-1 d-flex justify-content-evenly apartment-buttons">
+                            <a href="{{ route('user.messages.index', $apartment->slug ) }}" class="d-flex visualize-button align-items-center justify-content-center"><i class="fa-solid fa-eye"></i></a>
+                        </div>
                     </div>
                 </div>
                 @endforeach

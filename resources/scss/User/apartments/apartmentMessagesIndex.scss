@@ -1,20 +1,24 @@
 $main-bg-color: #ff375c;
 
-#apartment-messages-index{
-    .message-element{
+#apartment-messages-index {
+    .message-element {
         border-top: 1px solid rgb(200, 190, 190);
     }
 
-    .brand-color{
+    .brand-color {
         color: $main-bg-color;
     }
 
-    .unread-message{
+    .unread-message {
         background-color: #fa4c6c1a;
     }
 
-    .see-message{
+    .see-message {
         border: none;
         background-color: #00000000;
     }
+}
+
+.stats_container {
+    min-height: 250px;
 }

@@ -58,7 +58,7 @@
                     <div class="row p-0 col-8">
                         <div class="col-12 p-3 fw-bold fs-5 pe-0 pe-xl-5 align-self-center">{{ $apartment->title }}</div>
                         <div class="col-12 p-3 align-self-center">
-                            <p>ci sono <span class="text-brand"> {{count($apartment->messages->where('status',1))}}</span> messaggi non letti</p>
+                            <p>ci sono <span class="text-brand"> {{count($apartment->messages->where('status',0))}}</span> messaggi non letti</p>
                         </div>
                     </div>
                     <div class="col-2 col-sm-1 d-flex justify-content-evenly apartment-buttons">

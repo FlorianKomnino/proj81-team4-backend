@@ -93,6 +93,9 @@
         <main>
             @yield('content')
         </main>
+        <footer>
+            @yield('footer_content')
+        </footer>
     </div>
     @yield('bottomBody')
 

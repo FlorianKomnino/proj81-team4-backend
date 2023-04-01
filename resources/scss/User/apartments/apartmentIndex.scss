@@ -1,23 +1,26 @@
 $main-bg-color: #ff375c;
 @import "../../partials/variables";
 
-#apartment-index{
-    .sponsor-wrapper a i{
+
+#apartment-index {
+    .sponsor-wrapper a i {
         color: $main-bg-color;
         font-size: 1.7rem;
     }
 
-    .text-brand{
+    .text-brand {
         color: $main-bg-color;
     }
-    .apartment-container{
+
+    .apartment-container {
         position: relative;
         margin-bottom: 25px;
         border-radius: 25px;
         background: #eaeaea;
         box-shadow: $standardShadow;
+
         //15px 15px 21px #7b7b7b, -15px -15px 21px #ffffff
-        .sponsor-alert{
+        .sponsor-alert {
             position: absolute;
             top: -10px;
             left: 5%;
@@ -30,11 +33,12 @@ $main-bg-color: #ff375c;
             padding: 4px;
             width: 240px;
         }
-        .content{
+
+        .content {
             margin: 25px 0;
 
-            .service-element{
-                i{
+            .service-element {
+                i {
                     width: 23px;
                     font-size: 1.5rem;
                     color: $main-bg-color;
@@ -42,14 +46,14 @@ $main-bg-color: #ff375c;
             }
         }
 
-        .visibility-button{
+        .visibility-button {
             border: none;
             color: $main-bg-color;
             background-color: #ffffff00;
         }
 
         .apartment-buttons a,
-        .apartment-buttons button{
+        .apartment-buttons button {
             border: none;
             width: 45px;
             font-size: 1.7rem;
@@ -58,25 +62,28 @@ $main-bg-color: #ff375c;
             transition: all .25s;
             color: white;
             transform: skew(-15deg);
-            i{
+
+            i {
                 transform: skew(15deg);
             }
 
-            &.visualize-button:hover{
+            &.visualize-button:hover {
                 background-color: #6e48e9;
                 width: 85px;
             }
-            &.modify-button:hover{
+
+            &.modify-button:hover {
                 background-color: #eba605;
                 width: 85px;
             }
-            &.trash-button:hover{
+
+            &.trash-button:hover {
                 background-color: #e80e0e;
                 width: 85px;
             }
         }
 
-        #smartphone-visibility i{
+        #smartphone-visibility i {
             font-size: 1.7rem;
         }
     }

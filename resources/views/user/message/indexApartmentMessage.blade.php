@@ -10,6 +10,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="stats_container row">
+                    <h2 class="mb-4">{{$apartment->title}}</h2>
                     <h4 class="col-12 col-lg-6 mb-5">Questo appartamento è stato <span class="brand-color">visualizzato</span> {{ $apartment->visualizations->where('apartment_id',$apartment->id)->count()}} volte</h4>
                     <div class="col-12 col-lg-6 ms-auto mb-3">
                         <canvas id="myChart"></canvas>

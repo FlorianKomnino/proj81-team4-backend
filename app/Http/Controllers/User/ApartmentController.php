@@ -297,7 +297,7 @@ class ApartmentController extends Controller
 
     public function allApartmentsStats()
     {
-        $apartments = Apartment::all()->where('user_id', Auth::user()->id);
-        return view('user.apartmentIndex', compact('apartments'));
+        $apartments = Apartment::where('user_id', Auth::user()->id)->with('visualizations')->get();
+        return view('user.stats.visualizations', compact('apartments'));
     }
 }

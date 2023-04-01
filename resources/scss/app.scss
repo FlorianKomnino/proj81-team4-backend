@@ -9,76 +9,84 @@
 @import "./User/dashboard.scss";
 @import "./User/userNews.scss";
 
-    //apartments
-    @import "./User/apartments/createEditApartment.scss";
-    @import "./User/apartments/apartmentIndex.scss";
-    @import "./partials/variables";
-    @import "./User/apartments/apartmentMessagesIndex.scss";
+//apartments
+@import "./User/apartments/createEditApartment.scss";
+@import "./User/apartments/apartmentIndex.scss";
+@import "./partials/variables";
+@import "./User/apartments/apartmentMessagesIndex.scss";
+@import "./User/apartments/statisticsIndex.scss";
 
-    //braintree
-    @import "./User/braintree/paymentForm.scss";
-    @import "./User/braintree/sponsorshipIndex.scss";
-    @import "./User/braintree/checkoutSuccess.scss";
+//braintree
+@import "./User/braintree/paymentForm.scss";
+@import "./User/braintree/sponsorshipIndex.scss";
+@import "./User/braintree/checkoutSuccess.scss";
 
 
 $main-bg-color: #ff375c;
 
-.bnbButton{
+.bnbButton {
     background-color: $main-bg-color;
     color: white;
     text-decoration: none;
     padding: 10px;
     border-radius: 10px;
     border: none;
-    &:hover{
+
+    &:hover {
         color: white;
     }
 }
 
 
-#map{
+#map {
     height: 500px;
-    #marker{
-            background-color: $main-bg-color;
-            border-radius: 50%;
-            height: 50px;
-            width: 50px;
-            padding: 10px;
-        .marker-container{
+
+    #marker {
+        background-color: $main-bg-color;
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        padding: 10px;
+
+        .marker-container {
             filter: invert(100%);
         }
     }
 }
 
-#container-form{
-    #form{
+#container-form {
+    #form {
         *:focus {
             outline: none;
         }
+
         width: 70%;
         border: 1px solid lightgray;
         border-radius: 8px;
-        hr{
+
+        hr {
             margin: 5px 0;
         }
-        .form-label{
+
+        .form-label {
             color: grey;
         }
+
         textarea {
             resize: none;
             border: none;
         }
-        .lineOver{
+
+        .lineOver {
             border: 8px solid;
-            border-image: repeating-linear-gradient(135deg,#ff375c 0 1px,#ff375c 0 1px,#ff375c 0 1px) 8;
-            -webkit-mask: 
-              conic-gradient(from 180deg at top 1px right 1px, #0000 90deg,#000 0)
-               var(--_i,200%) 0  /200% var(--_i,1px) border-box no-repeat,
-              conic-gradient(at bottom 1px left  1px,  #0000 90deg,#000 0)
-               0   var(--_i,200%)/var(--_i,1px) 200% border-box no-repeat,
-              linear-gradient(#000 0 0) padding-box no-repeat;
+            border-image: repeating-linear-gradient(135deg, #ff375c 0 1px, #ff375c 0 1px, #ff375c 0 1px) 8;
+            -webkit-mask:
+                conic-gradient(from 180deg at top 1px right 1px, #0000 90deg, #000 0) var(--_i, 200%) 0 /200% var(--_i, 1px) border-box no-repeat,
+                conic-gradient(at bottom 1px left 1px, #0000 90deg, #000 0) 0 var(--_i, 200%)/var(--_i, 1px) 200% border-box no-repeat,
+                linear-gradient(#000 0 0) padding-box no-repeat;
             transition: .3s, -webkit-mask-position .3s .3s;
-            &:hover{
+
+            &:hover {
                 --_i: 100%;
                 transition: .3s, -webkit-mask-size .3s .3s;
             }
@@ -87,16 +95,18 @@ $main-bg-color: #ff375c;
 }
 
 
-.textContainer{
+.textContainer {
     max-height: 300px;
     max-width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    .textMessageContainer{
+
+    .textMessageContainer {
         overflow-y: auto;
-        .textMessage{
+
+        .textMessage {
             max-width: 100px;
         }
     }
-    
+
 }

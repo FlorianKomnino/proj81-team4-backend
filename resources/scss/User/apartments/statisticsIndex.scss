@@ -1,0 +1,54 @@
+$main-bg-color: #ff375c;
+@import "../../partials/variables";
+
+#visualizations-index {
+    .sponsor-wrapper a i {
+        color: $main-bg-color;
+        font-size: 1.7rem;
+    }
+
+    .img-wrapper {
+        height: 220px;
+        overflow: hidden;
+
+        img {
+            height: 100%;
+            border-radius: 25px 0 0 25px;
+        }
+    }
+
+    .text-brand {
+        color: $main-bg-color;
+    }
+
+    .apartment-container {
+        position: relative;
+        margin-bottom: 25px;
+        border-radius: 25px;
+        background: #eaeaea;
+        box-shadow: $standardShadow;
+
+        //15px 15px 21px #7b7b7b, -15px -15px 21px #ffffff
+        .sponsor-alert {
+            position: absolute;
+            top: -10px;
+            left: 5%;
+            border-radius: 5px;
+            color: white;
+            background-color: $main-bg-color;
+            text-align: center;
+            font-size: .9rem;
+            font-weight: bold;
+            padding: 4px;
+            width: 240px;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+            background-color: $main-bg-color;
+            width: 100%;
+            border-radius: 0 25px 25px 0;
+        }
+    }
+}

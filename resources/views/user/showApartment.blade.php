@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid container-md mb-5">
+    <div id="show-apartment" class="container-fluid container-md mb-5">
         <div class="row wrapper g-0">
             @if (session('message'))
             <div class="alert alert-{{ session('alert-type') }}">
@@ -13,10 +13,15 @@
             </div>
             @endif
             <div class="col-12">
-                <div class="col-12 d-flex justify-content-between align-items-center mb-1">
-                    <p class="title m-0">{{ucfirst($apartment->title)}}</p>
-                    <div>
-                        <a href="{{ route('user.messages.index', $apartment) }}" class="bnbButton">Statistiche e messaggi</a>
+                <div class="col-12 row justify-content-between align-items-center mb-1">
+                    <p class="title col-12 col-sm-7 m-0">{{ucfirst($apartment->title)}}</p>
+                    <div class="row col-12 col-sm-5 upper-buttons">
+                        <div class="col-12 col-lg-6 p-3">
+                            <a class="d-block" href="{{route('user.apartments.index')}}" class="bnbButton">Torna agli appartamenti</a>
+                        </div>
+                        <div class="col-12 col-lg-6 p-3">
+                            <a class="d-block" href="{{ route('user.messages.index', $apartment) }}" class="bnbButton">Statistiche e messaggi</a>
+                        </div>
                     </div>
                 </div>
                 <p class="smTextSize text-decoration-underline ">
@@ -58,7 +63,7 @@
                         </div>
                         <div class="col-12 col-lg-10 border-top border-secondary my-3"></div>
                         <div class="row service-box g-0">
-                            <div class="col-12">
+                            <div class="col-12 services">
                                 <p class="subTitleSize mb-1">Servizi che hai aggiunto</p>
                                 @foreach ($apartment->services as $service)
                                     <div class="textSize mb-1">
@@ -90,28 +95,30 @@
                                     </div>
                                 </div>
                                 @foreach ($messages as $message)
-                                    <div class="row g-0 message-element align-items-center d-flex justify-content-between border-bottom py-3 {{!$message->status ? 'unread-message' : ''}}">
-                                        <div class="col-3 col-lg-3">
-                                            <p class="m-0 ps-2 text-truncate">{{ $message->email }}</p>
-                                        </div> 
-                                        <div class="col-6 col-lg-5">
-                                            <p class="m-0 text-truncate">{{ $message->text_content }}</p>
-                                        </div>
-                                        <div class="col-3 col-lg-3">
-                                            <div class="d-flex justify-content-evenly">
-                                                <form action="{{ route('user.messages.toggle', $message->id) }}" method="POST">
-                                                @method('PATCH')
-                                                @csrf
-                                                    <button type="submit" title="{{!$message->status ? 'Segna come già letto' : 'Segna come da leggere' }}" class="see-message visibility-button border-0" ><i class="fa-2x fa-solid {{$message->status ? 'fa-envelope-open-text' : 'fa-envelope' }}"></i></button>
-                                                </form>
-                                                <form class="form-deleter d-inline" action="{{ route('user.messages.destroy', ['message'=>$message, 'apartment'=>$apartment] ) }}" method="POST" data-element-name="{{ $message->email }}">
+                                    <a class="preview-messages" href="{{ route('user.messages.index', $apartment) }}">
+                                        <div class="row g-0 message-element align-items-center d-flex justify-content-between border-bottom py-3 {{!$message->status ? 'unread-message' : ''}}">
+                                            <div class="col-3 col-lg-3">
+                                                <p class="m-0 ps-2 text-truncate">{{ $message->email }}</p>
+                                            </div> 
+                                            <div class="col-6 col-lg-5">
+                                                <p class="m-0 text-truncate">{{ $message->text_content }}</p>
+                                            </div>
+                                            <div class="col-3 col-lg-3">
+                                                <div class="d-flex justify-content-evenly">
+                                                    <form action="{{ route('user.messages.toggle', $message->id) }}" method="POST">
+                                                    @method('PATCH')
                                                     @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                                                </form>
+                                                        <button type="submit" title="{{!$message->status ? 'Segna come già letto' : 'Segna come da leggere' }}" class="see-message visibility-button border-0" ><i class="fa-2x fa-solid {{$message->status ? 'fa-envelope-open-text' : 'fa-envelope' }}"></i></button>
+                                                    </form>
+                                                    <form class="form-deleter d-inline" action="{{ route('user.messages.destroy', ['message'=>$message, 'apartment'=>$apartment] ) }}" method="POST" data-element-name="{{ $message->email }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 @endforeach
                             </div>
                         </div>

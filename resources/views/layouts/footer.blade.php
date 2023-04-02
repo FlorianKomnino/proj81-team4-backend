@@ -19,17 +19,17 @@
                     <div class="col-12 col-sm-6 col-md-6 col-lg-4 mt-4">
                         <h5>Link Utili:</h5>
                         <span><strong>Laravel 9.0</strong></span>
-                        <p><a href="https://laravel.com/docs/9.x/installation"><em>Vai alla documentazione</a></em></p>
+                        <p><a href="https://laravel.com/docs/9.x/installation"><em>Vai alla documentazione</em></a></p>
                         <span><strong>Vue 3</strong></span>
-                        <p><a href="https://vuejs.org/guide/introduction.html"><em>Vai alla documentazione</a></em></p>
+                        <p><a href="https://vuejs.org/guide/introduction.html"><em>Vai alla documentazione</em></a></p>
                         <span><strong>Bootstrap 5.2</strong></span>
-                        <p><a href="https://getbootstrap.com/docs/5.2/getting-started/introduction/"><em>Vai alla documentazione</a></em></p>
+                        <p><a href="https://getbootstrap.com/docs/5.2/getting-started/introduction/"><em>Vai alla documentazione</em></a></p>
                         <span><strong>StackOverflow ;)</strong></span>
-                        <p><a href="https://stackoverflow.com/https://stackoverflow.com/"><em>Vai al sito</a></em></p>
+                        <p><a href="https://stackoverflow.com/https://stackoverflow.com/"><em>Vai al sito</em></a></p>
                         <span><strong>TomTom API</strong></span>
-                        <p><a href="https://developer.tomtom.com/"><em>Vai alla documentazione</a></em></p>
+                        <p><a href="https://developer.tomtom.com/"><em>Vai alla documentazione</em></a></p>
                         <span><strong>Braintree Payments</strong></span>
-                        <p><a href="https://developer.paypal.com/braintree/docs"><em>Vai alla documentazione</a></em></p>
+                        <p><a href="https://developer.paypal.com/braintree/docs"><em>Vai alla documentazione</em></a></p>
                     </div>
                     <div class="col-12 col-sm-6 col-md-6 col-lg-4 mt-4">
                         <h5>Ringraziamenti:</h5>

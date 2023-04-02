@@ -6,6 +6,7 @@ use App\Models\Apartment;
 use App\Models\Message;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Faker\Generator as Faker;
 
 class MessageSeeder extends Seeder
 {
@@ -317,7 +318,7 @@ class MessageSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
         foreach ($this->messages as $message) {
             $newMessage = new Message();
@@ -327,6 +328,9 @@ class MessageSeeder extends Seeder
             $newMessage->name = $message['name'];
             $newMessage->status = random_int(0,1);
             $newMessage->save();
+            $newMessage->created_at = $faker->dateTimeBetween('-1 year', '-1 day');
+            $newMessage->update();
+
         }
     }
 }

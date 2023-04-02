@@ -121,6 +121,10 @@ $main-bg-color: #ff375c;
     }
 }
 
+.main-color-message-title {
+    color: $main-bg-color;
+}
+
 .textContainer {
     max-height: 300px;
     max-width: 100%;

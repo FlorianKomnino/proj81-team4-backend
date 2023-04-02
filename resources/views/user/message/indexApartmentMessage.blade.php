@@ -37,13 +37,13 @@
                             <div class="col-12 col-lg-3">
                                 <p>{{ $message->email }}</p>
                             </div> 
-                            <div class="col-6 col-lg-5">
+                            <div class="col-8 col-md-6 col-lg-5">
                                 <p>{{ $message->text_content }}</p>
                             </div>
-                            <div class="col-3 col-lg-2">
+                            <div class="col-3 col-lg-2 d-none d-md-block">
                                 <p>{{ $message->created_at }}</p>
                             </div>
-                            <div class="col-3 col-lg-2">
+                            <div class="col-4 col-md-3 col-lg-2">
                                 <div class="d-flex justify-content-evenly">
                                     <form action="{{ route('user.messages.toggle', $message->id) }}" method="POST">
                                     @method('PATCH')

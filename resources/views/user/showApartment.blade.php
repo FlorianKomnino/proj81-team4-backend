@@ -78,8 +78,8 @@
                     @if(isset($messages[0]))
                         <div id="apartment-messages-index" class="col-12 col-lg-7 textContainer position-relative border">
                             <div class="d-flex justify-content-center sticky-top bg-white border-bottom">
-                                <p class="subTitleSize m-0">
-                                    Preview dei messaggi
+                                <p class="subTitleSize m-0 my-2 main-color-message-title">
+                                    Anteprima dei messaggi
                                 </p>
                             </div>
                             <div class="messageContainer col-12 my-1">

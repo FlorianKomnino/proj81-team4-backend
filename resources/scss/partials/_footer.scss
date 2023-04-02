@@ -1,5 +1,26 @@
 #footer {
+    background-color: #feedf0;
+    margin-top: 8rem;
+    border-top: 2px solid #b8989e;
+    color: #977e82;
+
+    a {
+        color: #977e82;
+    }
+
     p {
+        font-size: 0.7rem;
+        margin-bottom: 0.5rem;
+
+
+    }
+
+    .credits {
+        font-size: 1rem;
+
+    }
+
+    span {
         font-size: 0.8rem;
     }
 }

@@ -21,7 +21,8 @@
     <script>
         $(window).on('load',function() {
             $('#loader').hide();
-            document.getElementById('app').style.zIndex(0)
+            document.getElementById('app').style.opacity = 1;
+            document.getElementById('app').style.zIndex = 6;
         });
     </script>
 
@@ -35,10 +36,8 @@
 
 <body>        
     <div id="loader">
-        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     </div>
-    <div id="app">
-
+    <div id="app" style="opacity:0;">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-5">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('http://localhost:5173/') }}">

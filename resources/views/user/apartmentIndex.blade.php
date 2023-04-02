@@ -23,7 +23,7 @@
                 <span>aggiungi il tuo primo appartamento!</span>
                 @endif
             </p>
-            <a href="{{ route('user.apartments.create') }}" class="bnbButton my-3">Aggiungi un appartamento</a>
+                <a class="d-block dashboard-button" href="{{route('user.dashboard')}}">Torna alla dashboard</a>
         </div>
         
         <div class="col-12 mt-4">

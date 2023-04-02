@@ -43,9 +43,9 @@
                                             $remainingDays
                                         }}
                                     @if ($remainingDays > 1)
-                                        giorni,
+                                        giorni
                                     @else
-                                        giorno,
+                                        giorno
                                     @endif
                                 @endif
 
@@ -54,9 +54,9 @@
                                             $remainingHours
                                         }}
                                     @if ($remainingHours > 1)
-                                    ore,
+                                    , ore
                                     @else
-                                        ora,
+                                    , ora
                                     @endif
                                 @endif
                         </p>

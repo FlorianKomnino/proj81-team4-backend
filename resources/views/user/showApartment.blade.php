@@ -56,7 +56,7 @@
                                         {{($apartment->bathrooms == 1) ? $apartment->bathrooms.' bagno' : $apartment->bathrooms.' bagni'}}
                                     </p>
                                     <p class="textSize m-0">
-                                        Superficie: {{$apartment->bathrooms}} metri quadrati
+                                        Superficie: {{$apartment->square_meters}} metri quadrati
                                     </p>
                                 </div>
                             </div>

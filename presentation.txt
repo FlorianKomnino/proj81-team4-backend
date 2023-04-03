@@ -1,0 +1,135 @@
+______________________________________________________________________________________________________________
+_____________________________________________Florian__________________________________________________________
+______________________________________________________________________________________________________________
+Buongiorno signore e signori!
+Benvenute e benvenuti alla presentazione del sito che farà tremare i competitors del settore affitti per notte!
+Il progetto è a cura di Arcudi Luca, Calella Sebastiano, Castellucci Luca, Komnino Florian e Palumbo Andrea.
+Fatte le presentazioni, senza ulteriori indugi, andiamo al sito!
+
+Questa che potete vedere è la pagina principale, che farà da benvenuto ad ogni utente che approccerà al sito.
+La scelta grafica è stata per un layout minimale ed intuitivo, dove è evidente che si puo fare una ricerca, accedere se si è già registrati, o appunto registrarsi.
+
+Scorrendo la pagina si trova la sezione degli appartamenti in evidenza, ovvero gli appartamenti con una sponsorizzazione attiva. Si ha la possibilità di vedere il dettaglio di ognuno di essi direttamente da qui.
+
+A seguire troviamo la sezione di fondo pagina che vedremo in conclusione.
+
+Proseguendo nel tour del sito supponiamo di essere un utente interessato ad effettuare un affitto. Andremo molto probabilmente a ricercare la localita di interesse.
+
+La barra di ricerca come potete vedere suggerisci i possibili risultati autocompletati fin dalle prime lettere inserite.
+
+Supponiamo di dover andare a milano.
+
+La pagina ci informa di quanti appartamenti ha trovato nelle vicinanze del punto scelto.
+Indicandoci anche la loro posizione sulla mappa.
+La ricerca avanzata ci permette di modificare il raggio di ricerca, modificare il numero di letti o bagni, ed in generale filtrate i risultati secondo le nostre preferenze o necessità.
+Selezioniamo i servizi di cucina e wifi per esempio.
+Questa volta ne ha trovati solo x.
+______________________________________________________________________________________________________________
+_____________________________________________Fine Florian_____________________________________________________
+______________________________________________________________________________________________________________
+
+
+
+
+______________________________________________________________________________________________________________
+_____________________________________________Andrea Palumbo___________________________________________________
+______________________________________________________________________________________________________________
+Per quanto riguarda i risultati stessi, si può notare che i primi ad apparire sono sempre quelli contrassegnati dall'etichetta "Bool Bnb selection". Ovvero gli appartamenti sponsorizzati che corrispondono alla ricerca effettutata.
+
+La pagina permette anche anche di condividere con gli amici l'indirizzo della ricerca specifica, che riprodurrà ogni volta i risultati coerenti con la ricerca stessa.
+
+Una volta trovato un appartamento di nostro interesse possiamo vederne la pagina di dettaglio premendo su "visualizza"
+
+Arriviamo così alla pagina dedicata al singolo appartamento, dove possiamo vedere l'indirizzo, la foto estesa, il numero di stanze, letti e bagni. La posizione sulla mappa e i servizi compresi.
+
+Per finire troviamo la sezione dove è possibile mettersi in comunicazione direttamente con l'host per ricevere informazioni.
+
+Vengono effettuate le dovute verifiche e se le informazioni inserite risultano corrette viene salvato il messaggio nel database perchè sia poi visualizzabile da chi gestisce il relativo appartmento
+
+Ognuna delle pagine viste fin'ora ha una propria presentazione differente in base al supposrto da cui viene osservata.
+
+Ecco una presentazione delle 3 principali modalità di visualizzazione.
+Mobile, tablet e schermo del computer.
+per quanto riguarda il layout smartphone i tasti accedi e registrati sono contenuti in un menu accessibile da questo tasto.
+
+La scelta è stata quella di rimuovere la mappa della ricerca nelle versioni smartphone e tablet, la quale è comunque visualizzabile nella pagina dedicata al singolo appartamento.
+
+Passiamo quindi alla presentazione della parte dedicata agli utenti registrati.
+______________________________________________________________________________________________________________
+_____________________________________________fine Andrea______________________________________________________
+______________________________________________________________________________________________________________
+
+
+______________________________________________________________________________________________________________
+_____________________________________________Luca Castellucci_________________________________________________
+______________________________________________________________________________________________________________
+Come anticipato gli utenti si potranno registrare premendo su "registrati"
+
+Questo il form di registrazione, dove le uniche informazioni obbligatorie sono email e password.
+Qual'ora non vengano popolati gli altri campi, i loro valori verranno assegnati di default per essere coerenti con i risultati mostrati nelle varie pagine.
+
+Per la presentazione abbiamo un account già pronto per vederne le varie caratteristiche.
+
+Se andiamo quindi al link "accedi" ci troveremo nel relativo form di login, il quale a sua volta ci porterà al menu principale dell'utente.
+
+Da qui è possibile aggiungere un appartamento, andare alla lista dei propri appartamenti, visualizzare i messaggi o visualizzare le statistiche.
+
+Cominciamo inserendo un nuovo appartamento.
+
+Questo che vedete è il form di creazione.
+
+Ognuno dei campi dispone delle validazioni necessarie sia lato utente che lato server, che se mancanti o non coerenti ritornano un messaggio di errore bloccante.
+Una volta inseriti valori accettabili e premuto il tasto crea, veniamo reindirizzati alla pagina di dettaglio dedicata.
+Dove potremo vedere il titolo dell'appartamento, l'indirizzo, la sua immagine estesa, la posizione sulla mappa e le caratteristiche quali numero di stanze, numero di bagni, superficie e servizi
+
+Come potete vedere qui viene indicato che nonci sono messaggi realiti a questo appartamento, ma andando alla lista di tutti i nostri appartamenti e vedendone uno già popolato, qui troveremo i messaggi relativi.
+
+Torniamo quindi alla lista degli appartamenti.
+______________________________________________________________________________________________________________
+_____________________________________________fine Luca Castellucci____________________________________________
+______________________________________________________________________________________________________________
+
+
+______________________________________________________________________________________________________________
+_____________________________________________Luca Arcudi______________________________________________________
+______________________________________________________________________________________________________________
+Qui si ha una panoramica complessiva dove quelli sponsorizzati portano, indicato in questa etichetta, il tempo rimanente di sponsorizzazione se presente
+
+Si ha la possibilità andare a vedere il singolo appartamento, modificarlo o eliminarlo.
+Sempre da questo menu è possibile rendere visibile un appartamento tramite questo slider o anche di sponsorizzarne uno.
+
+vediamo velocemente le varie funzioni correlate ad ognuna delle voci della lista.
+Visibilità
+Eliminazione
+Modifica
+Visualizzazione
+Sponsorizzazione
+
+tornando al menu principale possiamo andare a vedere la pagina dedicata ai messaggi
+______________________________________________________________________________________________________________
+_____________________________________________fine Luca Arcudi_________________________________________________
+______________________________________________________________________________________________________________
+
+
+______________________________________________________________________________________________________________
+_____________________________________________Sebastiano Calella_______________________________________________
+______________________________________________________________________________________________________________
+In questa pagina abbiamo un'altra lista degli appartamenti, questa volta dedicata a permettere di verificare quali di questi abbiano dei messaggi non letti, e qualora ce ne fossero, possiamo andare alla pagina dei messaggi del singolo appartamento a vederli nel dettaglio. Veniamo quindi portati alla lista dei messaggi e le statistiche di visualizzazione del singolo appartamento.
+Qui possiamo trovare i messaggi inerenti e segnare quelli gia visualizzati, o segnarli come non letti se necessario.
+Nella pagina delle statistiche troviamo il grafico delle statistiche generali di visualizzazioni ricevute, così come i grafici dei singoli appartamenti, anche questi con il link al dettaglio.
+
+Queste elencate sono le varie funzionalità disponibili, rivediamole velocemente nelle varie visulizzazioni possibili in base al dispositivo utilizzato.
+
+Lista degli appartamenti
+visualizzazione del singolo
+messaggi generali
+messaggi del singolo
+statistiche genrali
+
+Per concludere, torniamo alla dashboard e dedichiamo un momento di attenzione alla sezione a fondo pagina.
+Dove troviamo il link ad ognuno dei profili github dei partecipanti al progetto.
+La lista dei link alla documentazione delle risorse principali utilizzate.
+E i ringraziamenti ai nostri tutor, alla classe e a Boolean stessa.
+______________________________________________________________________________________________________________
+_____________________________________________Sebastiano Calella_______________________________________________
+______________________________________________________________________________________________________________

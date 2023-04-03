@@ -75,8 +75,8 @@
                                 @endif
                             </a>
                         </div>
-                        <div class="col-4 fw-bold fs-5 pe-0 pe-xl-5">{{ $apartment->title }}</div>
-                        <div class="col-3">{{ $apartment->address }}</div>
+                        <div class="col-7 col-md-4 fw-bold fs-5 pe-0 pe-xl-5">{{ $apartment->title }}</div>
+                        <div class="col-3 d-none d-md-block">{{ $apartment->address }}</div>
                         <div class="row col-5 col-md-3 justify-content-evenly">
                             @forelse ($apartment->services as $service )
                                 <div class="col-4 col-md-12 service-element d-flex align-items-center">

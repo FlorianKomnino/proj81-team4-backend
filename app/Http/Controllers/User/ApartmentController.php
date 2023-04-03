@@ -161,7 +161,7 @@ class ApartmentController extends Controller
         $newApartment->slug = $newApartment->slug . $newApartment->id;
         $newApartment->update();
         $newApartment->services()->sync($data['services']);
-        return redirect()->route('user.apartments.show', $newApartment->slug)->with('message', "$newApartment->title has been created")->with('alert-type', 'primary');
+        return redirect()->route('user.apartments.show', $newApartment->slug)->with('message', "$newApartment->title è stato creato con successo")->with('alert-type', 'primary');
     }
 
     /**
@@ -237,7 +237,7 @@ class ApartmentController extends Controller
 
         $apartment->update($data);
         $apartment->services()->sync($data['services']);
-        return redirect()->route('user.apartments.show', $apartment->slug)->with('message', "Successfully updated")->with('alert-type', 'primary');;
+        return redirect()->route('user.apartments.show', $apartment->slug)->with('message', "Appartamento aggiornato con successo")->with('alert-type', 'primary');;
     }
 
     /**

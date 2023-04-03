@@ -123,7 +123,7 @@
                             </div>
                         </div>
                         @else
-                            <div class="col-12 col-lg-8 align-items-center d-flex justify-content-center textSize">
+                            <div class="col-12 col-lg-7 align-items-center d-flex justify-content-center textSize">
                                 Non hai nessun messaggio in arrivo per questo appartamento
                             </div>
                         @endif

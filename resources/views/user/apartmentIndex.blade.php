@@ -49,14 +49,18 @@
                                     @endif
                                 @endif
 
+                                @if ($remainingDays >= 1 && $remainingHours >= 1)
+                                , 
+                                @endif
+
                                 @if ($remainingHours >= 1)
-                                        {{
+                                {{
                                             $remainingHours
                                         }}
                                     @if ($remainingHours > 1)
-                                    , ore
+                                    ore
                                     @else
-                                    , ora
+                                    ora
                                     @endif
                                 @endif
                         </p>
